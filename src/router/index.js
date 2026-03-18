@@ -1,23 +1,69 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import ProductDisplay from '@/components/ProductDisplay.vue'
+import ProductoLayout from '../views/ProductoLayout.vue'
+import ProductoInfo from '../views/ProductoInfo.vue'
+import ProductoResenas from '../views/ProductoResenas.vue'
+import NotFound from '../views/NotFound.vue'
+import NetworkError from '../views/NetworkError.vue'
+import { createRouter,createWebHistory } from 'vue-router'
+import HomeView from '../views/HomeView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/',
-      name: 'home',
-      component: ProductDisplay,
+      path:'/',
+      name:'Inicio',
+      component:HomeView
     },
     {
-      path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import('../views/AboutView.vue'),
+      path: '/item/:id',
+      redirect: to =>{
+        return{
+          path:`/producto/${to.params.id}`
+        }
+      }
+      },
+      {
+      path: '/producto/:id',
+      name: 'ProductoLayout',
+      component: ProductoLayout,
+      props: true, // Permite recibir el :id como prop
+      //Ponemos a los hijos
+      children: [
+        {
+          //Al tener el path vacio eso significa qyue nos lleva al path de arriba del :id
+          path: '',
+          name: 'ProductoInfo',
+          component: ProductoInfo
+        },
+        {
+          path: 'resenas', // Ruta de reseñas (/producto/1/resenas)
+          name: 'ProductoResenas',
+          component: ProductoResenas
+        }
+      ]
     },
-  ],
+    {
+      //Te lleva a una ruta de error 404 y da igual si es evento erroneo pagina o etc
+      path:'/404/:resource',
+      name:'404Resource',
+      component: NotFound,
+      props:true
+    },
+    {
+      path:'/network-error',
+      name:'NetworkError',
+      component: NetworkError
+    },
+    {
+      //path para mirar todas las rutas que se juntan y no existen
+      path:'/:catchAll(.*)',
+      name:'NotFoundGeneral',
+      component:NotFound,
+      props:{
+        resource:'pagina'
+      }
+    }
+  ]
 })
 
 export default router

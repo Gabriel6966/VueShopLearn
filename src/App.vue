@@ -1,14 +1,14 @@
 <script setup>
 
 import {ref} from 'vue'
-import ProductDisplay from '@/components/ProductDisplay.vue';
+import ProductoLayout from './views/ProductoLayout.vue'
 
 const cart = ref([])
 const premium = ref(true)
 const url = ref('https://vuejs.org/guide/quick-start.html')
 const isAnimating = ref(false)
 
-
+//Metodos carro
 const actualizarCarrito = (id) => {
   cart.value.push(id)
   isAnimating.value = true
@@ -31,8 +31,8 @@ const eliminarCarrito = (id) =>{
 <template>
   <div class="nav-bar">
         <div class="nav-links">
-          <a href="#" class="nav-link"><i class="fas fa-home"></i>Inicio</a>
-          <a href="#" class="nav-link"><i class="fas fa-store"></i>Tienda</a>
+          <router-link to="/" class="nav-link"><i class="fas fa-home"></i>Inicio</router-link>
+          <router-link :to="{name:'ProductoLayout', params:{id:'1'}}" class="nav-link"><i class="fas fa-store"></i>Tienda</router-link>
           <a :href="url" class="nav-link"><i class="fas fa-book"></i>Guia de Vue</a>
         </div>
       
@@ -40,13 +40,13 @@ const eliminarCarrito = (id) =>{
         <i class="fas fa-shopping-cart"></i> Cart({{cart.length}})
         </div>
       </div>
-      <ProductDisplay
+      <router-view
       :premium="premium"
       @add-to-cart="actualizarCarrito"
       @delete-element="eliminarCarrito"
       />
 
-  <RouterView />
+  <router-view/>
 </template>
 
 <style scoped>
