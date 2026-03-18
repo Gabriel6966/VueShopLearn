@@ -8,7 +8,8 @@
       "descripcion": "Calecetinos comodos para entrenar",
       "detalles": ["50% cotton", "30% wool", "20% polyester"],
       "variantes": [
-        { "id": 2234, "color": "green", "image": "./src/assets/images/socks_green.jpg", "cantidad": 50, "enRebajas": true },
+        { 
+          "id": 2234, "color": "green", "image": "./src/assets/images/socks_green.jpg", "cantidad": 50, "enRebajas": true },
         { "id": 2235, "color": "blue", "image": "./src/assets/images/socks_blue.jpg", "cantidad": 0, "enRebajas": false }
       ],
       "tamaños": [
