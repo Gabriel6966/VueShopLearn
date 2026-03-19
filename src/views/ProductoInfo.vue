@@ -1,127 +1,134 @@
 <script setup>
-import {ref , computed} from 'vue'
-import { notificatioModel} from '../stores/NotificationStore'
+import { ref, computed } from 'vue'
+import { NotificacionStore } from '../stores/NotificationStore'
 
+const notificacionStore = NotificacionStore()
 const props = defineProps(['calcetin'])
 //Eventos que vamos a enviar
 const emit = defineEmits(['add-to-cart', 'delete-element'])
 
 const selectedVariant = ref(0)
-const selectedTalla=ref('')
+const selectedTalla = ref('')
 //Propiedades
-const title = computed(()=> props.calcetin.brand+ '' +props.calcetin.product)
-const psale = computed(()=> title.value + 'esta en venta')
-const image = computed (()=> props.calcetin.variantes[selectedVariant.value].image)
-const inStock = computed(()=> props.calcetin.variantes[selectedVariant.value].cantidad)
-const onSale = computed(()=> props.calcetin.variantes[selectedVariant.value].enRebajas)
+const title = computed(() => props.calcetin.brand + ' ' + props.calcetin.product)
+const psale = computed(() => title.value + 'esta en venta')
+const image = computed(() => props.calcetin.variantes[selectedVariant.value].image)
+const inStock = computed(() => props.calcetin.variantes[selectedVariant.value].cantidad)
+const onSale = computed(() => props.calcetin.variantes[selectedVariant.value].enRebajas)
 
 //Metodos
 
 //Validar que selecione una talla y que haya stock
-const tallasDispo = computed(()=>{
-    //Funcion para que en cuanto slecione un color encuentre con el metodo find el color usando un if en donde si encuentra devuelve las tallas de ese color,si no nos da una array vacio
+const tallasDispo = computed(() => {
+  //Funcion para que en cuanto slecione un color encuentre con el metodo find el color usando un if en donde si encuentra devuelve las tallas de ese color,si no nos da una array vacio
   const colorActual = props.calcetin.variantes[selectedVariant.value].color
-  const tamanoEncontrado = props.calcetin.tamaños.find(t =>
-  t.color === colorActual)
+  const tamanoEncontrado = props.calcetin.tamaños.find((t) => t.color === colorActual)
 
-  if(tamanoEncontrado){
+  if (tamanoEncontrado) {
     return tamanoEncontrado.tallas
-  }else{
+  } else {
     return []
   }
 })
 
 const actualizarVariante = (index) => {
-    selectedVariant.value = index
-    selectedTalla.value=''
+  selectedVariant.value = index
+  selectedTalla.value = ''
 }
 
-const anadirAlCarrit = () =>{
-emit('add-to-cart'), props.calcetin.variantes[selectedVariant.value].id
-notificatioModel.mostrar('Añadido correctamente al carrito')
+const anadirAlCarrit = () => {
+  emit('add-to-cart', props.calcetin.variantes[selectedVariant.value].id)
+  notificacionStore.mostrar('Añadido correctamente al carrito')
 }
 
-const eliminarElemento = () =>{
-    emit('delete-element'), props.calcetin.variantes[selectedVariant.value].id
-    notificatioModel.mostrar('Eliminado correctamente')
+const eliminarElemento = () => {
+  emit('delete-element', props.calcetin.variantes[selectedVariant.value].id)
+  notificacionStore.mostrar('Eliminado correctamente')
 }
 </script>
 
 <template>
-    <div class="product-container">
-        <div class="product-image">
-            <img :src="image" :class="{'out-of-stock-img': inStock===0}">
-        </div>
-    
-    
-    <div class="product-info">
-        <h1>{{ title }}</h1>
-        <p v-if="inStock>10">En stock</p>
-        <p v-else-if="inStock<=10 && inStock >0">Apunto de terminarse!!</p>
-        <p v-else>Fuera de stock</p>
-        <p v-if="onSale">{{psale}}</p>
+  <div class="product-container">
+    <div class="product-image">
+      <img :src="image" :class="{ 'out-of-stock-img': inStock === 0 }" />
+    </div>
 
-        <ul>
-            <li v-for="detalle in calcetin.detalles" :key="detalle">{{ detalle}}</li>
-        </ul>
-        
-        <div class="selection-row">
-            <div class="color-circles">
-                <div
-                v-for="(variante,index) in calcetin.variantes"
-                :key="variante.id"
-                @mouseover="actualizarVariante(index)"
-                class="color-circle"
-                :style="{backgroundColor: variante.color}">
-            </div>
+    <div class="product-info">
+      <h1>{{ title }}</h1>
+      <p v-if="inStock > 10">En stock</p>
+      <p v-else-if="inStock <= 10 && inStock > 0">Apunto de terminarse!!</p>
+      <p v-else>Fuera de stock</p>
+      <p v-if="onSale">{{ psale }}</p>
+
+      <ul>
+        <li v-for="detalle in calcetin.detalles" :key="detalle">{{ detalle }}</li>
+      </ul>
+
+      <div class="selection-row">
+        <div class="color-circles">
+          <div
+            v-for="(variante, index) in calcetin.variantes"
+            :key="variante.id"
+            @mouseover="actualizarVariante(index)"
+            class="color-circle"
+            :style="{ backgroundColor: variante.color }"
+          ></div>
         </div>
         <div class="price-desc">
-            <h2>{{calcetin.price}} €</h2>
-            <p>{{calcetin.descripcion}}</p>
+          <h2>{{ calcetin.price }} €</h2>
+          <p>{{ calcetin.descripcion }}</p>
         </div>
-    </div>
+      </div>
 
-    <div class="button-group">
-        <button class="button" :class="{disabledButton: inStock===0}" :disabled="inStock===0" @click="anadirAlCarrit">
-            Añadir al carrito
+      <div class="button-group">
+        <button
+          class="button"
+          :class="{ disabledButton: inStock === 0 }"
+          :disabled="inStock === 0"
+          @click="anadirAlCarrit"
+        >
+          Añadir al carrito
         </button>
-        <button class="button" :class="{disabledButton: inStock===0}" :disabled="inStock===0" @click="eliminarElemento">
-            Eliminar del carrito
+        <button
+          class="button"
+          :class="{ disabledButton: inStock === 0 }"
+          :disabled="inStock === 0"
+          @click="eliminarElemento"
+        >
+          Eliminar del carrito
         </button>
-        </div>
+      </div>
     </div>
-    </div>
-    
+  </div>
 </template>
 
 <style scoped>
-.tallas-container{
-    margin-bottom: 20px;
+.tallas-container {
+  margin-bottom: 20px;
 }
 
-.tallas-flex{
-    display:flex;
-    gap:10px;
-    margin-top:10px;
+.tallas-flex {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
 }
-.talla-box{
-    border: 2px solid #d8d8d8;
-    paddin:8px 15px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: bold;
-    color:#39495c;
-    transition: all 0.2;
-}
-
-.talla-box:hover{
-    border-color: #16c0b0;
+.talla-box {
+  border: 2px solid #d8d8d8;
+  paddin: 8px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  color: #39495c;
+  transition: all 0.2;
 }
 
-.talla-activa{
-    background-color: #16c0b0;
-    color: white;
-    border-color: #16c0b0;
+.talla-box:hover {
+  border-color: #16c0b0;
 }
 
+.talla-activa {
+  background-color: #16c0b0;
+  color: white;
+  border-color: #16c0b0;
+}
 </style>

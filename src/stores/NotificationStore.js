@@ -1,13 +1,14 @@
-import { reactive } from "vue";
+import { ref } from 'vue'
+import { defineStore } from 'pinia'
 
-export const notificatioModel = reactive({
-    mensaje:'',
+export const NotificacionStore = defineStore('notification', () => {
+  const mensaje = ref('')
 
-    mostrar(texto){
-        this.mensaje=texto
-        setTimeout(()=>{
-            this.mensaje=''
-        },3000)
-    }
-
+  function mostrar(texto) {
+    mensaje.value = texto
+    setTimeout(() => {
+      mensaje.value = ''
+    }, 3000)
+  }
+  return { mensaje, mostrar }
 })

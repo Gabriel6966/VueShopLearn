@@ -1,44 +1,36 @@
 <script setup>
-import {ref,onMounted} from 'vue'
-import TiendaService  from '../services/TiendaService'
-import ProductoInfo from './ProductoInfo.vue';
+import { ref, onMounted } from 'vue'
+import TiendaService from '../services/TiendaService'
+import ProductoInfo from './ProductoInfo.vue'
 
-
-const productos =ref([])
+const productos = ref([])
 //Funciones que pasaran por del producoinfo al app
-const emit =defineEmits(['add-to-cart', 'delete-element'])
+const emit = defineEmits(['add-to-cart', 'delete-element'])
 
-onMounted(()=>{
-    TiendaService.getCalcetines()
-    .then((response)=>{
-        productos.value=response.data
-    
+onMounted(() => {
+  TiendaService.getCalcetines()
+    .then((response) => {
+      productos.value = response.data
     })
-    .catch((error)=>{
-        console.log(error)
+    .catch((error) => {
+      console.log(error)
     })
 })
-
 </script>
 
 <template>
-    <div class="tienda-grande">
-        <h1 class="titulo-catalogo">
-            Productos Actualmente
-        </h1>
-        <div v-if="productos.length>0">
-            <div v-for="producto in productos" :key="producto.id" class="producto-fila">
-                <ProductoInfo
-                :calcetin="producto"
-                @add-to-cart="$emit('add-to-cart', $event)"
-                @delete-element="$emit('delete-element', $event)"
-            />
-        </div>
+  <div class="tienda-gigante">
+    <h1 class="titulo-catalogo">Productos Actualmente</h1>
+    <div v-if="productos.length > 0">
+      <div v-for="producto in productos" :key="producto.id" class="producto-fila">
+        <ProductoInfo
+          :calcetin="producto"
+          @add-to-cart="$emit('add-to-cart', $event)"
+          @delete-element="$emit('delete-element', $event)"
+        />
+      </div>
     </div>
-    </div>
-
-
-
+  </div>
 </template>
 
 <style scoped>
