@@ -5,14 +5,20 @@ import NotFound from '../views/NotFound.vue'
 import NetworkError from '../views/NetworkError.vue'
 import { createRouter,createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
+import TiendaService from '@/services/TiendaService'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path:'/',
-      name:'Inicio',
+      name:'Home',
       component:HomeView
+    },
+    {
+      path:'/tienda',
+      name: 'TiendaCompleta',
+      component:TiendaService
     },
     {
       path: '/item/:id',

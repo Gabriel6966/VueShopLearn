@@ -5,18 +5,59 @@
       "product": "Socks",
       "brand": "Vue Mastery",
       "price": 6.75,
-      "descripcion": "Calecetinos comodos para entrenar",
-      "detalles": ["50% cotton", "30% wool", "20% polyester"],
+      "descripcion": "Calecetines comodos para entrenar",
+      "detalles": ["50% algodon", "30% lana", "20% poliester"],
       "variantes": [
         { 
-          "id": 2234, "color": "green", "image": "./src/assets/images/socks_green.jpg", "cantidad": 50, "enRebajas": true },
-        { "id": 2235, "color": "blue", "image": "./src/assets/images/socks_blue.jpg", "cantidad": 0, "enRebajas": false }
+          "id": 2234, "color": "green", "image": "/images/socks_green.jpg", "cantidad": 50, "enRebajas": true },
+        { "id": 2235, "color": "blue", "image": "/images/socks_blue.jpg", "cantidad": 0, "enRebajas": false }
       ],
       "tamaños": [
         { "id":1, "color":"green", "tallas":["S", "M", "L"]},
         { "id":2, "color":"blue", "tallas":["XL", "XXL", "XXXL"]}
       ],
       "reviews": []
+    },
+
+    {
+      "id": "2",
+      "product": "GabiTech",
+      "brand": "Camiseta",
+      "price": 15.50,
+      "descripcion": "Camiseta para uso deportivo",
+      "detalles": ["100% algodon", "Slim-fit", "Tela fina"],
+      "variantes": [
+        { 
+          "id": 3001, "color": "black", "image": "/images/shirt_black.jpg", "cantidad": 20, "enRebajas": false },
+        { "id": 3002, "color": "white", "image": "/images/shirt_white.jpg", "cantidad": 10, "enRebajas": true }
+      ],
+      "tamaños": [
+        { "id":1, "color":"black", "tallas":["S", "M", "L"]},
+        { "id":2, "color":"white", "tallas":["M", "L", "XL"]}
+      ],
+      "reviews": []
+      
+    },
+
+    {
+      "id": "3",
+      "product": "Sudadera",
+      "brand": "VueShop",
+      "price": 29.99,
+      "descripcion": "Sudadera con capucha para el entreno",
+      "detalles": ["Capucha", "Bolsillo Unido", "Tela suave"],
+      "variantes": [
+        { 
+          "id": 4001, "color": "gray", "image": "/images/hoodie_gray.jpg", "cantidad": 10, "enRebajas": false },
+        { "id": 4002, "color": "navy", "image": "/images/hoodie_navy.jpg", "cantidad": 5, "enRebajas": true }
+      ],
+      "tamaños": [
+        { "id":1, "color":"gray", "tallas":["M", "L", "XXL"]},
+        { "id":2, "color":"navy", "tallas":["S", "M", "L"]}
+      ],
+      "reviews": []
+      
     }
+
   ]
 }

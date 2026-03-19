@@ -1,12 +1,13 @@
 <script setup>
 import {ref , computed} from 'vue'
-
+import { notificatioModel} from '../stores/NotificationStore'
 
 const props = defineProps(['calcetin'])
 //Eventos que vamos a enviar
 const emit = defineEmits(['add-to-cart', 'delete-element'])
 
 const selectedVariant = ref(0)
+const selectedTalla=ref('')
 //Propiedades
 const title = computed(()=> props.calcetin.brand+ '' +props.calcetin.product)
 const psale = computed(()=> title.value + 'esta en venta')
@@ -16,16 +17,33 @@ const onSale = computed(()=> props.calcetin.variantes[selectedVariant.value].enR
 
 //Metodos
 
+//Validar que selecione una talla y que haya stock
+const tallasDispo = computed(()=>{
+    //Funcion para que en cuanto slecione un color encuentre con el metodo find el color usando un if en donde si encuentra devuelve las tallas de ese color,si no nos da una array vacio
+  const colorActual = props.calcetin.variantes[selectedVariant.value].color
+  const tamanoEncontrado = props.calcetin.tamaños.find(t =>
+  t.color === colorActual)
+
+  if(tamanoEncontrado){
+    return tamanoEncontrado.tallas
+  }else{
+    return []
+  }
+})
+
 const actualizarVariante = (index) => {
     selectedVariant.value = index
+    selectedTalla.value=''
 }
 
 const anadirAlCarrit = () =>{
-emit('add-to-cart'), props.calcetin.variantes[selectedVariant].id
+emit('add-to-cart'), props.calcetin.variantes[selectedVariant.value].id
+notificatioModel.mostrar('Añadido correctamente al carrito')
 }
 
 const eliminarElemento = () =>{
     emit('delete-element'), props.calcetin.variantes[selectedVariant.value].id
+    notificatioModel.mostrar('Eliminado correctamente')
 }
 </script>
 
@@ -75,3 +93,35 @@ const eliminarElemento = () =>{
     </div>
     
 </template>
+
+<style scoped>
+.tallas-container{
+    margin-bottom: 20px;
+}
+
+.tallas-flex{
+    display:flex;
+    gap:10px;
+    margin-top:10px;
+}
+.talla-box{
+    border: 2px solid #d8d8d8;
+    paddin:8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    color:#39495c;
+    transition: all 0.2;
+}
+
+.talla-box:hover{
+    border-color: #16c0b0;
+}
+
+.talla-activa{
+    background-color: #16c0b0;
+    color: white;
+    border-color: #16c0b0;
+}
+
+</style>
