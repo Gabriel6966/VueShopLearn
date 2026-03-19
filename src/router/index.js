@@ -5,10 +5,26 @@ import NotFound from '../views/NotFound.vue'
 import NetworkError from '../views/NetworkError.vue'
 import { createRouter,createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
-import TiendaService from '@/services/TiendaService'
+import TiendaView from '../views/TiendaView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
+  scrollBehavior(to,from,savedPostiton){
+    if(savedPostiton){
+      return new Promise((resolve)=>{
+        setTimeout(()=>{
+          //Acortamiento con los '...' lo mismo: {left:savedPosition.left,top: savedPosition.top}
+          resolve({...savedPostiton,behavior:'smooth'})
+        },300)
+      })
+    }else{
+      return{
+          top:0,
+          behavior: 'smooth'
+        }
+
+      }
+    },
   routes: [
     {
       path:'/',
@@ -18,7 +34,7 @@ const router = createRouter({
     {
       path:'/tienda',
       name: 'TiendaCompleta',
-      component:TiendaService
+      component:TiendaView
     },
     {
       path: '/item/:id',
