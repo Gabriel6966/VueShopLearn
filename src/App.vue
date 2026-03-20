@@ -26,9 +26,13 @@ const eliminarCarrito = (id) => {
       <a :href="url" class="nav-link">Guia de Vue</a>
     </div>
 
-    <div class="cart" :class="{ 'cart-animation': carrito.isAnimating }">
+    <router-link
+      :to="{ name: 'Carrito' }"
+      class="cart"
+      :class="{ 'cart-animation': carrito.isAnimating }"
+    >
       Cart({{ carrito.total }})
-    </div>
+    </router-link>
   </div>
   <div v-if="notificacionStore.mensaje" class="flash-message">
     {{ notificacionStore.mensaje }}

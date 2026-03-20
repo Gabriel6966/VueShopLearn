@@ -10,7 +10,7 @@ const rating = ref(null)
 const recommended = ref(null)
 
 const onSubmit = () => {
-  if (!name.vale || !review.value || !rating.value || recommended.value === null) {
+  if (!name.value || !review.value || !rating.value || recommended.value === null) {
     alert('Completa el fromulario entero antes de entergar')
     return
   }
@@ -24,44 +24,6 @@ const onSubmit = () => {
   name.value = review.value = ''
   rating.value = recommended.value = null
 }
-</script>
-
-<script>
-//export default{
-//    data(){
-//        return{
-//                name:'',
-//                review:'',
-//                rating: null,
-//                recommended:null,
-//        }
-//    },
-//    methods:{
-//        onSubmit(){
-//            //Validaciones basicas
-//            if(this.name === '' || this.review === '' || this.rating === null || this.recommended===null){
-//                alert('Complete the full form please before submitting')
-//                return
-//            }
-//            //Cogemos con la variable let productoOpinion el nombre review rating y recommended
-//            let productoOpinion={
-//                name:this.name,
-//                review:this.review,
-//                rating:this.rating,
-//                recommended:this.recommended,
-//            }
-//            //Emitimos el evento que hacemos mediante el review que nos han dado y se lo mandamos al padre
-//            this.$emit('review-submitted', productoOpinion)
-//
-//            this.name='',
-//            this.review='',
-//            this.rating=null,
-//            this.recommended=null
-//        }
-//    }
-//
-//}
-//
 </script>
 
 <template>

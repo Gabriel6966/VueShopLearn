@@ -8,9 +8,12 @@ export const CarritoTienda = defineStore('cart', () => {
   //Getters
   //Computed para pinia son getters
   const total = computed(() => items.value.length)
+  const precioTotal = computed(() =>
+    items.value.reduce((acc, item) => acc + parseFloat(item.price), 0).toFixed(2),
+  )
 
-  function add(id) {
-    items.value.push(id)
+  function add(producto) {
+    items.value.push(producto)
     isAnimating.value = true
     setTimeout(() => {
       isAnimating.value = false
@@ -18,15 +21,13 @@ export const CarritoTienda = defineStore('cart', () => {
   }
 
   function eliminar(id) {
-    const index = items.value.indexOf(id)
-    if (index !== -1) {
-      items.value.splice(index, 1)
-    }
+    const index = items.value.findIndex((item) => item.id === id)
+    if (index !== -1) items.value.splice(index, 1)
   }
 
   function vacio() {
     items.value = []
   }
 
-  return { items, total, isAnimating, add, eliminar, vacio }
+  return { items, total, precioTotal, isAnimating, add, eliminar, vacio }
 })

@@ -1,19 +1,18 @@
 <script setup>
-import { ref,onMounted } from 'vue';
-import TiendaService from '../services/TiendaService';
+import { ref, onMounted } from 'vue'
+import TiendaService from '../services/TiendaService'
 
-const productos =ref(null)
+const productos = ref(null)
 
-onMounted(()=>{
+onMounted(() => {
   TiendaService.getCalcetines()
-  .then((response)=>{
-    productos.value=response.data
-  })
-  .catch((error)=>{
-    console.log(error)
-  })
+    .then((response) => {
+      productos.value = response.data
+    })
+    .catch((error) => {
+      console.log(error)
+    })
 })
-
 </script>
 
 <template>
@@ -22,12 +21,16 @@ onMounted(()=>{
     <p>Una de las mejores tiendas que se ha creado con Vue</p>
     <div class="productos-grid" v-if="productos">
       <div v-for="producto in productos" :key="producto.id" class="producto-card">
-        <img :src="producto.variantes[0].image" :alt="producto.product" class="card-image">
+        <img :src="producto.variantes[0].image" :alt="producto.product" class="card-image" />
         <h2>{{ producto.brand }} {{ producto.product }}</h2>
-        <p class="price">{{producto.price}}€</p>
-   
-        <router-link :to="{ name:'ProductoLayout', params:{id:producto.id}}" class="button-start">
-      Ver mas detalles
+        <p class="price">{{ producto.price }}€</p>
+
+        <router-link
+          v-if="producto.id"
+          :to="{ name: 'ProductoLayout', params: { id: producto.id } }"
+          class="button-start"
+        >
+          Ver mas detalles
         </router-link>
       </div>
     </div>
@@ -105,7 +108,7 @@ p {
 .button-start {
   background-color: #16c0b0;
   color: white;
-  padding: 12px 0; 
+  padding: 12px 0;
   text-decoration: none;
   font-size: 16px;
   border-radius: 8px;

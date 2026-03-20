@@ -35,7 +35,13 @@ const actualizarVariante = (index) => {
 }
 
 const anadirAlCarrit = () => {
-  carritoStore.add(props.calcetin.variantes[selectedVariant.value].id)
+  carritoStore.add({
+    id: props.calcetin.variantes[selectedVariant.value].id,
+    nombre: `${props.calcetin.brand} ${props.calcetin.product}`,
+    color: props.calcetin.variantes[selectedVariant.value].color,
+    image: props.calcetin.variantes[selectedVariant.value].image,
+    price: props.calcetin.price,
+  })
   notificacionStore.mostrar('Añadido correctamente al carrito')
 }
 
@@ -75,6 +81,13 @@ const eliminarElemento = () => {
         <div class="price-desc">
           <h2>{{ calcetin.price }} €</h2>
           <p>{{ calcetin.descripcion }}</p>
+        </div>
+      </div>
+
+      <div class="tallas-container">
+        <p><strong>Talla disponibles:</strong></p>
+        <div class="tallas-flex">
+          <span v-for="talla in tallasDispo" :key="talla" class="talla-box">{{ talla }} </span>
         </div>
       </div>
 
