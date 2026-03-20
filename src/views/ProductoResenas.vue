@@ -17,7 +17,7 @@ const anadirReview = (productoOpinion) => {
 <template>
   <div class="review-wrapper">
     <ReviewList
-      v-if="calcetin - reviews && calcetin.reviews.length > 0"
+      v-if="calcetin.reviews && calcetin.reviews.length > 0"
       :reviews="calcetin.reviews"
     />
     <ReviewForm @review-submitted="anadirReview" />

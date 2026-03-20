@@ -1,14 +1,13 @@
 <script setup>
 import { ref, computed } from 'vue'
 import { NotificacionStore } from '../stores/NotificationStore'
+import { CarritoTienda } from '../stores/CartStore'
 
 const notificacionStore = NotificacionStore()
+const carritoStore = CarritoTienda()
 const props = defineProps(['calcetin'])
-//Eventos que vamos a enviar
-const emit = defineEmits(['add-to-cart', 'delete-element'])
-
 const selectedVariant = ref(0)
-const selectedTalla = ref('')
+
 //Propiedades
 const title = computed(() => props.calcetin.brand + ' ' + props.calcetin.product)
 const psale = computed(() => title.value + 'esta en venta')
@@ -33,16 +32,15 @@ const tallasDispo = computed(() => {
 
 const actualizarVariante = (index) => {
   selectedVariant.value = index
-  selectedTalla.value = ''
 }
 
 const anadirAlCarrit = () => {
-  emit('add-to-cart', props.calcetin.variantes[selectedVariant.value].id)
+  carritoStore.add(props.calcetin.variantes[selectedVariant.value].id)
   notificacionStore.mostrar('Añadido correctamente al carrito')
 }
 
 const eliminarElemento = () => {
-  emit('delete-element', props.calcetin.variantes[selectedVariant.value].id)
+  carritoStore.eliminar(props.calcetin.variantes[selectedVariant.value].id)
   notificacionStore.mostrar('Eliminado correctamente')
 }
 </script>

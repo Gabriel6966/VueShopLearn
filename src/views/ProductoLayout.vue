@@ -6,12 +6,9 @@ import { useRouter } from 'vue-router'
 //Cogemos el id del url mediante al router
 const props = defineProps({
   id: {
-    required: true
-  }
+    required: true,
+  },
 })
-
-// Declaramos los elementos que iran al padre de todos a App.vue
-const emit = defineEmits(['add-to-cart', 'delete-element'])
 
 const calcetin = ref(null)
 const router = useRouter()
@@ -20,13 +17,12 @@ const router = useRouter()
 onMounted(() => {
   TiendaService.getCalcetines(props.id)
     .then((response) => {
-
       //Manejamos mediante un array u objeto ya que json puedes devolver esos tipos de datos usando un operador ternario
       calcetin.value = Array.isArray(response.data) ? response.data[0] : response.data
 
       //En caso de que no hay id ponemos el error
-      if(!calcetin.value) {
-          router.push({ name: '404Resource', params: { resource: 'calcetín' } })
+      if (!calcetin.value) {
+        router.push({ name: '404Resource', params: { resource: 'calcetín' } })
       }
     })
     .catch((error) => {
@@ -46,18 +42,12 @@ onMounted(() => {
       <router-link :to="{ name: 'ProductoInfo' }">Detalles del Producto</router-link>
       <router-link :to="{ name: 'ProductoResenas' }">Opiniones</router-link>
     </div>
-
-    <router-view 
-      :calcetin="calcetin" 
-      @add-to-cart="$emit('add-to-cart', $event)" 
-      @delete-element="$emit('delete-element', $event)" 
-    />
-    
+    <!--Ahora ya no hace falta pasarle los @add-to-cart ya que pinia gestionara los movimientos-->
+    <router-view :calcetin="calcetin" />
   </div>
 </template>
 
 <style scoped>
-
 .layout-container {
   max-width: 1000px;
   margin: 0 auto;

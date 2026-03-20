@@ -4,9 +4,6 @@ import TiendaService from '../services/TiendaService'
 import ProductoInfo from './ProductoInfo.vue'
 
 const productos = ref([])
-//Funciones que pasaran por del producoinfo al app
-const emit = defineEmits(['add-to-cart', 'delete-element'])
-
 onMounted(() => {
   TiendaService.getCalcetines()
     .then((response) => {
@@ -23,11 +20,7 @@ onMounted(() => {
     <h1 class="titulo-catalogo">Productos Actualmente</h1>
     <div v-if="productos.length > 0">
       <div v-for="producto in productos" :key="producto.id" class="producto-fila">
-        <ProductoInfo
-          :calcetin="producto"
-          @add-to-cart="$emit('add-to-cart', $event)"
-          @delete-element="$emit('delete-element', $event)"
-        />
+        <ProductoInfo :calcetin="producto" />
       </div>
     </div>
   </div>
