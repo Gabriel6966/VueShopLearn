@@ -13,9 +13,18 @@ const apiClient = axios.create({
 
 export default {
   getCalcetines(id) {
-    if (id) {
-      return apiClient.get('calcetines/' + id)
-    }
-    return apiClient.get('/calcetines')
+    return apiClient.get(id ? `/calcetines/${id}` : '/calcetines')
+  },
+
+  async opiniones(productoId, opinion) {
+    const respuesta = await apiClient.get(`/calcetines/${productoId}`)
+    const opiactuales = respuesta.data.reviews || []
+    return apiClient.patch(`/calcetines/${productoId}`, {
+      reviews: [...opiactuales, opinion],
+    })
+  },
+
+  recogeropiniones(productoId) {
+    return apiClient.get(`/calcetines/${productoId}`)
   },
 }

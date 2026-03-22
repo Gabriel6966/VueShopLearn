@@ -2,15 +2,18 @@
 import ReviewList from '@/components/ReviewList.vue'
 import ReviewForm from '@/components/ReviewForm.vue'
 import { useReviewStore } from '@/stores/ReviewStore'
-import { computed } from 'vue'
+import { computed, onMounted } from 'vue'
 
 const props = defineProps(['calcetin'])
 const reviewStore = useReviewStore()
-const reviews = computed(() => reviewStore.verResenas(props.calcetin.id))
+const reviews = computed(() => reviewStore.resenas(props.calcetin.id))
 
+onMounted(() => {
+  reviewStore.cargarreviews(props.calcetin.id)
+})
 const anadirReview = (productoOpinion) => {
   //Verificacion de que calce tenga un array de review creado
-  reviewStore.add(props.calcetin.id, productoOpinion)
+  reviewStore.anadir(props.calcetin.id, productoOpinion)
 
   //Añadir opinion a la interfaz
 }
