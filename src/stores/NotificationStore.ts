@@ -4,7 +4,7 @@ import { defineStore } from 'pinia'
 export const NotificacionStore = defineStore('notification', () => {
   const mensaje = ref('')
 
-  function mostrar(texto) {
+  function mostrar(texto: string) {
     mensaje.value = texto
     setTimeout(() => {
       mensaje.value = ''

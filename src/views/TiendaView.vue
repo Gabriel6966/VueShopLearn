@@ -1,14 +1,15 @@
-<script setup>
+<script setup lang="ts">
 import { ref, onMounted, computed } from 'vue'
 import TiendaService from '../services/TiendaService'
 import ProductoInfo from './ProductoInfo.vue'
+import type { Producto } from '../types/index'
 
 //Filtros
-const Color = ref('')
-const Rebajas = ref(false)
-const Stock = ref(false)
-const Orden = ref('')
-const productos = ref([])
+const Color = ref<string>('')
+const Rebajas = ref<boolean>(false)
+const Stock = ref<boolean>(false)
+const Orden = ref<string>('')
+const productos = ref<Producto[]>([])
 
 //Montamos los productos de la API
 onMounted(() => {
@@ -22,8 +23,8 @@ onMounted(() => {
 })
 
 //Bucle para que saque los colores sin repetir
-const colordispo = computed(() => {
-  const colores = []
+const colordispo = computed<string[]>(() => {
+  const colores: string[] = []
   for (const producto of productos.value) {
     for (const variante of producto.variantes) {
       //En caso de que el color no este en el array lo metemos con el .includes
@@ -36,7 +37,7 @@ const colordispo = computed(() => {
 })
 
 //Ordenamos mediante metodo quicksrot
-function quickSort(array, orden) {
+function quickSort(array: Producto[], orden: string): Producto[] {
   //Excepciones
   if (array.length <= 1) return array
 
@@ -66,8 +67,8 @@ function quickSort(array, orden) {
 }
 
 //Calculamos los filtros una vez hechos arriba
-const filtrados = computed(() => {
-  let resultado = []
+const filtrados = computed<Producto[]>(() => {
+  let resultado: Producto[] = []
 
   //Recorrer productos
   for (const producto of productos.value) {
@@ -93,7 +94,7 @@ const filtrados = computed(() => {
   }
   return resultado
 })
-const reiniciar = () => {
+const reiniciar = (): void => {
   Color.value = ''
   Rebajas.value = false
   Stock.value = false
@@ -126,10 +127,8 @@ const reiniciar = () => {
       </div>
 
       <div class="filtro-grupo">
-        <label>
-          <input type="checkbox" v-model="Rebajas" />
-          Solo rebajas
-        </label>
+        <label for="check-rebajas">Solo Rebajas</label>
+        <input id="check-rebajas " type="checkbox" v-model="Rebajas" />
       </div>
 
       <div class="filtro-grupo">

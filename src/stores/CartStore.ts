@@ -1,18 +1,19 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
+import type { ItemCarrito } from '../types/index'
 
 export const CarritoTienda = defineStore('cart', () => {
-  const items = ref([])
+  const items = ref<ItemCarrito[]>([])
   const isAnimating = ref(false)
 
   //Getters
   //Computed para pinia son getters
   const total = computed(() => items.value.length)
   const precioTotal = computed(() =>
-    items.value.reduce((acc, item) => acc + parseFloat(item.price), 0).toFixed(2),
+    items.value.reduce((acc, item) => acc + item.price, 0).toFixed(2),
   )
 
-  function add(producto) {
+  function add(producto: ItemCarrito) {
     items.value.push(producto)
     isAnimating.value = true
     setTimeout(() => {
@@ -20,7 +21,7 @@ export const CarritoTienda = defineStore('cart', () => {
     }, 300)
   }
 
-  function eliminar(id) {
+  function eliminar(id: number) {
     const index = items.value.findIndex((item) => item.id === id)
     if (index !== -1) items.value.splice(index, 1)
   }

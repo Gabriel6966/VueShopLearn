@@ -1,4 +1,5 @@
 import axios from 'axios'
+import type { Review } from '../types/index'
 
 const apiClient = axios.create({
   //La url que llamamos
@@ -12,11 +13,11 @@ const apiClient = axios.create({
 })
 
 export default {
-  getCalcetines(id) {
+  getCalcetines(id?: string) {
     return apiClient.get(id ? `/calcetines/${id}` : '/calcetines')
   },
 
-  async opiniones(productoId, opinion) {
+  async opiniones(productoId: string, opinion: Review) {
     const respuesta = await apiClient.get(`/calcetines/${productoId}`)
     const opiactuales = respuesta.data.reviews || []
     return apiClient.patch(`/calcetines/${productoId}`, {
@@ -24,7 +25,7 @@ export default {
     })
   },
 
-  recogeropiniones(productoId) {
+  recogeropiniones(productoId: string) {
     return apiClient.get(`/calcetines/${productoId}`)
   },
 }

@@ -1,17 +1,17 @@
 <!--Cambiasmos de la API export default a la 'Composition API' ya que en caso de que querramos usar TS nos sera mejor-->
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue'
 
 const emit = defineEmits(['review-submitted'])
 
 const name = ref('')
 const review = ref('')
-const rating = ref(null)
-const recommended = ref(null)
+const rating = ref<number | null>(null)
+const recommended = ref<number | null>(null)
 
 const onSubmit = () => {
   if (!name.value || !review.value || !rating.value || recommended.value === null) {
-    alert('Completa el fromulario entero antes de entergar')
+    alert('Completa el formulario entero antes de entergar')
     return
   }
   emit('review-submitted', {

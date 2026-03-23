@@ -1,16 +1,16 @@
-<script setup>
+<script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import TiendaService from '../services/TiendaService.js'
 import { useRouter } from 'vue-router'
+import type { Producto } from '../types/index'
 
-//Cogemos el id del url mediante al router
-const props = defineProps({
-  id: {
-    required: true,
-  },
-})
+//Prop tipada
+const props = defineProps<{
+  id: string
+}>()
 
-const calcetin = ref(null)
+//Tipado como producto o null
+const calcetin = ref<Producto | null>(null)
 const router = useRouter()
 
 // Cuando se muestre la pagina lo que hacemos es pedirle los calcetines a la API

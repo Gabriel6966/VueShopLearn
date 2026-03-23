@@ -1,13 +1,17 @@
-<script setup>
+<script setup lang="ts">
 import { ref, computed } from 'vue'
 import { NotificacionStore } from '../stores/NotificationStore'
 import { CarritoTienda } from '../stores/CartStore'
+import type { Producto } from '../types/index'
 
 const notificacionStore = NotificacionStore()
 const carritoStore = CarritoTienda()
-const props = defineProps(['calcetin'])
-const selectedVariant = ref(0)
 
+const props = defineProps<{
+  calcetin: Producto
+}>()
+
+const selectedVariant = ref<number>(0)
 //Como la vairante actual se repite varias veces usaremos una computed
 const actualVariante = computed(() => props.calcetin.variantes[selectedVariant.value])
 
@@ -21,21 +25,15 @@ const onSale = computed(() => actualVariante.value.enRebajas)
 //Validar que selecione una talla y que haya stock
 const tallasDispo = computed(() => {
   //Funcion para que en cuanto slecione un color encuentre con el metodo find el color usando un if en donde si encuentra devuelve las tallas de ese color,si no nos da una array vacio
-  const colorActual = props.calcetin.variantes[selectedVariant.value].color
-  const tamanoEncontrado = props.calcetin.tamaños.find((t) => t.color === colorActual)
-
-  if (tamanoEncontrado) {
-    return tamanoEncontrado.tallas
-  } else {
-    return []
-  }
+  const tamaño = props.calcetin.tamaños.find((t) => t.color === actualVariante.value.color)
+  return tamaño?.talla ?? []
 })
 
-//const actualizarVariante = (index) => {
-//  selectedVariant.value = index
-//}
+const actualizarVariante = (index: number): void => {
+  selectedVariant.value = index
+}
 
-const anadirAlCarrit = () => {
+const anadirAlCarrit = (): void => {
   carritoStore.add({
     id: actualVariante.value.id,
     nombre: title.value,

@@ -1,6 +1,6 @@
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue'
-import { Usuario } from '@/stores/Usuario'
+import { Usuario } from '../stores/Usuario'
 import { useRouter } from 'vue-router'
 
 const usuario = Usuario()

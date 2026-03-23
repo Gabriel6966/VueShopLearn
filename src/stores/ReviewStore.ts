@@ -1,13 +1,15 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import TiendaService from '../services/TiendaService'
+import type { Review } from '../types/index'
 
 export const useReviewStore = defineStore('reviews', () => {
-  const reviews = ref({})
+  type rp = { [key: string]: Review[] }
+  const reviews = ref<rp>({})
   const cargando = ref(false)
 
   //Cargamos los reviews de la API
-  async function cargarreviews(productoId) {
+  async function cargarreviews(productoId: string) {
     if (reviews.value[productoId]) return
     cargando.value = true
 
@@ -21,7 +23,7 @@ export const useReviewStore = defineStore('reviews', () => {
     }
   }
 
-  async function anadir(productoId, opinion) {
+  async function anadir(productoId: string, opinion: Review) {
     try {
       await TiendaService.opiniones(productoId, opinion)
       //Recargamos las reviews del producto
@@ -32,7 +34,7 @@ export const useReviewStore = defineStore('reviews', () => {
     }
   }
 
-  function resenas(productoId) {
+  function resenas(productoId: string): Review[] {
     //Que nos devuelva el producto de las reviws o un array vacio con el operador ternario
     return reviews.value[productoId] ?? []
   }

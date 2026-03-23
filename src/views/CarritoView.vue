@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { CarritoTienda } from '../stores/CartStore'
 
 const carritoStore = CarritoTienda()
