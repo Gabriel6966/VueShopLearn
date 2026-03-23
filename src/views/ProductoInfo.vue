@@ -8,14 +8,15 @@ const carritoStore = CarritoTienda()
 const props = defineProps(['calcetin'])
 const selectedVariant = ref(0)
 
+//Como la vairante actual se repite varias veces usaremos una computed
+const actualVariante = computed(() => props.calcetin.variantes[selectedVariant.value])
+
 //Propiedades
 const title = computed(() => props.calcetin.brand + ' ' + props.calcetin.product)
 const psale = computed(() => title.value + 'esta en venta')
-const image = computed(() => props.calcetin.variantes[selectedVariant.value].image)
-const inStock = computed(() => props.calcetin.variantes[selectedVariant.value].cantidad)
-const onSale = computed(() => props.calcetin.variantes[selectedVariant.value].enRebajas)
-
-//Metodos
+const image = computed(() => actualVariante.value.image)
+const inStock = computed(() => actualVariante.value.cantidad)
+const onSale = computed(() => actualVariante.value.enRebajas)
 
 //Validar que selecione una talla y que haya stock
 const tallasDispo = computed(() => {
@@ -30,16 +31,16 @@ const tallasDispo = computed(() => {
   }
 })
 
-const actualizarVariante = (index) => {
-  selectedVariant.value = index
-}
+//const actualizarVariante = (index) => {
+//  selectedVariant.value = index
+//}
 
 const anadirAlCarrit = () => {
   carritoStore.add({
-    id: props.calcetin.variantes[selectedVariant.value].id,
-    nombre: `${props.calcetin.brand} ${props.calcetin.product}`,
-    color: props.calcetin.variantes[selectedVariant.value].color,
-    image: props.calcetin.variantes[selectedVariant.value].image,
+    id: actualVariante.value.id,
+    nombre: title.value,
+    color: actualVariante.value.color,
+    image: actualVariante.value.image,
     price: props.calcetin.price,
   })
   notificacionStore.mostrar('Añadido correctamente al carrito')
@@ -125,12 +126,12 @@ const eliminarElemento = () => {
 }
 .talla-box {
   border: 2px solid #d8d8d8;
-  paddin: 8px 15px;
+  padding: 8px 15px;
   border-radius: 5px;
   cursor: pointer;
   font-weight: bold;
   color: #39495c;
-  transition: all 0.2;
+  transition: all 0.2s;
 }
 
 .talla-box:hover {

@@ -15,7 +15,7 @@ export const useReviewStore = defineStore('reviews', () => {
       const respuesta = await TiendaService.recogeropiniones(productoId)
       reviews.value[productoId] = respuesta.data.reviews || []
     } catch (error) {
-      console.log(error)
+      console.error(error)
     } finally {
       cargando.value = false
     }

@@ -71,10 +71,10 @@ const url = 'https://vuejs.org/guide/quick-start.html'
   border-radius: 5px;
   cursor: pointer;
   font-size: 14px;
-  transition: background 0.2 ease;
+  transition: background 0.2s ease;
 }
 
 .btn-logout:hover {
-  background: rgba(255 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.4);
 }
 </style>
