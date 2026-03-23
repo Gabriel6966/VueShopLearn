@@ -68,7 +68,16 @@ function quickSort(array: Producto[], orden: string): Producto[] {
 
 //Calculamos los filtros una vez hechos arriba
 const filtrados = computed<Producto[]>(() => {
-  let resultado: Producto[] = []
+  let resultado = productos.value.filter((producto) =>
+    producto.variantes.some(
+      (v) =>
+        //añadimos esta validacion para que el resultado no devuelva con el filter un producto con el some(variable para que encuentre con el filtro que le metemos)
+        //ese mismo color y precio,ya que el producto mezclaba tanto un color con el otro el stock rebajas y colores
+        (Color.value === '' || v.color === Color.value) &&
+        (!Rebajas.value || v.enRebajas) &&
+        (!Stock.value || v.cantidad > 0),
+    ),
+  )
 
   //Recorrer productos
   for (const producto of productos.value) {
@@ -142,8 +151,9 @@ const reiniciar = (): void => {
     </div>
     <p class="resultado-count">
       <!--Contamos los productos y hacemos un operador ternario en caso de que si hay mas de un producto ke añada la s de productos y no salga producto habiendo 4 productos-->
-      {{ filtrados.length }} producto {{ filtrados.length !== 1 ? 's' : '' }} encontrado
-      {{ filtrados.length !== 1 ? 's' : '' }}
+      {{ filtrados.length }} producto{{ filtrados.length !== 1 ? 's' : '' }} encontrado{{
+        filtrados.length !== 1 ? 's' : ''
+      }}
     </p>
 
     <div v-if="filtrados.length > 0">
