@@ -58,7 +58,7 @@ function quickSort(array: Producto[], orden: string): Producto[] {
   }
   //Recursividad
   if (orden === 'asc') {
-    //Y ordenamos de menor a mayor,primero menores luego iguales y luego mayores
+    //Y ordenamos de menor a mayor,primero menores luego iguales y luego mayor
     return [...quickSort(menos, orden), ...igual, ...quickSort(mayor, orden)]
   } else {
     //Lo mismo solo que esta vez cambiamos las ultimas variables del principio  y final para que sea al reves
@@ -78,24 +78,6 @@ const filtrados = computed<Producto[]>(() => {
         (!Stock.value || v.cantidad > 0),
     ),
   )
-
-  //Recorrer productos
-  for (const producto of productos.value) {
-    let comprobar1 = false //variables temporales para comprobar
-    let comprobar2 = false //variables temporales para comprobar
-    let comprobar3 = false //variables temporales para comprobar
-
-    for (const variante of producto.variantes) {
-      //Excepcion en caso de que no tenga pase y si tiene tambien para que no nos de error
-      if (variante.color === Color.value || !Color.value) comprobar1 = true
-      if (variante.enRebajas || !Rebajas.value) comprobar2 = true
-      if (variante.cantidad > 0 || !Stock.value) comprobar3 = true
-    }
-    //Y filtro final si pasan los  tres filtros anteriores
-    if (comprobar1 && comprobar2 && comprobar3) {
-      resultado.push(producto)
-    }
-  }
 
   //Orden en caso de que el usuario seleccione ascendente o descendente
   if (Orden.value === 'asc' || Orden.value === 'desc') {
