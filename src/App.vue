@@ -37,7 +37,11 @@ const url = 'https://vuejs.org/guide/quick-start.html'
   <div v-if="notificacionStore.mensaje" class="flash-message">
     {{ notificacionStore.mensaje }}
   </div>
-  <router-view :premium="usuario.premium" />
+  <router-view v-slot="{ Component }">
+    <Transition name="pagina" mode="out-in">
+      <component :is="Component" :premium="usuario.premium" />
+    </Transition>
+  </router-view>
 </template>
 
 <style scoped>
@@ -76,5 +80,19 @@ const url = 'https://vuejs.org/guide/quick-start.html'
 
 .btn-logout:hover {
   background: rgba(255, 255, 255, 0.4);
+}
+
+.pagina-enter-active,
+.pagina-leave-active {
+  transition: all 0.3s ease;
+}
+
+.pagina-enter-from {
+  opacity: 0;
+  transform: translateX(20px);
+}
+.pagina-leave-to {
+  opacity: 0;
+  transform: translateX(-20px);
 }
 </style>

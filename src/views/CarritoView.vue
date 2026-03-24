@@ -134,7 +134,7 @@ const carritoStore = CarritoTienda()
   font-size: 16px;
   border-radius: 8px;
   font-weight: bold;
-  transition: background-color 0.2 ease;
+  transition: background-color 0.2s ease;
 }
 
 .button-start:hover {

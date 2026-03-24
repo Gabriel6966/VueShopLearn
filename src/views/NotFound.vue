@@ -1,11 +1,12 @@
 <script setup lang="ts">
-defineProps({
-  resource: {
-    type: String,
-    required: true,
-    default: 'pagina',
+withDefaults(
+  defineProps<{
+    resource: string
+  }>(),
+  {
+    resource: 'pagina',
   },
-})
+)
 </script>
 
 <template>

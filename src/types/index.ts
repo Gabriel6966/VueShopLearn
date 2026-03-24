@@ -9,7 +9,7 @@ export interface Variante {
 export interface Tamaño {
   id: number
   color: string
-  talla: string[]
+  tallas: string[]
 }
 
 export interface Review {

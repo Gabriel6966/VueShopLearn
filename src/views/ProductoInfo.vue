@@ -26,7 +26,7 @@ const onSale = computed(() => actualVariante.value.enRebajas)
 const tallasDispo = computed(() => {
   //Funcion para que en cuanto slecione un color encuentre con el metodo find el color usando un if en donde si encuentra devuelve las tallas de ese color,si no nos da una array vacio
   const tamaño = props.calcetin.tamaños.find((t) => t.color === actualVariante.value.color)
-  return tamaño?.talla ?? []
+  return tamaño?.tallas ?? []
 })
 
 const actualizarVariante = (index: number): void => {

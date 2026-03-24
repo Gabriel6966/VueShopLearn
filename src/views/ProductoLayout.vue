@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import TiendaService from '../services/TiendaService.js'
+import TiendaService from '../services/TiendaService'
 import { useRouter } from 'vue-router'
 import type { Producto } from '../types/index'
 
@@ -27,7 +27,7 @@ onMounted(() => {
     })
     .catch((error) => {
       //Manejo de errores mediante push ya que con console.log seria la parte fea del error,asi con el push le mandamos a la pagina de error que creamos
-      if (error.response && error.response.status == 404) {
+      if (error.response && error.response.status === 404) {
         router.push({ name: '404Resource', params: { resource: 'calcetín' } })
       } else {
         router.push({ name: 'NetworkError' })

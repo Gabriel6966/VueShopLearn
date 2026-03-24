@@ -6,11 +6,11 @@ import { useRouter } from 'vue-router'
 const usuario = Usuario()
 const router = useRouter()
 
-const nombre = ref('')
-const contra = ref('')
-const error = ref('')
+const nombre = ref<string>('')
+const contra = ref<string>('')
+const error = ref<string>('')
 
-const onSubmit = () => {
+const onSubmit = (): void => {
   if (!nombre.value || !contra.value) {
     error.value = 'Completa todos los campos'
     return
