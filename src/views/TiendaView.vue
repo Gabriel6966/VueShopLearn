@@ -10,6 +10,7 @@ const Rebajas = ref<boolean>(false)
 const Stock = ref<boolean>(false)
 const Orden = ref<string>('')
 const productos = ref<Producto[]>([])
+const buscar = ref<string>('')
 
 //Montamos los productos de la API
 onMounted(() => {
@@ -68,16 +69,23 @@ function quickSort(array: Producto[], orden: string): Producto[] {
 
 //Calculamos los filtros una vez hechos arriba
 const filtrados = computed<Producto[]>(() => {
-  let resultado = productos.value.filter((producto) =>
-    producto.variantes.some(
+  let resultado = productos.value.filter((producto) => {
+    const buscalower = buscar.value.toLowerCase()
+    const mismapalabra =
+      buscar.value === '' ||
+      producto.product.toLowerCase().includes(buscalower) ||
+      producto.brand.toLowerCase().includes(buscalower)
+
+    const coinciden = producto.variantes.some(
       (v) =>
         //añadimos esta validacion para que el resultado no devuelva con el filter un producto con el some(variable para que encuentre con el filtro que le metemos)
         //ese mismo color y precio,ya que el producto mezclaba tanto un color con el otro el stock rebajas y colores
         (Color.value === '' || v.color === Color.value) &&
         (!Rebajas.value || v.enRebajas) &&
         (!Stock.value || v.cantidad > 0),
-    ),
-  )
+    )
+    return mismapalabra && coinciden
+  })
 
   //Orden en caso de que el usuario seleccione ascendente o descendente
   if (Orden.value === 'asc' || Orden.value === 'desc') {
@@ -90,6 +98,7 @@ const reiniciar = (): void => {
   Rebajas.value = false
   Stock.value = false
   Orden.value = ''
+  buscar.value = ''
 }
 </script>
 
@@ -98,6 +107,10 @@ const reiniciar = (): void => {
     <h1 class="titulo-catalogo">Productos Actualmente</h1>
 
     <div class="filtros-bar">
+      <div>
+        <label>Buscar: </label>
+        <input type="text" v-model="buscar" placeholder="Buscar producto..." class="buscar" />
+      </div>
       <div class="filtro-grupo">
         <label>Color:</label>
         <select v-model="Color">
@@ -236,5 +249,18 @@ const reiniciar = (): void => {
   flex-direction: column;
   align-items: center;
   gap: 20px;
+}
+.buscar {
+  border: 1px solid #d8d8d8;
+  border-radius: 5px;
+  padding: 5px 10px;
+  font-size: 14px;
+  color: #39495c;
+  width: 180px;
+  transition: border-color 0.2s ease;
+}
+.buscar:focus {
+  outline: none;
+  border-color: #16c0b0;
 }
 </style>
