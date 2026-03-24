@@ -4,7 +4,7 @@ import js from '@eslint/js'
 import pluginVue from 'eslint-plugin-vue'
 import pluginOxlint from 'eslint-plugin-oxlint'
 import skipFormatting from 'eslint-config-prettier/flat'
-import tseslint, { parser } from 'typescript-eslint'
+import tseslint from 'typescript-eslint'
 
 export default defineConfig([
   {

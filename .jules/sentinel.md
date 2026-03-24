@@ -1,0 +1,4 @@
+## 2024-05-24 - [Information Disclosure Prevention]
+**Vulnerability:** Found multiple instances of `console.log(error)` and `console.error(error)` in catch blocks within store files and views (e.g., `ReviewStore.ts`, `HomeView.vue`, `TiendaView.vue`).
+**Learning:** Raw console logging exposes error details to the client which could leak sensitive information such as server paths, network details, or API structures. The project has a standard generic error route (`NetworkError`) for this exact purpose.
+**Prevention:** Always use the router to push to generic error routes (`router.push({ name: 'NetworkError' })`) instead of raw `console.log()` or `console.error()` on catch blocks. In store files without access to `useRouter()`, import the router directly from the router setup file.

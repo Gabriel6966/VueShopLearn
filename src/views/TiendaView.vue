@@ -3,6 +3,7 @@ import { ref, onMounted, computed } from 'vue'
 import TiendaService from '../services/TiendaService'
 import ProductoInfo from './ProductoInfo.vue'
 import type { Producto } from '../types/index'
+import { useRouter } from 'vue-router'
 
 //Filtros
 const Color = ref<string>('')
@@ -11,14 +12,16 @@ const Stock = ref<boolean>(false)
 const Orden = ref<string>('')
 const productos = ref<Producto[]>([])
 
+const router = useRouter()
+
 //Montamos los productos de la API
 onMounted(() => {
   TiendaService.getCalcetines()
     .then((response) => {
       productos.value = response.data
     })
-    .catch((error) => {
-      console.log(error)
+    .catch(() => {
+      router.push({ name: 'NetworkError' })
     })
 })
 
