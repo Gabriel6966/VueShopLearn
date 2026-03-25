@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import TiendaService from '../services/TiendaService'
+import TiendaService from '@/services/TiendaService'
 import { useRouter } from 'vue-router'
-import type { Producto } from '../types/index'
+import type { Producto } from '@/types/index'
 
 //Prop tipada
 const props = defineProps<{

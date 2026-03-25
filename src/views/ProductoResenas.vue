@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import ReviewList from '../components/ReviewList.vue'
-import ReviewForm from '../components/ReviewForm.vue'
-import { useReviewStore } from '../stores/ReviewStore'
+import ReviewList from '@/components/ReviewList.vue'
+import ReviewForm from '@/components/ReviewForm.vue'
+import { useReviewStore } from '@/stores/ReviewStore'
 import { computed, onMounted } from 'vue'
-import type { Producto, Review } from '../types/index'
+import type { Producto, Review } from '@/types/index'
 
 const props = defineProps<{
   calcetin: Producto

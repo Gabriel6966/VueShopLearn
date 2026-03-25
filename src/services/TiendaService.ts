@@ -1,5 +1,5 @@
 import axios from 'axios'
-import type { Review } from '../types/index'
+import type { Review } from '@/types/index'
 
 const apiClient = axios.create({
   //La url que llamamos

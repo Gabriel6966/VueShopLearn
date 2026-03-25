@@ -1,7 +1,7 @@
 <!--Cambiasmos de la API export default a la 'Composition API' ya que en caso de que querramos usar TS nos sera mejor-->
 <script setup lang="ts">
 import { ref } from 'vue'
-import { Review } from '../types/index'
+import { Review } from '@/types/index'
 
 const emit = defineEmits<{
   'review-submitted': [review: Review]

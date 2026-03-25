@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
-import type { UsuarioLogin } from '../types/index'
+import type { UsuarioLogin } from '@/types/index'
 
 export const Usuario = defineStore('usuario', () => {
   const nombre = ref<string>('')

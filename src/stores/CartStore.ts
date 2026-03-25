@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
-import type { ItemCarrito } from '../types/index'
+import type { ItemCarrito } from '@/types/index'
 
 export const CarritoTienda = defineStore('cart', () => {
   const items = ref<ItemCarrito[]>([])

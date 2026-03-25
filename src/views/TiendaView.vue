@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { ref, onMounted, computed, watch } from 'vue'
 import { debounce } from 'lodash-es'
-import TiendaService from '../services/TiendaService'
+import TiendaService from '@/services/TiendaService'
 import ProductoInfo from './ProductoInfo.vue'
-import type { Producto } from '../types/index'
+import type { Producto } from '@/types/index'
 
 //Filtros
 const Color = ref<string>('')

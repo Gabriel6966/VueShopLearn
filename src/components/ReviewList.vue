@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Review } from '../types/index'
+import type { Review } from '@/types/index'
 //Hacemos lo mismo que en el Form Migramos los datos
 defineProps<{
   reviews: Review[]

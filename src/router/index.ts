@@ -1,13 +1,13 @@
-import ProductoLayout from '../views/ProductoLayout.vue'
-import ProductoInfo from '../views/ProductoInfo.vue'
-import ProductoResenas from '../views/ProductoResenas.vue'
-import NotFound from '../views/NotFound.vue'
-import NetworkError from '../views/NetworkError.vue'
+import ProductoLayout from '@/views/ProductoLayout.vue'
+import ProductoInfo from '@/views/ProductoInfo.vue'
+import ProductoResenas from '@/views/ProductoResenas.vue'
+import NotFound from '@/views/NotFound.vue'
+import NetworkError from '@/views/NetworkError.vue'
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
-import TiendaView from '../views/TiendaView.vue'
-import CarritoView from '../views/CarritoView.vue'
-import LoginView from '../views/LoginView.vue'
+import HomeView from '@/views/HomeView.vue'
+import TiendaView from '@/views/TiendaView.vue'
+import CarritoView from '@/views/CarritoView.vue'
+import LoginView from '@/views/LoginView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),

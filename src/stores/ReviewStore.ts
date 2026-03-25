@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-import TiendaService from '../services/TiendaService'
-import type { Review } from '../types/index'
+import TiendaService from '@/services/TiendaService'
+import type { Review } from '@/types/index'
 
 export const useReviewStore = defineStore('reviews', () => {
   type rp = { [key: string]: Review[] }

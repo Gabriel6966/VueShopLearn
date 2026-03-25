@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import TiendaService from '../services/TiendaService'
-import { Producto } from '../types'
+import TiendaService from '@/services/TiendaService'
+import { Producto } from '@/types'
 
 const productos = ref<Producto[] | null>(null)
 

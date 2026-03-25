@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
-import { NotificacionStore } from '../stores/NotificationStore'
-import { CarritoTienda } from '../stores/CartStore'
-import type { Producto } from '../types/index'
+import { NotificacionStore } from '@/stores/NotificationStore'
+import { CarritoTienda } from '@/stores/CartStore'
+import type { Producto } from '@/types/index'
 
 const notificacionStore = NotificacionStore()
 const carritoStore = CarritoTienda()
