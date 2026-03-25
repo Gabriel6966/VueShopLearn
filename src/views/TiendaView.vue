@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { ref, onMounted, computed } from 'vue'
+import { ref, onMounted, computed, watch } from 'vue'
+import { debounce } from 'lodash-es'
 import TiendaService from '../services/TiendaService'
 import ProductoInfo from './ProductoInfo.vue'
 import type { Producto } from '../types/index'
@@ -11,6 +12,18 @@ const Stock = ref<boolean>(false)
 const Orden = ref<string>('')
 const productos = ref<Producto[]>([])
 const buscar = ref<string>('')
+//Debounce
+const dbd = ref<string>('')
+
+//Cuando paremos de escribir durante 300 ms
+const busqueda = debounce((val: string) => {
+  dbd.value = val
+}, 300)
+
+//Miramos el buscar y despues llamamos a la funcion con el delay
+watch(buscar, (nColor) => {
+  busqueda(nColor)
+})
 
 //Montamos los productos de la API
 onMounted(() => {
@@ -36,7 +49,6 @@ const colordispo = computed<string[]>(() => {
   }
   return colores
 })
-
 //Ordenamos mediante metodo quicksrot
 function quickSort(array: Producto[], orden: string): Producto[] {
   //Excepciones
@@ -70,9 +82,9 @@ function quickSort(array: Producto[], orden: string): Producto[] {
 //Calculamos los filtros una vez hechos arriba
 const filtrados = computed<Producto[]>(() => {
   let resultado = productos.value.filter((producto) => {
-    const buscalower = buscar.value.toLowerCase()
+    const buscalower = dbd.value.toLowerCase()
     const mismapalabra =
-      buscar.value === '' ||
+      dbd.value === '' ||
       producto.product.toLowerCase().includes(buscalower) ||
       producto.brand.toLowerCase().includes(buscalower)
 
@@ -99,6 +111,7 @@ const reiniciar = (): void => {
   Stock.value = false
   Orden.value = ''
   buscar.value = ''
+  dbd.value = ''
 }
 </script>
 
