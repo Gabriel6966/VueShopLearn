@@ -123,22 +123,22 @@ const eliminarElemento = () => {
   margin-top: 10px;
 }
 .talla-box {
-  border: 2px solid #d8d8d8;
+  border: 2px solid var(--color-borde);
   padding: 8px 15px;
   border-radius: 5px;
   cursor: pointer;
   font-weight: bold;
-  color: #39495c;
+  color: var(--color-texto-oscuro);
   transition: all 0.2s;
 }
 
 .talla-box:hover {
-  border-color: #16c0b0;
+  border-color: var(--color-primario);
 }
 
 .talla-activa {
-  background-color: #16c0b0;
+  background-color: var(--color-primario);
   color: white;
-  border-color: #16c0b0;
+  border-color: var(--color-primario);
 }
 </style>

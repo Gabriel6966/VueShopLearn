@@ -66,18 +66,18 @@ onMounted(() => {
   text-decoration: none;
   font-size: 18px;
   font-weight: bold;
-  color: #39495c;
+  color: var(--color-texto-oscuro);
   padding: 5px 10px;
   transition: all 0.2s ease;
 }
 
 .nav-producto a:hover {
-  color: #16c0b0;
+  color: var(--color-primario);
 }
 
 /* Vue Router añade esta clase al enlace activo */
 .nav-producto a.router-link-exact-active {
-  color: #16c0b0;
-  border-bottom: 3px solid #16c0b0;
+  color: var(--color-primario);
+  border-bottom: 3px solid var(--color-primario);
 }
 </style>

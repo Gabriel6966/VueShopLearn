@@ -48,7 +48,7 @@ onMounted(() => {
 
 h1 {
   font-size: 48px;
-  color: #39495c;
+  color: var(--color-texto-oscuro);
   margin-bottom: 10px;
 }
 
@@ -83,7 +83,7 @@ p {
 .producto-card:hover {
   transform: translateY(-8px);
   box-shadow: 0 12px 25px rgba(0, 0, 0, 0.1);
-  border-color: #16c0b0;
+  border-color: var(--color-primario);
 }
 
 .card-image {
@@ -95,19 +95,19 @@ p {
 
 .producto-card h2 {
   font-size: 22px;
-  color: #39495c;
+  color: var(--color-texto-oscuro);
   margin: 10px 0;
 }
 
 .price {
   font-size: 26px;
   font-weight: bold;
-  color: #16c0b0;
+  color: var(--color-primario);
   margin-bottom: 20px;
 }
 
 .button-start {
-  background-color: #16c0b0;
+  background-color: var(--color-primario);
   color: white;
   padding: 12px 0;
   text-decoration: none;

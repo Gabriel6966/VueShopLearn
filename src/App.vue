@@ -61,7 +61,7 @@ const url = 'https://vuejs.org/guide/quick-start.html'
 
 .premium-badge {
   background: gold;
-  color: #39495c;
+  color: var(--color-texto-oscuro);
   padding: 2px 8px;
   border-radius: 10px;
   font-size: 13px;

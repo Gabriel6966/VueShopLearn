@@ -40,8 +40,8 @@ const carritoStore = CarritoTienda()
 }
 .carrito-titulo {
   font-size: 40px;
-  color: #39495c;
-  border-bottom: 3px solid #16c0b0;
+  color: var(--color-texto-oscuro);
+  border-bottom: 3px solid var(--color-primario);
   padding-bottom: 10px;
   margin-bottom: 30px;
 }
@@ -82,7 +82,7 @@ const carritoStore = CarritoTienda()
 }
 .carrito-info h2 {
   font-size: 18px;
-  color: #39495c;
+  color: var(--color-texto-oscuro);
   margin: 0 0 5px;
 }
 .carrito-info p {
@@ -91,7 +91,7 @@ const carritoStore = CarritoTienda()
 }
 .carrito-precio {
   font-weight: bold;
-  color: #16c0b0 !important;
+  color: var(--color-primario) !important;
   font-size: 18px;
 }
 
@@ -123,11 +123,11 @@ const carritoStore = CarritoTienda()
 .total-precio {
   font-size: 26px;
   font-weight: bold;
-  color: #39495c;
+  color: var(--color-texto-oscuro);
 }
 
 .button-start {
-  background-color: #16c0b0;
+  background-color: var(--color-primario);
   color: white;
   padding: 12px 30px;
   text-decoration: none;

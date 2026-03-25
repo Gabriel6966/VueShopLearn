@@ -68,14 +68,14 @@ const onSubmit = (): void => {
 }
 
 h1 {
-  color: #39495c;
+  color: var(--color-texto-oscuro);
   text-align: center;
   margin-bottom: 10px;
 }
 
 label {
   font-weight: bold;
-  color: #39495c;
+  color: var(--color-texto-oscuro);
 }
 
 .error-msg {

@@ -46,7 +46,7 @@ const anadirReview = (productoOpinion: Review): void => {
   font-size: 18px;
   background: white;
   border-radius: 10px;
-  border: 2px dashed #d8d8d8;
+  border: 2px dashed var(--color-borde);
   margin-bottom: 20px;
 }
 </style>

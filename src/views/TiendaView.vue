@@ -187,9 +187,9 @@ const reiniciar = (): void => {
 .titulo-catalogo {
   text-align: center;
   font-size: 40px;
-  color: #39495c;
+  color: var(--color-texto-oscuro);
   margin-bottom: 30px;
-  border-bottom: 3px solid #16c0b0;
+  border-bottom: 3px solid var(--color-primario);
   padding-bottom: 10px;
 }
 
@@ -210,15 +210,16 @@ const reiniciar = (): void => {
   align-items: center;
   gap: 8px;
   font-weight: bold;
-  color: #39495c;
+  color: var(--color-texto-oscuro);
 }
 
-.filtro-grupo select {
-  border: 1px solid #d8d8d8;
+.filtro-grupo select,
+.buscar {
+  border: 1px solid var(--color-borde);
   border-radius: 5px;
   padding: 5px 10px;
   font-size: 14px;
-  color: #39495c;
+  color: var(--color-texto-oscuro);
   cursor: pointer;
 }
 
@@ -226,13 +227,13 @@ const reiniciar = (): void => {
   width: 16px;
   height: 16px;
   cursor: pointer;
-  accent-color: #16c0b0;
+  accent-color: var(--color-primario);
 }
 
 .btn-reset {
   background: none;
-  border: 2px solid #16c0b0;
-  color: #16c0b0;
+  border: 2px solid var(--color-primario);
+  color: white;
   padding: 6px 15px;
   border-radius: 5px;
   cursor: pointer;
@@ -264,16 +265,16 @@ const reiniciar = (): void => {
   gap: 20px;
 }
 .buscar {
-  border: 1px solid #d8d8d8;
+  border: 1px solid var(--color-borde);
   border-radius: 5px;
   padding: 5px 10px;
   font-size: 14px;
-  color: #39495c;
+  color: var(--color-texto-oscuro);
   width: 180px;
   transition: border-color 0.2s ease;
 }
 .buscar:focus {
   outline: none;
-  border-color: #16c0b0;
+  border-color: var(--color-primario);
 }
 </style>
