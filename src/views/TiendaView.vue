@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted, computed } from 'vue'
+import { useRouter } from 'vue-router'
 import TiendaService from '../services/TiendaService'
 import ProductoInfo from './ProductoInfo.vue'
 import type { Producto } from '../types/index'
@@ -11,6 +12,7 @@ const Stock = ref<boolean>(false)
 const Orden = ref<string>('')
 const productos = ref<Producto[]>([])
 const buscar = ref<string>('')
+const router = useRouter()
 
 //Montamos los productos de la API
 onMounted(() => {
@@ -18,8 +20,9 @@ onMounted(() => {
     .then((response) => {
       productos.value = response.data
     })
-    .catch((error) => {
-      console.log(error)
+    .catch(() => {
+      // Manejo seguro de errores
+      router.push({ name: 'NetworkError' })
     })
 })
 
