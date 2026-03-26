@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
+import router from '@/router/index'
 import TiendaService from '@/services/TiendaService'
 import type { Review } from '@/types/index'
 
@@ -16,8 +17,8 @@ export const useReviewStore = defineStore('reviews', () => {
     try {
       const respuesta = await TiendaService.recogeropiniones(productoId)
       reviews.value[productoId] = respuesta.data.reviews || []
-    } catch (error) {
-      console.error(error)
+    } catch {
+      router.push({ name: 'NetworkError' })
     } finally {
       cargando.value = false
     }
@@ -29,8 +30,8 @@ export const useReviewStore = defineStore('reviews', () => {
       //Recargamos las reviews del producto
       delete reviews.value[productoId]
       await cargarreviews(productoId)
-    } catch (error) {
-      console.log(error)
+    } catch {
+      router.push({ name: 'NetworkError' })
     }
   }
 
