@@ -233,7 +233,7 @@ const reiniciar = (): void => {
 .btn-reset {
   background: none;
   border: 2px solid var(--color-primario);
-  color: white;
+  color: black;
   padding: 6px 15px;
   border-radius: 5px;
   cursor: pointer;

@@ -1,13 +1,6 @@
-import ProductoLayout from '@/views/ProductoLayout.vue'
-import ProductoInfo from '@/views/ProductoInfo.vue'
-import ProductoResenas from '@/views/ProductoResenas.vue'
-import NotFound from '@/views/NotFound.vue'
-import NetworkError from '@/views/NetworkError.vue'
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '@/views/HomeView.vue'
-import TiendaView from '@/views/TiendaView.vue'
-import CarritoView from '@/views/CarritoView.vue'
-import LoginView from '@/views/LoginView.vue'
+//En vez de hacer 9 imports hacemos uno que sea global con las carpeta de views y que nos pille todos los archivos .vue
+const vistas = import.meta.glob('../views/*.vue')
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -30,22 +23,22 @@ const router = createRouter({
     {
       path: '/',
       name: 'Home',
-      component: HomeView,
+      component: vistas['../views/HomeView.vue'],
     },
     {
       path: '/login',
       name: 'Login',
-      component: LoginView,
+      component: vistas['../views/LoginView.vue'],
     },
     {
       path: '/tienda',
       name: 'TiendaCompleta',
-      component: TiendaView,
+      component: vistas['../views/TiendaView.vue'],
     },
     {
       path: '/carrito',
       name: 'Carrito',
-      component: CarritoView,
+      component: vistas['../views/CarritoView.vue'],
     },
     {
       path: '/item/:id',
@@ -58,7 +51,7 @@ const router = createRouter({
     {
       path: '/producto/:id',
       name: 'ProductoLayout',
-      component: ProductoLayout,
+      component: vistas['../views/ProductoLayout.vue'],
       props: true, // Permite recibir el :id como prop
       //Ponemos a los hijos
       children: [
@@ -66,12 +59,12 @@ const router = createRouter({
           //Al tener el path vacio eso significa qyue nos lleva al path de arriba del :id
           path: '',
           name: 'ProductoInfo',
-          component: ProductoInfo,
+          component: vistas['../views/ProductoInfo.vue'],
         },
         {
           path: 'resenas', // Ruta de reseñas (/producto/1/resenas)
           name: 'ProductoResenas',
-          component: ProductoResenas,
+          component: vistas['../views/ProductoResenas.vue'],
         },
       ],
     },
@@ -79,19 +72,19 @@ const router = createRouter({
       //Te lleva a una ruta de error 404 y da igual si es evento erroneo pagina o etc
       path: '/404/:resource',
       name: '404Resource',
-      component: NotFound,
+      component: vistas['../views/NotFound.vue'],
       props: true,
     },
     {
       path: '/network-error',
       name: 'NetworkError',
-      component: NetworkError,
+      component: vistas['../views/NetworkError.vue'],
     },
     {
       //path para mirar todas las rutas que se juntan y no existen
       path: '/:catchAll(.*)',
       name: 'NotFoundGeneral',
-      component: NotFound,
+      component: vistas['../views/NotFound.vue'],
       props: {
         resource: 'pagina',
       },
