@@ -14,8 +14,11 @@ describe('ReviewList.vue', () => {
         reviews: prueba,
       },
     })
-    expect(contenedor.text()).toContain('Normales')
-    expect(contenedor.findAll('li')).toHaveLength(2)
+    //expect(contenedor.text()).toContain('Normales')
+    //expect(contenedor.findAll('li')).toHaveLength(2)
+
+    //Aplicamos el concepto de snapshot(basicamente hace una foto y la compara con la vieja  y si cambia algo nos avisa)
+    expect(contenedor.html()).toMatchSnapshot()
   })
 
   it('no peta si no hay nada', () => {
@@ -24,6 +27,8 @@ describe('ReviewList.vue', () => {
         reviews: [],
       },
     })
-    expect(contenedor.findAll('li')).toHaveLength(0)
+    //expect(contenedor.findAll('li')).toHaveLength(0)
+    //Aqui tambien
+    expect(contenedor.html()).toMatchSnapshot()
   })
 })

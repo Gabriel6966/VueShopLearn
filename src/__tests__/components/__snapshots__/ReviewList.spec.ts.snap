@@ -1,0 +1,29 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ReviewList.vue > no peta si no hay nada 1`] = `
+"<div data-v-92f5ac26="" class="review-list">
+  <h3 data-v-92f5ac26="">Reviews:</h3>
+  <ul data-v-92f5ac26="">
+    <!--Recorremos el array de reviews con review y el index  para enseñar cada opinion que se ha hecho en el formu-->
+  </ul>
+</div>"
+`;
+
+exports[`ReviewList.vue > opiniones que le pasamos 1`] = `
+"<div data-v-92f5ac26="" class="review-list">
+  <h3 data-v-92f5ac26="">Reviews:</h3>
+  <ul data-v-92f5ac26="">
+    <!--Recorremos el array de reviews con review y el index  para enseñar cada opinion que se ha hecho en el formu-->
+    <li data-v-92f5ac26="">
+      <p data-v-92f5ac26=""><strong data-v-92f5ac26="">Brian</strong></p>
+      <p data-v-92f5ac26="">Normales</p>
+      <p data-v-92f5ac26="">Rating: 4</p>
+    </li>
+    <li data-v-92f5ac26="">
+      <p data-v-92f5ac26=""><strong data-v-92f5ac26="">Maria</strong></p>
+      <p data-v-92f5ac26="">Basicos</p>
+      <p data-v-92f5ac26="">Rating: 2</p>
+    </li>
+  </ul>
+</div>"
+`;
