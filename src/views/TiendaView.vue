@@ -2,9 +2,11 @@
 import { ref, onMounted, computed, watch } from 'vue'
 import { debounce } from 'lodash-es'
 import TiendaService from '@/services/TiendaService'
+import { useRouter } from 'vue-router'
 import ProductoInfo from './ProductoInfo.vue'
 import type { Producto } from '@/types/index'
 
+const router = useRouter()
 //Filtros
 const Color = ref<string>('')
 const Rebajas = ref<boolean>(false)
@@ -31,8 +33,9 @@ onMounted(() => {
     .then((response) => {
       productos.value = response.data
     })
-    .catch((error) => {
-      console.log(error)
+    .catch(() => {
+      // Security: Avoid logging raw errors to prevent information exposure
+      router.push({ name: 'NetworkError' })
     })
 })
 
