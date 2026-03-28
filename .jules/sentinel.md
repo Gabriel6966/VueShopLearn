@@ -1,0 +1,5 @@
+## 2024-05-14 - Prevent Information Disclosure in Vue Shop
+
+**Vulnerability:** Information Disclosure via Console Logs
+**Learning:** The application was indiscriminately logging raw error objects using `console.log` and `console.error` in Pinia stores and Vue views (`ReviewStore.ts`, `TiendaView.vue`, `HomeView.vue`). In a production setting, this exposes sensitive network paths, application state, and potentially server-side stack traces to any user inspecting the browser console.
+**Prevention:** Replaced console logging with secure, generalized redirects to the generic `NetworkError` route. Used optional catch binding (`catch { ... }`) to ensure the error object itself is never instantiated in scope, guaranteeing zero leakage and satisfying Oxlint/ESLint rules against unused variables. Additionally, remembered to use the `useRouter()` composable only within the `setup()` context of Vue components, while importing the router instance directly (`import router from '@/router/index'`) inside Pinia stores.

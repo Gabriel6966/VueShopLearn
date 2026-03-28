@@ -1,9 +1,12 @@
 <script setup lang="ts">
 import { ref, onMounted, computed, watch } from 'vue'
+import { useRouter } from 'vue-router'
 import { debounce } from 'lodash-es'
 import TiendaService from '@/services/TiendaService'
 import ProductoInfo from './ProductoInfo.vue'
 import type { Producto } from '@/types/index'
+
+const router = useRouter()
 
 //Filtros
 const Color = ref<string>('')
@@ -31,8 +34,8 @@ onMounted(() => {
     .then((response) => {
       productos.value = response.data
     })
-    .catch((error) => {
-      console.log(error)
+    .catch(() => {
+      router.push({ name: 'NetworkError' })
     })
 })
 
