@@ -1,0 +1,4 @@
+## 2024-05-30 - Prevent Error Information Leakage
+**Vulnerability:** Application components (HomeView, TiendaView, ReviewStore) were using `console.log` and `console.error` to handle network and API errors. This could potentially expose sensitive internal details (like full stack traces, server endpoints, or API schemas) in the browser console.
+**Learning:** Raw console logging for unhandled or unexpected network errors poses an information leakage risk. In Vue applications using vue-router, it is much safer to catch these errors and redirect the user to a generic error route (e.g., `NetworkError`).
+**Prevention:** Instead of logging errors to the console, use `catch { router.push({ name: 'NetworkError' }) }` or similar routing logic to silently fail to a generic error page, thus preventing the leakage of stack traces or internals to the user.
