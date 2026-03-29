@@ -1,3 +1,4 @@
+import { datos } from '@/stores/Usuario'
 import { createRouter, createWebHistory } from 'vue-router'
 //En vez de hacer 9 imports hacemos uno que sea global con las carpeta de views y que nos pille todos los archivos .vue
 const vistas = import.meta.glob('../views/*.vue')
@@ -90,6 +91,14 @@ const router = createRouter({
       },
     },
   ],
+})
+router.beforeEach((to) => {
+  const log = datos()
+  if (to.name === 'Carrito' && !log.logueado) {
+    return {
+      name: 'Login',
+    }
+  }
 })
 
 export default router

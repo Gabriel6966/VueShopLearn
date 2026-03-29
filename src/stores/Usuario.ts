@@ -1,37 +1,76 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
-import type { UsuarioLogin } from '@/types/index'
+import TiendaService from '@/services/TiendaService'
+import type { Usuario } from '@/types/index'
 
-export const Usuario = defineStore('usuario', () => {
-  const nombre = ref<string>('')
-  const logueado = ref<boolean>(false)
+export const datos = defineStore('usuario', () => {
+  const usuario = ref<Usuario | null>(null)
+  const logueado = computed(() => usuario.value !== null)
+  const premium = computed(() => usuario.value?.premium ?? false)
+  const nombre = computed(() => usuario.value?.nombre ?? '')
+  const error = ref<string>('')
 
-  //Usuarios registrados por defecto(si feura una pagina real vendrian de una API)
+  async function login(email: string, contrasena: string): Promise<boolean> {
+    try {
+      const respuesta = await TiendaService.encontrar(email)
+      const encontrado: Usuario = respuesta.data[0]
 
-  ///Tipamos el array de los usuarios
-  const usuarios: UsuarioLogin[] = [
-    { nombre: 'gabriel', contra: '1234', premium: true },
-    { nombre: 'andrei', contra: '0000', premium: false },
-  ]
+      if (!encontrado || encontrado.contrasena !== contrasena) {
+        error.value = 'El correo o la contraseña son incorrectas'
+        return false
+      }
+      usuario.value = encontrado
 
-  //El premium depende si esta loagueado
-  const premium = computed(() => {
-    return usuarios.find((u) => u.nombre === nombre.value)?.premium ?? false
-  })
-
-  function login(nombreEntrada: string, contraEntrada: string): boolean {
-    const usuario = usuarios.find((u) => u.nombre === nombreEntrada && u.contra === contraEntrada)
-    if (usuario) {
-      nombre.value = usuario.nombre
-      logueado.value = true
+      //Guardamos en el localstorage para que haya persistencia entre sesiones
+      localStorage.setItem('usuario', JSON.stringify(encontrado))
+      error.value = ''
       return true
+    } catch (err) {
+      error.value = 'Error de conexion'
+      console.error(err)
+      return false
     }
-    return false
-  }
-  function salida(): void {
-    nombre.value = ''
-    logueado.value = false
   }
 
-  return { nombre, logueado, premium, login, salida }
+  async function registro(nombre: string, email: string, contrasena: string): Promise<boolean> {
+    try {
+      //Comprobaciones de existencia
+      const respuesta = await TiendaService.encontrar(email)
+      if (respuesta.data.length > 0) {
+        error.value = 'Hay una cuenta existente con este gmail'
+        return false
+      }
+      const nuevo: Usuario = {
+        nombre,
+        email,
+        contrasena,
+        premium: false,
+      }
+      const creado = await TiendaService.registrar(nuevo)
+      usuario.value = creado.data
+      localStorage.setItem('usuario', JSON.stringify(creado.data))
+      error.value = ''
+      return true
+    } catch (err) {
+      error.value = 'Error al intentar cread la cuenta'
+      console.error(err)
+      return false
+    }
+  }
+
+  function salida(): void {
+    usuario.value = null
+    localStorage.removeItem('usuario')
+  }
+
+  //Funcion de guardado al recargar pagina
+  function conectada(): void {
+    const guardado = localStorage.getItem('usuario')
+    //Comprobamos que no sea null antes de pasearlo
+    if (guardado) {
+      usuario.value = JSON.parse(guardado)
+    }
+  }
+
+  return { usuario, logueado, premium, nombre, error, login, registro, salida, conectada }
 })

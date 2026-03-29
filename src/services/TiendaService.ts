@@ -28,4 +28,12 @@ export default {
   recogeropiniones(productoId: string) {
     return apiClient.get(`/calcetines/${productoId}`)
   },
+
+  encontrar(email: string) {
+    return apiClient.get(`/usuarios?rmail=${email}`)
+  },
+
+  registrar(usuario: object) {
+    return apiClient.post('/usuarios', usuario)
+  },
 }

@@ -6,11 +6,7 @@
       "brand": "Vue Mastery",
       "price": 6.75,
       "descripcion": "Calecetines comodos para entrenar",
-      "detalles": [
-        "50% algodon",
-        "30% lana",
-        "20% poliester"
-      ],
+      "detalles": ["50% algodon", "30% lana", "20% poliester"],
       "variantes": [
         {
           "id": 2234,
@@ -31,20 +27,12 @@
         {
           "id": 1,
           "color": "green",
-          "tallas": [
-            "S",
-            "M",
-            "L"
-          ]
+          "tallas": ["S", "M", "L"]
         },
         {
           "id": 2,
           "color": "blue",
-          "tallas": [
-            "XL",
-            "XXL",
-            "XXXL"
-          ]
+          "tallas": ["XL", "XXL", "XXXL"]
         }
       ],
       "reviews": [
@@ -68,11 +56,7 @@
       "brand": "Camiseta",
       "price": 15.5,
       "descripcion": "Camiseta para uso deportivo",
-      "detalles": [
-        "100% algodon",
-        "Slim-fit",
-        "Tela fina"
-      ],
+      "detalles": ["100% algodon", "Slim-fit", "Tela fina"],
       "variantes": [
         {
           "id": 3001,
@@ -93,20 +77,12 @@
         {
           "id": 1,
           "color": "black",
-          "tallas": [
-            "S",
-            "M",
-            "L"
-          ]
+          "tallas": ["S", "M", "L"]
         },
         {
           "id": 2,
           "color": "white",
-          "tallas": [
-            "M",
-            "L",
-            "XL"
-          ]
+          "tallas": ["M", "L", "XL"]
         }
       ],
       "reviews": []
@@ -117,11 +93,7 @@
       "brand": "VueShop",
       "price": 29.99,
       "descripcion": "Sudadera con capucha para el entreno",
-      "detalles": [
-        "Capucha",
-        "Bolsillo Unido",
-        "Tela suave"
-      ],
+      "detalles": ["Capucha", "Bolsillo Unido", "Tela suave"],
       "variantes": [
         {
           "id": 4001,
@@ -142,24 +114,26 @@
         {
           "id": 1,
           "color": "gray",
-          "tallas": [
-            "M",
-            "L",
-            "XXL"
-          ]
+          "tallas": ["M", "L", "XXL"]
         },
         {
           "id": 2,
           "color": "navy",
-          "tallas": [
-            "S",
-            "M",
-            "L"
-          ]
+          "tallas": ["S", "M", "L"]
         }
       ],
       "reviews": []
     }
   ],
+  "usuarios": [
+    {
+      "id": "1",
+      "nombre": "gabriel",
+      "email": "terente@vue.com",
+      "contrasena": "1234",
+      "premium": true
+    }
+  ],
+
   "$schema": "./node_modules/json-server/schema.json"
 }

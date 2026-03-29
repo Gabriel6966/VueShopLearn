@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { NotificacionStore } from './stores/NotificationStore'
 import { CarritoTienda } from './stores/CartStore'
-import { Usuario } from './stores/Usuario'
+import { datos } from './stores/Usuario'
 
 const notificacionStore = NotificacionStore()
 const carrito = CarritoTienda()
-const usuario = Usuario()
+const usuario = datos()
 
 const url = 'https://vuejs.org/guide/quick-start.html'
 </script>

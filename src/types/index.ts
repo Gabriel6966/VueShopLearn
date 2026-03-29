@@ -44,3 +44,13 @@ export interface UsuarioLogin {
   contra: string
   premium: boolean
 }
+//Nueva interfaz para el usuario
+
+export interface Usuario {
+  //Ponemos el id opcional con el ?
+  id?: string
+  nombre: string
+  email: string
+  contrasena: string
+  premium: boolean
+}
