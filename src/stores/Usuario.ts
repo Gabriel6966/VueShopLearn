@@ -19,6 +19,10 @@ export const datos = defineStore('usuario', () => {
         error.value = 'El correo o la contraseña son incorrectas'
         return false
       }
+
+      // Eliminar la contraseña antes de guardarla en el estado y localStorage
+      delete encontrado.contrasena
+
       usuario.value = encontrado
 
       //Guardamos en el localstorage para que haya persistencia entre sesiones
@@ -47,8 +51,11 @@ export const datos = defineStore('usuario', () => {
         premium: false,
       }
       const creado = await TiendaService.registrar(nuevo)
-      usuario.value = creado.data
-      localStorage.setItem('usuario', JSON.stringify(creado.data))
+      const usuarioSinPass = { ...creado.data }
+      delete usuarioSinPass.contrasena
+
+      usuario.value = usuarioSinPass
+      localStorage.setItem('usuario', JSON.stringify(usuarioSinPass))
       error.value = ''
       return true
     } catch (err) {
