@@ -181,7 +181,7 @@ const cambio = (): void => {
     opacity: 0;
   }
 }
-/* Card */
+
 .login-card {
   background: rgba(255, 255, 255, 0.95);
   padding: 40px;

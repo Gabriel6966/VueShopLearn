@@ -2,10 +2,12 @@
 import { NotificacionStore } from './stores/NotificationStore'
 import { CarritoTienda } from './stores/CartStore'
 import { datos } from './stores/Usuario'
+import { fondo } from './stores/FondoStore'
 
 const notificacionStore = NotificacionStore()
 const carrito = CarritoTienda()
 const usuario = datos()
+const tema = fondo()
 
 const url = 'https://vuejs.org/guide/quick-start.html'
 </script>
@@ -18,7 +20,11 @@ const url = 'https://vuejs.org/guide/quick-start.html'
 
       <a :href="url" class="nav-link">Guia de Vue</a>
     </div>
+
     <div class="nav-right">
+      <button class="tema" @click="tema.cambiar">
+        {{ tema.oscuro ? 'Modo claro' : 'Modo oscuro' }}
+      </button>
       <div v-if="usuario.logueado" class="user-info">
         <span>{{ usuario.nombre }}</span>
         <span v-if="usuario.premium" class="premium-badge">Premium</span>
@@ -45,6 +51,10 @@ const url = 'https://vuejs.org/guide/quick-start.html'
 </template>
 
 <style scoped>
+/*Precaucion para que no pete*/
+.nav-link {
+  color: white !important;
+}
 .nav-right {
   display: flex;
   align-items: center;
@@ -94,5 +104,24 @@ const url = 'https://vuejs.org/guide/quick-start.html'
 .pagina-leave-to {
   opacity: 0;
   transform: translateX(-20px);
+}
+
+.tema {
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid white;
+  color: white;
+  padding: 6px 14px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 14px;
+  transition:
+    transform 0.2s ease,
+    background-color 0.2s;
+}
+
+.tema:hover {
+  background-color: rgba(0, 0, 0, 0.4);
+  transform: scale(1.05);
 }
 </style>

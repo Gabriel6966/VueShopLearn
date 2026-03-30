@@ -164,7 +164,7 @@ const reiniciar = (): void => {
       }}
     </p>
 
-    <div v-if="filtrados.length > 0">
+    <div v-if="filtrados.length > 0" class="lista-productos">
       <div v-for="producto in filtrados" :key="producto.id" class="producto-fila">
         <ProductoInfo :calcetin="producto" />
       </div>
@@ -179,30 +179,35 @@ const reiniciar = (): void => {
 
 <style scoped>
 .tienda-gigante {
-  max-width: 1000px;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
 }
 
 .titulo-catalogo {
   text-align: center;
-  font-size: 40px;
+  font-size: 36px;
   color: var(--color-texto-oscuro);
   margin-bottom: 30px;
-  border-bottom: 3px solid var(--color-primario);
   padding-bottom: 10px;
+  transition: color 0.3s ease;
 }
 
 .filtros-bar {
   display: flex;
   flex-wrap: wrap;
-  gap: 20px;
+  gap: 15px;
   align-items: center;
-  background: white;
+  background: var(--color-tarjetas);
   padding: 20px;
   border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
-  margin-bottom: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  margin-bottom: 30px;
+  border: 1px solid var(--color-borde);
+  transition:
+    background-color 0.3s ease,
+    border-color 0.3s ease;
+  justify-content: space-between;
 }
 
 .filtro-grupo {
@@ -217,10 +222,11 @@ const reiniciar = (): void => {
 .buscar {
   border: 1px solid var(--color-borde);
   border-radius: 5px;
-  padding: 5px 10px;
+  padding: 8px 12px;
   font-size: 14px;
   color: var(--color-texto-oscuro);
-  cursor: pointer;
+  background-color: var(--color-tarjetas);
+  transition: all 0.3s ease;
 }
 
 .filtro-grupo input[type='checkbox'] {
@@ -233,31 +239,31 @@ const reiniciar = (): void => {
 .btn-reset {
   background: none;
   border: 2px solid var(--color-primario);
-  color: black;
-  padding: 6px 15px;
-  border-radius: 5px;
+  color: var(--color-texto-oscuro);
+  padding: 8px 16px;
+  border-radius: 6px;
   cursor: pointer;
   font-weight: bold;
   font-size: 14px;
   transition: all 0.2s ease;
-  margin-left: auto;
 }
 
 .btn-reset:hover {
-  background: #16c0b0;
+  background: var(--color-primario);
   color: white;
 }
 
 .resultado-count {
-  color: #666;
+  color: var(--color-texto-oscuro);
   font-size: 14px;
   margin-bottom: 20px;
+  opacity: 0.8;
 }
 
 .sin-resultados {
   text-align: center;
   padding: 60px 0;
-  color: #666;
+  color: var(--color-texto-oscuro);
   font-size: 20px;
   display: flex;
   flex-direction: column;
@@ -265,16 +271,16 @@ const reiniciar = (): void => {
   gap: 20px;
 }
 .buscar {
-  border: 1px solid var(--color-borde);
-  border-radius: 5px;
-  padding: 5px 10px;
-  font-size: 14px;
-  color: var(--color-texto-oscuro);
-  width: 180px;
-  transition: border-color 0.2s ease;
+  width: 200px;
 }
-.buscar:focus {
+.buscar:focus,
+.filtro-grupo select:focus {
   outline: none;
   border-color: var(--color-primario);
+}
+.lista-productos {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
 }
 </style>
