@@ -5,10 +5,15 @@ import type { Usuario } from '@/types/index'
 
 export const datos = defineStore('usuario', () => {
   const usuario = ref<Usuario | null>(null)
-  const logueado = computed(() => usuario.value !== null)
+  const logueado = computed(() => usuario.value !== null || invitado.value)
   const premium = computed(() => usuario.value?.premium ?? false)
-  const nombre = computed(() => usuario.value?.nombre ?? '')
+  const nombre = computed(() => {
+    if (usuario.value) return usuario.value.nombre
+    if (invitado.value) return 'Invitado'
+    return ''
+  })
   const error = ref<string>('')
+  const invitado = ref<boolean>(false)
 
   async function login(email: string, contrasena: string): Promise<boolean> {
     try {
@@ -57,9 +62,15 @@ export const datos = defineStore('usuario', () => {
       return false
     }
   }
+  function entradainvitado(): void {
+    usuario.value = null
+    invitado.value = true
+    error.value = ''
+  }
 
   function salida(): void {
     usuario.value = null
+    invitado.value = false
     localStorage.removeItem('usuario')
   }
 
@@ -72,5 +83,16 @@ export const datos = defineStore('usuario', () => {
     }
   }
 
-  return { usuario, logueado, premium, nombre, error, login, registro, salida, conectada }
+  return {
+    usuario,
+    logueado,
+    premium,
+    nombre,
+    error,
+    login,
+    registro,
+    salida,
+    conectada,
+    entradainvitado,
+  }
 })

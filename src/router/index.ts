@@ -1,4 +1,5 @@
 import { datos } from '@/stores/Usuario'
+import LoginView from '@/views/LoginView.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 //En vez de hacer 9 imports hacemos uno que sea global con las carpeta de views y que nos pille todos los archivos .vue
 const vistas = import.meta.glob('../views/*.vue')
@@ -23,13 +24,13 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      name: 'Home',
-      component: vistas['../views/HomeView.vue'],
+      name: 'Login',
+      component: LoginView,
     },
     {
-      path: '/login',
-      name: 'Login',
-      component: vistas['../views/LoginView.vue'],
+      path: '/home',
+      name: 'Home',
+      component: vistas['../views/HomeView.vue'],
     },
     {
       path: '/tienda',
@@ -97,6 +98,11 @@ router.beforeEach((to) => {
   if (to.name === 'Carrito' && !log.logueado) {
     return {
       name: 'Login',
+    }
+  }
+  if (to.name === 'Login' && log.logueado) {
+    return {
+      name: 'Home',
     }
   }
 })

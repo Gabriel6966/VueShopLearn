@@ -2,9 +2,11 @@
 import { ref } from 'vue'
 import { datos } from '@/stores/Usuario'
 import { useRouter } from 'vue-router'
+import { NotificacionStore } from '@/stores/NotificationStore'
 
 const usuario = datos()
 const router = useRouter()
+const ns = NotificacionStore()
 
 const modo = ref<'login' | 'registro'>('login')
 const nombre = ref<string>('')
@@ -24,6 +26,14 @@ const onSubmit = async (): Promise<void> => {
 const cambio = (): void => {
   modo.value = modo.value === 'login' ? 'registro' : 'login'
   usuario.error = ''
+}
+
+const loginvitado = (): void => {
+  usuario.entradainvitado() //LLaMada a la funcion
+  ns.mostrar('Estas navegando como invitado')
+  router.push({
+    name: 'TiendaCompleta',
+  })
 }
 </script>
 <template>
@@ -67,6 +77,12 @@ const cambio = (): void => {
           {{ modo === 'login' ? 'Registrarte' : 'Iniciar sesion' }}
         </span>
       </p>
+      <div class="divisor">o</div>
+      <button type="button" class="invitado" @click="loginvitado">
+        Continuar sin iniciar sesion
+      </button>
+
+      <div></div>
     </div>
   </div>
 </template>
@@ -292,5 +308,43 @@ h2 {
 
 .cambiar span:hover {
   color: #12998d;
+}
+.divisor {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: #888;
+  font-size: 14px;
+  margin: 10px 0;
+}
+
+.divisor::before,
+.divisor::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid #d8d8d8;
+}
+.divisor:not(:empty)::before {
+  margin-right: 15px;
+}
+.divisor:not(:empty)::after {
+  margin-right: 15px;
+}
+
+.invitado {
+  background: transparent;
+  border: 2px solid #39495c;
+  color: #39495c;
+  padding: 10px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  width: 100%;
+}
+
+.invitado:hover {
+  background: #39495c;
+  color: white;
 }
 </style>
