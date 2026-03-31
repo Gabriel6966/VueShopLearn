@@ -13,6 +13,14 @@ const nombre = ref<string>('')
 const email = ref<string>('')
 const contra = ref<string>('')
 
+const X = ref(0)
+const Y = ref(0)
+
+const raton = (e: MouseEvent) => {
+  X.value = e.clientX
+  Y.value = e.clientY
+}
+
 const onSubmit = async (): Promise<void> => {
   var correcto: boolean
   if (modo.value === 'login') {
@@ -37,7 +45,13 @@ const loginvitado = (): void => {
 }
 </script>
 <template>
-  <div class="login-pagina">
+  <div
+    class="login-pagina"
+    @mouseover="raton"
+    :style="{ '--raton-x': X + 'px', '--raton-y': Y + 'px' }"
+  >
+    <div class="ptnbase"></div>
+    <div class="ptnreactivos"></div>
     <div class="animaciones">
       <div v-for="n in 10" :key="n" class="animacion"></div>
     </div>
@@ -93,7 +107,7 @@ const loginvitado = (): void => {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background: linear-gradient(135deg, #16c0b0, #39495c);
+  background-color: #000000;
   overflow: hidden;
   position: relative;
 }
@@ -199,16 +213,17 @@ const loginvitado = (): void => {
 }
 
 .login-card {
-  background: rgba(255, 255, 255, 0.95);
+  background: var(--color-tarjetas-oscuras, #1e1e1e);
   padding: 40px;
   border-radius: 20px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
   width: 100%;
   max-width: 420px;
   z-index: 10;
   display: flex;
   flex-direction: column;
   gap: 15px;
+  border: 1px solid var(--color-primario-claro, #8cecc8);
 }
 
 .logo {
@@ -239,13 +254,13 @@ h2 {
 
 .campo label {
   font-weight: bold;
-  color: #39495c;
+  color: var(--color-gris-claro, #e2e8f0);
   font-size: 14px;
 }
 
 .campo input {
   padding: 10px 15px;
-  border: 2px solid #d8d8d8;
+  border: 2px solid var(--color-primario-oscuro, #4a5568);
   border-radius: 8px;
   font-size: 15px;
   transition: border-color 0.2s ease;
@@ -255,11 +270,11 @@ h2 {
 
 .campo input:focus {
   outline: none;
-  border-color: #16c0b0;
+  border-color: var(--color-primario-claro, #8cecc8);
 }
 
 .registrar {
-  background: linear-gradient(135deg, #16c0b0, #12998d);
+  background: linear-gradient(135deg, var(--color-primario), #12998d);
   color: white;
   border: none;
   padding: 12px;
@@ -313,7 +328,7 @@ h2 {
   display: flex;
   align-items: center;
   text-align: center;
-  color: #888;
+  color: var(--color-go, #a0aec0);
   font-size: 14px;
   margin: 10px 0;
 }
@@ -346,5 +361,40 @@ h2 {
 .invitado:hover {
   background: #39495c;
   color: white;
+}
+.ptnbase,
+.ptnreactivos {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  /*Evitamos que no bloqueen los clicks */
+  pointer-events: none;
+  /*Ajustamos las capas */
+  background-position: 0 0;
+}
+.ptnbase {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.8) 1.5px, transparent 1.5px);
+  background-size: 30px 30px;
+  z-index: 1;
+}
+.ptnreactivos {
+  background-image: radial-gradient(var(--color-primario) 2px, transparent 2px);
+  background-size: 30px 30px;
+  z-index: 2;
+
+  -webkit-mask-image: radial-gradient(
+    circle 200px at var(--raton-x, 50%) var(--raton-y, 50%),
+    black 0%,
+    transparent 100%
+  );
+  mask-image: radial-gradient(
+    circle 200px at var(--raton-x, 50%) var(--raton-y, 50%),
+    black 0%,
+    transparent 100%
+  );
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
 }
 </style>
