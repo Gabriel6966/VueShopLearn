@@ -51,6 +51,6 @@ export interface Usuario {
   id?: string
   nombre: string
   email: string
-  contrasena: string
+  contrasena?: string // Contraseña es opcional para no exponerla en memoria ni localStorage
   premium: boolean
 }
