@@ -1,0 +1,4 @@
+## 2024-05-17 - [Local Storage and State Plaintext Password Exposure]
+**Vulnerability:** The `Usuario` store was saving the entire user object directly from the API response into Pinia reactive state (`usuario.value`) and persisting it to `localStorage`. This included the user's plaintext password (`contrasena`), exposing it to anyone with access to the browser's developer tools or any XSS attack on the site.
+**Learning:** This architectural flaw reveals a pattern where backend API responses are trusted and blindly mapped into client-side state/storage without manual sanitization or exclusion of sensitive fields.
+**Prevention:** Always destructure or explicitly map backend responses before assigning them to frontend application state or persisting them to browser storage (like `localStorage` or `sessionStorage`). Sensitive fields like passwords, security tokens, or PII should never be stored raw in client-side storage.

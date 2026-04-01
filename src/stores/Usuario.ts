@@ -24,10 +24,13 @@ export const datos = defineStore('usuario', () => {
         error.value = 'El correo o la contraseña son incorrectas'
         return false
       }
-      usuario.value = encontrado
+      // Security Fix: Prevent plaintext password exposure in reactive state and localStorage
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { contrasena: _pass, ...usuarioSeguro } = encontrado
+      usuario.value = usuarioSeguro as Usuario
 
       //Guardamos en el localstorage para que haya persistencia entre sesiones
-      localStorage.setItem('usuario', JSON.stringify(encontrado))
+      localStorage.setItem('usuario', JSON.stringify(usuarioSeguro))
       error.value = ''
       return true
     } catch (err) {
@@ -52,8 +55,11 @@ export const datos = defineStore('usuario', () => {
         premium: false,
       }
       const creado = await TiendaService.registrar(nuevo)
-      usuario.value = creado.data
-      localStorage.setItem('usuario', JSON.stringify(creado.data))
+      // Security Fix: Prevent plaintext password exposure in reactive state and localStorage
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { contrasena: _pass, ...usuarioSeguro } = creado.data
+      usuario.value = usuarioSeguro as Usuario
+      localStorage.setItem('usuario', JSON.stringify(usuarioSeguro))
       error.value = ''
       return true
     } catch (err) {
