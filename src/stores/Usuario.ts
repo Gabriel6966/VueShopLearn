@@ -24,10 +24,15 @@ export const datos = defineStore('usuario', () => {
         error.value = 'El correo o la contraseña son incorrectas'
         return false
       }
-      usuario.value = encontrado
+
+      //Con la funcion de antes la contraseña al estar guardada en el localstorage,estara escrita al darle F12 para inspeccionar la pagina y se podria robar la contra muy facil
+      //Al hacer eso a ts le decimos que almacene en una variable temporal con el _ y los tres puntos(operador rest) le decimos que coja las demas variables
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { contrasena: _contra, ...usuarioSeguro } = encontrado
+      usuario.value = usuarioSeguro as Usuario
 
       //Guardamos en el localstorage para que haya persistencia entre sesiones
-      localStorage.setItem('usuario', JSON.stringify(encontrado))
+      localStorage.setItem('usuario', JSON.stringify(usuarioSeguro))
       error.value = ''
       return true
     } catch (err) {
@@ -52,8 +57,14 @@ export const datos = defineStore('usuario', () => {
         premium: false,
       }
       const creado = await TiendaService.registrar(nuevo)
-      usuario.value = creado.data
-      localStorage.setItem('usuario', JSON.stringify(creado.data))
+      //usuario.value = creado.data
+      //localStorage.setItem('usuario', JSON.stringify(creado.data))
+
+      //Y con este texto le decimos a ts que aun que no usemos la variable contra no nos de el error
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { contrasena: _contra, ...usuarioSeguro } = creado.data
+      usuario.value = usuarioSeguro as Usuario
+      localStorage.setItem('usuario', JSON.stringify(usuarioSeguro))
       error.value = ''
       return true
     } catch (err) {
