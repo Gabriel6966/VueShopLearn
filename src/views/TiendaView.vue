@@ -4,6 +4,7 @@ import { debounce } from 'lodash-es'
 import TiendaService from '@/services/TiendaService'
 import ProductoInfo from './ProductoInfo.vue'
 import type { Producto } from '@/types/index'
+import { useRouter } from 'vue-router'
 
 //Filtros
 const Color = ref<string>('')
@@ -12,6 +13,7 @@ const Stock = ref<boolean>(false)
 const Orden = ref<string>('')
 const productos = ref<Producto[]>([])
 const buscar = ref<string>('')
+const router = useRouter()
 //Debounce
 const dbd = ref<string>('')
 
@@ -31,8 +33,8 @@ onMounted(() => {
     .then((response) => {
       productos.value = response.data
     })
-    .catch((error) => {
-      console.log(error)
+    .catch(() => {
+      router.push({ name: 'NetworkError' })
     })
 })
 

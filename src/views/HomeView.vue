@@ -2,16 +2,17 @@
 import { ref, onMounted } from 'vue'
 import TiendaService from '@/services/TiendaService'
 import { Producto } from '@/types'
+import { useRouter } from 'vue-router'
 
 const productos = ref<Producto[] | null>(null)
-
+const router = useRouter()
 onMounted(() => {
   TiendaService.getCalcetines()
     .then((response) => {
       productos.value = response.data
     })
-    .catch((error) => {
-      console.log(error)
+    .catch(() => {
+      router.push({ name: 'NetworkError' })
     })
 })
 </script>

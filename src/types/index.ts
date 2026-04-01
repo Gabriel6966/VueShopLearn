@@ -51,6 +51,6 @@ export interface Usuario {
   id?: string
   nombre: string
   email: string
-  contrasena: string
+  contrasena?: string
   premium: boolean
 }
