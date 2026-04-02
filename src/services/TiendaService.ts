@@ -30,7 +30,7 @@ export default {
   },
 
   encontrar(email: string) {
-    return apiClient.get(`/usuarios?email=${email}`)
+    return apiClient.get(`/usuarios?email=${encodeURIComponent(email)}`)
   },
 
   registrar(usuario: object) {
