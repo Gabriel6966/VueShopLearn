@@ -1,0 +1,4 @@
+## 2026-04-05 - Query Injection and Path Traversal Risks via Direct String Concatenation
+**Vulnerability:** Unsanitized user inputs (`id`, `productoId`, `email`) were directly concatenated into API endpoint URLs in `TiendaService.ts` (e.g., `/usuarios?email=${email}`).
+**Learning:** Bypassing standard HTTP client utilities (like Axios `params`) in favor of manual string building creates avenues for HTTP parameter pollution, path traversal, and potentially SSRF-like behavior, as raw inputs can manipulate URL structure.
+**Prevention:** Always use `encodeURIComponent()` for variables embedded in URL paths, and use the client's built-in parameters configuration object (e.g., `{ params: { key: value } }` in Axios) to safely construct query strings.
