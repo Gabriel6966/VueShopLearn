@@ -14,23 +14,28 @@ const apiClient = axios.create({
 
 export default {
   getCalcetines(id?: string) {
-    return apiClient.get(id ? `/calcetines/${id}` : '/calcetines')
+    // 🛡️ Security: Use encodeURIComponent for route parameters to prevent injection
+    return apiClient.get(id ? `/calcetines/${encodeURIComponent(id)}` : '/calcetines')
   },
 
   async opiniones(productoId: string, opinion: Review) {
-    const respuesta = await apiClient.get(`/calcetines/${productoId}`)
+    // 🛡️ Security: Use encodeURIComponent for route parameters
+    const safeId = encodeURIComponent(productoId)
+    const respuesta = await apiClient.get(`/calcetines/${safeId}`)
     const opiactuales = respuesta.data.reviews || []
-    return apiClient.patch(`/calcetines/${productoId}`, {
+    return apiClient.patch(`/calcetines/${safeId}`, {
       reviews: [...opiactuales, opinion],
     })
   },
 
   recogeropiniones(productoId: string) {
-    return apiClient.get(`/calcetines/${productoId}`)
+    // 🛡️ Security: Use encodeURIComponent for route parameters
+    return apiClient.get(`/calcetines/${encodeURIComponent(productoId)}`)
   },
 
   encontrar(email: string) {
-    return apiClient.get(`/usuarios?email=${email}`)
+    // 🛡️ Security: Use params object to safely encode query parameters and prevent parameter pollution
+    return apiClient.get('/usuarios', { params: { email } })
   },
 
   registrar(usuario: object) {

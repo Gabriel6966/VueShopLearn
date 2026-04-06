@@ -1,0 +1,4 @@
+## 2025-05-18 - Prevent HTTP Parameter Pollution & Query Injection in Axios Requests
+**Vulnerability:** The application was constructing Axios request URLs using string interpolation directly with user-supplied data (e.g., `` `/usuarios?email=${email}` ``). This exposes the application to HTTP Parameter Pollution and Query Injection where an attacker can append unexpected query parameters (like `&admin=true`) or manipulate the route.
+**Learning:** This existed because string interpolation is a common but unsafe shortcut when making HTTP requests, bypassing the automatic URI encoding that should happen for parameter values.
+**Prevention:** Always use `encodeURIComponent` when passing user-supplied data into API request URLs for path parameters, and always use the Axios `params` config object for query parameters, which handles the encoding safely and automatically.
