@@ -1,0 +1,4 @@
+## 2025-04-07 - HTTP Parameter Pollution and Query Injection Risk
+**Vulnerability:** The API service (`src/services/TiendaService.ts`) was using string interpolation for URL query parameters (e.g., `/usuarios?email=${email}`) and dynamic path segments (e.g., `/calcetines/${id}`), leaving the application vulnerable to HTTP Parameter Pollution and query injection attacks if an attacker inputs specially crafted URLs.
+**Learning:** String interpolation does not automatically encode special characters in URL components, meaning data passed to the backend might execute unintended operations or break URL parsing.
+**Prevention:** Always use the Axios `params` config object to automatically encode query parameters (e.g., `{ params: { email } }`), and explicitly use `encodeURIComponent()` for all dynamic path segments (e.g., `/calcetines/${encodeURIComponent(id)}`).
