@@ -30,7 +30,8 @@ export default {
   },
 
   encontrar(email: string) {
-    return apiClient.get(`/usuarios?email=${email}`)
+    // 🛡️ Sentinel: Safe URL encoding for query parameters using Axios params config
+    return apiClient.get('/usuarios', { params: { email } })
   },
 
   registrar(usuario: object) {
