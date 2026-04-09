@@ -13,6 +13,7 @@ export const CarritoTienda = defineStore('cart', () => {
     items.value.reduce((acc, item) => acc + item.price, 0).toFixed(2),
   )
 
+  //Acciones
   function add(producto: ItemCarrito) {
     items.value.push(producto)
     isAnimating.value = true
@@ -22,8 +23,10 @@ export const CarritoTienda = defineStore('cart', () => {
   }
 
   function eliminar(id: number) {
-    const index = items.value.findIndex((item) => item.id === id)
-    if (index !== -1) items.value.splice(index, 1)
+    const index = items.value.findLastIndex((item) => item.varianteId === id)
+    if (index !== -1) {
+      items.value.splice(index, 1)
+    }
   }
 
   function vacio() {

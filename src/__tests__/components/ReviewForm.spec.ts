@@ -19,13 +19,6 @@ describe('ReviewForm.vue', () => {
 
     //Snapshot
     expect(contenedor.html()).toMatchSnapshot()
-
-    //expect(contenedor.emitted('review-submitted')![0][0]).toEqual({
-    //  name: 'Gabriel',
-    //  review: 'Buenos calcetines',
-    //  rating: 5,
-    //  recommended: 1,
-    //})
   })
 
   it('avisar si falta algo', async () => {

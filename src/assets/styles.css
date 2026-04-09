@@ -80,25 +80,6 @@ body {
   }
 }
 
-/*Ordenado abajo los reviews*/
-.review-wrapper {
-  margin-top: 50px;
-  padding: 40px;
-  border-top: 2px solid var(--color-borde);
-  display: flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
-}
-
-.review-form,
-.review-container {
-  width: 425px;
-  padding: 25px;
-  background-color: var(--color-tarjetas);
-  border: 2px solid var(--color-borde);
-  transition: background-color 0.3s ease;
-  box-shadow: 2px 15px -12px rgba(0, 0, 0, 0.57);
-}
 .flash-message {
   position: fixed;
   top: 80px;

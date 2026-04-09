@@ -4,16 +4,6 @@ import type { Review } from '@/types/index'
 defineProps<{
   reviews: Review[]
 }>()
-
-//    export default{
-//        props:{
-//        reviews:{
-//            type:Array,
-//            required:true
-//        }
-//    }
-//    }
-//
 </script>
 <template>
   <div class="review-list">

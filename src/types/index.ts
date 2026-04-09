@@ -32,7 +32,7 @@ export interface Producto {
 }
 
 export interface ItemCarrito {
-  id: number
+  varianteId: number
   nombre: string
   color: string
   image: string

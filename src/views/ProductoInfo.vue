@@ -35,7 +35,7 @@ const actualizarVariante = (index: number): void => {
 
 const anadirAlCarrit = (): void => {
   carritoStore.add({
-    id: actualVariante.value.id,
+    varianteId: actualVariante.value.id,
     nombre: title.value,
     color: actualVariante.value.color,
     image: actualVariante.value.image,

@@ -36,7 +36,12 @@ const anadirReview = (productoOpinion: Review): void => {
 
 <style scoped>
 .review-wrapper {
-  padding: 20px;
+  margin-top: 50px;
+  padding: 40px;
+  border-top: 2px solid var(--color-borde);
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
 }
 
 .sin-reviews {

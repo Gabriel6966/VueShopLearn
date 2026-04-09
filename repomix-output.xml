@@ -1,0 +1,2975 @@
+This file is a merged representation of the entire codebase, combined into a single document by Repomix.
+
+<file_summary>
+This section contains a summary of this file.
+
+<purpose>
+This file contains a packed representation of the entire repository's contents.
+It is designed to be easily consumable by AI systems for analysis, code review,
+or other automated processes.
+</purpose>
+
+<file_format>
+The content is organized as follows:
+1. This summary section
+2. Repository information
+3. Directory structure
+4. Repository files (if enabled)
+5. Multiple file entries, each consisting of:
+  - File path as an attribute
+  - Full contents of the file
+</file_format>
+
+<usage_guidelines>
+- This file should be treated as read-only. Any changes should be made to the
+  original repository files, not this packed version.
+- When processing this file, use the file path to distinguish
+  between different files in the repository.
+- Be aware that this file may contain sensitive information. Handle it with
+  the same level of security as you would the original repository.
+</usage_guidelines>
+
+<notes>
+- Some files may have been excluded based on .gitignore rules and Repomix's configuration
+- Binary files are not included in this packed representation. Please refer to the Repository Structure section for a complete list of file paths, including binary files
+- Files matching patterns in .gitignore are excluded
+- Files matching default ignore patterns are excluded
+- Files are sorted by Git change count (files with more changes are at the bottom)
+</notes>
+
+</file_summary>
+
+<directory_structure>
+.editorconfig
+.gitattributes
+.gitignore
+.oxlintrc.json
+.prettierrc.json
+cypress.config.ts
+cypress/e2e/tienda.cy.ts
+cypress/fixtures/example.json
+cypress/support/commands.ts
+cypress/support/e2e.ts
+db.json
+eslint.config.js
+index.html
+jsconfig.json
+package.json
+public/favicon.ico
+public/images/hoodie_gray.jpg
+public/images/hoodie_navy.jpg
+public/images/shirt_black.jpg
+public/images/shirt_white.jpg
+public/images/socks_blue.jpg
+public/images/socks_green.jpg
+README.md
+src/__tests__/components/__snapshots__/ReviewForm.spec.ts.snap
+src/__tests__/components/__snapshots__/ReviewList.spec.ts.snap
+src/__tests__/components/ReviewForm.spec.ts
+src/__tests__/components/ReviewList.spec.ts
+src/__tests__/services/TiendaService.spec.ts
+src/App.vue
+src/assets/styles.css
+src/components/ReviewForm.vue
+src/components/ReviewList.vue
+src/env.d.ts
+src/main.ts
+src/router/index.ts
+src/services/TiendaService.ts
+src/stores/CartStore.ts
+src/stores/NotificationStore.ts
+src/stores/ReviewStore.ts
+src/stores/Usuario.ts
+src/types/index.ts
+src/views/CarritoView.vue
+src/views/HomeView.vue
+src/views/LoginView.vue
+src/views/NetworkError.vue
+src/views/NotFound.vue
+src/views/ProductoInfo.vue
+src/views/ProductoLayout.vue
+src/views/ProductoResenas.vue
+src/views/TiendaView.vue
+tsconfig.json
+vite.config.ts
+vitest.config.ts
+</directory_structure>
+
+<files>
+This section contains the contents of the repository's files.
+
+<file path=".editorconfig">
+[*.{js,jsx,mjs,cjs,ts,tsx,mts,cts,vue,css,scss,sass,less,styl}]
+charset = utf-8
+indent_size = 2
+indent_style = space
+insert_final_newline = true
+trim_trailing_whitespace = true
+end_of_line = lf
+max_line_length = 100
+</file>
+
+<file path=".gitattributes">
+* text=auto eol=lf
+</file>
+
+<file path=".oxlintrc.json">
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["eslint", "unicorn", "oxc", "vue"],
+  "env": {
+    "browser": true
+  },
+  "categories": {
+    "correctness": "error"
+  }
+}
+</file>
+
+<file path=".prettierrc.json">
+{
+  "$schema": "https://json.schemastore.org/prettierrc",
+  "semi": false,
+  "singleQuote": true,
+  "printWidth": 100
+}
+</file>
+
+<file path="cypress.config.ts">
+import { defineConfig } from "cypress";
+
+export default defineConfig({
+  allowCypressEnv: false,
+
+  e2e: {
+    setupNodeEvents(on, config) {
+      // implement node event listeners here
+    },
+  },
+});
+</file>
+
+<file path="cypress/e2e/tienda.cy.ts">
+describe('Prueba E2E ', () => {
+  beforeEach(() => {
+    cy.visit('http://localhost:5173')
+  })
+
+  it('Cargando correctamente', () => {
+    //Vemos que la barra verde existe
+    cy.get('.nav-bar').should('be.visible')
+    //Comprobacionde carritoç
+    cy.get('.cart').should('contain', 'Cart(0)')
+  })
+
+  it('Sumar 1 cuando añadimos un producto', () => {
+    //Tienda
+    cy.visit('http://localhost:5173/tienda')
+
+    //Busca primer boton
+    cy.get('.button ').first().click()
+
+    //Acualizacion de carrito
+    cy.get('.cart').should('contain', 'Cart(1)')
+  })
+})
+</file>
+
+<file path="cypress/fixtures/example.json">
+{
+  "name": "Using fixtures to represent data",
+  "email": "hello@cypress.io",
+  "body": "Fixtures are a great way to mock data for responses to routes"
+}
+</file>
+
+<file path="cypress/support/commands.ts">
+/// <reference types="cypress" />
+// ***********************************************
+// This example commands.ts shows you how to
+// create various custom commands and overwrite
+// existing commands.
+//
+// For more comprehensive examples of custom
+// commands please read more here:
+// https://on.cypress.io/custom-commands
+// ***********************************************
+//
+//
+// -- This is a parent command --
+// Cypress.Commands.add('login', (email, password) => { ... })
+//
+//
+// -- This is a child command --
+// Cypress.Commands.add('drag', { prevSubject: 'element'}, (subject, options) => { ... })
+//
+//
+// -- This is a dual command --
+// Cypress.Commands.add('dismiss', { prevSubject: 'optional'}, (subject, options) => { ... })
+//
+//
+// -- This will overwrite an existing command --
+// Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+//
+// declare global {
+//   namespace Cypress {
+//     interface Chainable {
+//       login(email: string, password: string): Chainable<void>
+//       drag(subject: string, options?: Partial<TypeOptions>): Chainable<Element>
+//       dismiss(subject: string, options?: Partial<TypeOptions>): Chainable<Element>
+//       visit(originalFn: CommandOriginalFn, url: string, options: Partial<VisitOptions>): Chainable<Element>
+//     }
+//   }
+// }
+</file>
+
+<file path="cypress/support/e2e.ts">
+// ***********************************************************
+// This example support/e2e.ts is processed and
+// loaded automatically before your test files.
+//
+// This is a great place to put global configuration and
+// behavior that modifies Cypress.
+//
+// You can change the location of this file or turn off
+// automatically serving support files with the
+// 'supportFile' configuration option.
+//
+// You can read more here:
+// https://on.cypress.io/configuration
+// ***********************************************************
+
+// Import commands.js using ES2015 syntax:
+import './commands'
+</file>
+
+<file path="jsconfig.json">
+{
+  "compilerOptions": {
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
+  "exclude": ["node_modules", "dist"]
+}
+</file>
+
+<file path="src/__tests__/services/TiendaService.spec.ts">
+import { describe, it, expect, vi, beforeEach } from 'vitest'
+import TiendaService from '@/services/TiendaService'
+import type { AxiosResponse } from 'axios'
+
+//Mockeamos axios para la llamada falsa de API
+vi.mock('axios')
+
+describe('TiendaService', () => {
+  beforeEach(() => {
+    vi.clearAllMocks()
+  })
+
+  it('obtener todos los calcetines', async () => {
+    const falso = [
+      { id: '1', product: 'Calcetines rojos' },
+      { id: '2', product: 'Calcetines azules' },
+    ]
+    //Usaios el AxiosResponse para que no se queje Ts ya que necesita el valor que le pasamos tenga la misma forma cuando lo devuelva
+    vi.spyOn(TiendaService, 'getCalcetines').mockResolvedValue({
+      data: falso,
+    } as AxiosResponse)
+
+    const respuesta = await TiendaService.getCalcetines()
+
+    expect(respuesta.data).toEqual(falso)
+  })
+
+  it('obtener calcetin por su id', async () => {
+    const cfalso = {
+      id: '5',
+      product: 'Calcetines verdes',
+    }
+
+    vi.spyOn(TiendaService, 'getCalcetines').mockResolvedValue({
+      data: cfalso,
+    } as AxiosResponse)
+
+    const respuesta = await TiendaService.getCalcetines('5')
+
+    expect(respuesta.data).toEqual(cfalso)
+  })
+})
+</file>
+
+<file path="src/stores/NotificationStore.ts">
+import { ref } from 'vue'
+import { defineStore } from 'pinia'
+
+export const NotificacionStore = defineStore('notification', () => {
+  const mensaje = ref('')
+
+  function mostrar(texto: string) {
+    mensaje.value = texto
+    setTimeout(() => {
+      mensaje.value = ''
+    }, 3000)
+  }
+  return { mensaje, mostrar }
+})
+</file>
+
+<file path="vite.config.ts">
+import { fileURLToPath, URL } from 'node:url'
+
+import { defineConfig } from 'vite'
+import vue from '@vitejs/plugin-vue'
+
+// https://vite.dev/config/
+export default defineConfig({
+  plugins: [vue()],
+  resolve: {
+    alias: {
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
+    },
+  },
+})
+</file>
+
+<file path="vitest.config.ts">
+import { defineConfig } from 'vitest/config'
+import vue from '@vitejs/plugin-vue'
+import { fileURLToPath, URL } from 'node:url'
+
+export default defineConfig({
+  plugins: [vue()],
+  resolve: {
+    alias: {
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
+    },
+  },
+
+  test: {
+    environment: 'jsdom',
+    globals: true,
+  },
+})
+</file>
+
+<file path="index.html">
+<!doctype html>
+<html lang="">
+  <head>
+    <meta charset="UTF-8" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite App</title>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
+</file>
+
+<file path="src/__tests__/components/ReviewForm.spec.ts">
+import { describe, it, expect, vi } from 'vitest'
+import { mount } from '@vue/test-utils'
+import ReviewForm from '@/components/ReviewForm.vue'
+
+describe('ReviewForm.vue', () => {
+  it('funciona con los datos correctos al enviar', async () => {
+    //Creamos el formulario
+    const contenedor = mount(ReviewForm)
+
+    await contenedor.find('#name').setValue('Gabriel')
+    await contenedor.find('#review').setValue('Buenos calcetines')
+    await contenedor.find('#rating').setValue('5')
+    await contenedor.find('#recommended').setValue('1')
+
+    await contenedor.find('form').trigger('submit') //Boton de enviar
+
+    //Comprobaciones
+    expect(contenedor.emitted('review-submitted')).toBeTruthy()
+
+    //Snapshot
+    expect(contenedor.html()).toMatchSnapshot()
+
+    //expect(contenedor.emitted('review-submitted')![0][0]).toEqual({
+    //  name: 'Gabriel',
+    //  review: 'Buenos calcetines',
+    //  rating: 5,
+    //  recommended: 1,
+    //})
+  })
+
+  it('avisar si falta algo', async () => {
+    const aviso = vi.spyOn(window, 'alert').mockImplementation(() => {})
+    const contenedor = mount(ReviewForm)
+    await contenedor.find('form').trigger('submit')
+
+    //Tiene que tener el texto que le pasamos el mismo texto que en el reviewform,para que no de error
+    expect(aviso).toHaveBeenCalledWith('Completa el formulario entero antes de entregar')
+
+    //Limpiamos
+    aviso.mockRestore()
+  })
+})
+</file>
+
+<file path="src/__tests__/components/ReviewList.spec.ts">
+import { describe, it, expect } from 'vitest'
+import { mount } from '@vue/test-utils'
+import ReviewList from '@/components/ReviewList.vue'
+
+const prueba = [
+  { name: 'Brian', review: 'Normales', rating: 4, recommended: 1 },
+  { name: 'Maria', review: 'Basicos', rating: 2, recommended: 0 },
+]
+
+describe('ReviewList.vue', () => {
+  it('opiniones que le pasamos', () => {
+    const contenedor = mount(ReviewList, {
+      props: {
+        reviews: prueba,
+      },
+    })
+    //expect(contenedor.text()).toContain('Normales')
+    //expect(contenedor.findAll('li')).toHaveLength(2)
+
+    //Aplicamos el concepto de snapshot(basicamente hace una foto y la compara con la vieja  y si cambia algo nos avisa)
+    expect(contenedor.html()).toMatchSnapshot()
+  })
+
+  it('no peta si no hay nada', () => {
+    const contenedor = mount(ReviewList, {
+      props: {
+        reviews: [],
+      },
+    })
+    //expect(contenedor.findAll('li')).toHaveLength(0)
+    //Aqui tambien
+    expect(contenedor.html()).toMatchSnapshot()
+  })
+})
+</file>
+
+<file path="src/env.d.ts">
+//Le decimos a ts que use los tipos de vite
+
+/// <reference types="vite/client" />
+
+declare module '*.vue' {
+  import type { DefineComponent } from 'vue'
+  //Tenemos que cambiarlo a un object en este caso ya que ts no permite que haya cualquier cosa nula
+  //A linter no le gusta el any entonces lo cambiamos por el unknown apra usarlo en ts
+  const component: DefineComponent<object, object, unknown>
+  export default component
+}
+
+interface ImportMetaEnv {
+  readonly VITE_APP_TITLE: string
+}
+
+interface ImportMeta {
+  readonly env: ImportMetaEnv
+}
+</file>
+
+<file path="src/stores/CartStore.ts">
+import { defineStore } from 'pinia'
+import { ref, computed } from 'vue'
+import type { ItemCarrito } from '@/types/index'
+
+export const CarritoTienda = defineStore('cart', () => {
+  const items = ref<ItemCarrito[]>([])
+  const isAnimating = ref(false)
+
+  //Getters
+  //Computed para pinia son getters
+  const total = computed(() => items.value.length)
+  const precioTotal = computed(() =>
+    items.value.reduce((acc, item) => acc + item.price, 0).toFixed(2),
+  )
+
+  function add(producto: ItemCarrito) {
+    items.value.push(producto)
+    isAnimating.value = true
+    setTimeout(() => {
+      isAnimating.value = false
+    }, 300)
+  }
+
+  function eliminar(id: number) {
+    const index = items.value.findIndex((item) => item.id === id)
+    if (index !== -1) items.value.splice(index, 1)
+  }
+
+  function vacio() {
+    items.value = []
+  }
+
+  return { items, total, precioTotal, isAnimating, add, eliminar, vacio }
+})
+</file>
+
+<file path="src/views/NetworkError.vue">
+<template>
+  <div style="text-align: center; margin-top: 50px">
+    <h1 style="font-size: 80px; color: #ff4a4a">Vaya lo siento</h1>
+    <h2>Parece ser que estamos teniendo unos problemas de conexion interna de red</h2>
+    <h3>
+      Danos un suspiro que en nada lo tenemos,
+      <a href="#" @click.prevent="$router.go(-1)">pulsa aqui</a> para recargar
+    </h3>
+  </div>
+</template>
+</file>
+
+<file path=".gitignore">
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+</file>
+
+<file path="eslint.config.js">
+import { defineConfig, globalIgnores } from 'eslint/config'
+import globals from 'globals'
+import js from '@eslint/js'
+import pluginVue from 'eslint-plugin-vue'
+import pluginOxlint from 'eslint-plugin-oxlint'
+import skipFormatting from 'eslint-config-prettier/flat'
+import tseslint from 'typescript-eslint'
+
+export default defineConfig([
+  {
+    name: 'app/files-to-lint',
+    files: ['**/*.{vue,js,mjs,jsx,ts,tsx}'],
+  },
+
+  globalIgnores(['**/dist/**', '**/dist-ssr/**', '**/coverage/**']),
+
+  {
+    languageOptions: {
+      globals: {
+        ...globals.browser,
+      },
+    },
+  },
+
+  js.configs.recommended,
+
+  ...tseslint.configs.recommended,
+
+  ...pluginVue.configs['flat/essential'],
+  {
+    files: ['**/*vue'],
+    languageOptions: {
+      parserOptions: {
+        parser: tseslint.parser,
+      },
+    },
+  },
+
+  ...pluginOxlint.buildFromOxlintConfigFile('.oxlintrc.json'),
+
+  skipFormatting,
+])
+</file>
+
+<file path="README.md">
+# 🧦 VueShopLearn - Online Store
+
+Online store project developed with **Vue 3** and **Vite** as part of a vocational training course.
+
+---
+
+## 🚀 Features
+
+- **Single File Components** architecture (.vue)
+- **Pinia** for global state management
+- **Vue Router** with nested routes, redirects and error handling
+- **Axios** for REST API consumption
+- **JSON Server** as backend simulation
+- **Composition API** with `ref`, `computed` and `onMounted`
+- Custom styles with CSS animations
+
+---
+
+## 📦 Functionalities
+
+- 🛒 Shopping cart with add, remove and clear
+- 🔑 User login with Premium account support
+- ⭐ Product reviews saved in database
+- 🔍 Filters by color, price, sales and stock
+- 📊 Price sorting with **QuickSort** algorithm
+- 💬 Real-time flash notifications
+- 🗺️ Navigation with nested routes and 404 error pages
+
+---
+
+## 🛠️ Installation
+
+1. Clone the repository
+```bash
+   git clone https://github.com/yourusername/progreso-tienda.git
+```
+
+2. Install dependencies
+```bash
+   npm install
+```
+
+3. Start the data server
+```bash
+   npx json-server --watch db.json
+```
+
+4. Start the application
+```bash
+   npm run dev
+```
+
+---
+
+## 🗂️ Project Structure
+```
+src/
+├── assets/          # Global styles
+├── components/      # Reusable components
+├── router/          # Route configuration
+├── services/        # API calls with Axios
+├── stores/          # Pinia stores
+│   ├── CartStore.js
+│   ├── NotificationStore.js
+│   ├── ReviewStore.js
+│   └── Usuario.js
+└── views/           # Application pages
+```
+
+---
+
+## 🧰 Technologies Used
+
+| Technology | Version | Purpose |
+|---|---|---|
+| Vue 3 | ^3.x | Main framework |
+| Vite | ^5.x | Bundler and dev server |
+| Pinia | ^2.x | State management |
+| Vue Router | ^4.x | Navigation |
+| Axios | ^1.x | HTTP requests |
+| JSON Server | ^1.x | Simulated REST API |
+
+---
+
+## 👤 Test Users
+
+| Username | Password | Type |
+|---|---|---|
+| gabriel | 1234 | Premium ⭐ |
+| andrei | 0000 | Normal |
+
+---
+
+## 📝 License
+
+Educational project — developed by **Gabi**
+</file>
+
+<file path="src/main.ts">
+import { createApp } from 'vue'
+import { createPinia } from 'pinia'
+import App from './App.vue'
+import router from './router'
+import './assets/styles.css'
+import { datos } from './stores/Usuario'
+
+const app = createApp(App)
+const pinia = createPinia()
+
+app.use(pinia)
+app.use(router)
+
+//mediante el metodo de recuperar(conectada) recuperamos la sesion al montar la aopp
+const log = datos()
+log.conectada()
+app.mount('#app')
+</file>
+
+<file path="src/stores/ReviewStore.ts">
+import { defineStore } from 'pinia'
+import { ref } from 'vue'
+import TiendaService from '@/services/TiendaService'
+import type { Review } from '@/types/index'
+import router from '@/router'
+
+export const useReviewStore = defineStore('reviews', () => {
+  type rp = { [key: string]: Review[] }
+  const reviews = ref<rp>({})
+  const cargando = ref(false)
+
+  //Cargamos los reviews de la API
+  async function cargarreviews(productoId: string) {
+    if (reviews.value[productoId]) return
+    cargando.value = true
+
+    try {
+      const respuesta = await TiendaService.recogeropiniones(productoId)
+      reviews.value[productoId] = respuesta.data.reviews || []
+    } catch {
+      router.push({ name: 'NetworkError' })
+    } finally {
+      cargando.value = false
+    }
+  }
+
+  async function anadir(productoId: string, opinion: Review) {
+    try {
+      await TiendaService.opiniones(productoId, opinion)
+      //Recargamos las reviews del producto
+      delete reviews.value[productoId]
+      await cargarreviews(productoId)
+    } catch {
+      router.push({ name: 'NetworkError' })
+    }
+  }
+
+  function resenas(productoId: string): Review[] {
+    //Que nos devuelva el producto de las reviws o un array vacio con el operador ternario
+    return reviews.value[productoId] ?? []
+  }
+
+  return { reviews, cargando, cargarreviews, resenas, anadir }
+})
+</file>
+
+<file path="src/components/ReviewList.vue">
+<script setup lang="ts">
+import type { Review } from '@/types/index'
+//Hacemos lo mismo que en el Form Migramos los datos
+defineProps<{
+  reviews: Review[]
+}>()
+
+//    export default{
+//        props:{
+//        reviews:{
+//            type:Array,
+//            required:true
+//        }
+//    }
+//    }
+//
+</script>
+<template>
+  <div class="review-list">
+    <h3>Reviews:</h3>
+    <ul>
+      <!--Recorremos el array de reviews con review y el index  para enseñar cada opinion que se ha hecho en el formu-->
+      <li v-for="(review, index) in reviews" :key="index">
+        <p>
+          <strong>{{ review.name }}</strong>
+        </p>
+        <p>{{ review.review }}</p>
+        <p>Rating: {{ review.rating }}</p>
+      </li>
+    </ul>
+  </div>
+</template>
+
+<style scoped>
+.review-list {
+  padding: 20px;
+  background-color: #f8f8f8;
+  border: 1px solid #ddd;
+  margin-top: 20px;
+}
+
+.review-list ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.review-list li {
+  margin-bottom: 20px;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 10px;
+}
+</style>
+</file>
+
+<file path="src/types/index.ts">
+export interface Variante {
+  id: number
+  color: string
+  image: string
+  cantidad: number
+  enRebajas: boolean
+}
+
+export interface Tamaño {
+  id: number
+  color: string
+  tallas: string[]
+}
+
+export interface Review {
+  name: string
+  review: string
+  rating: number
+  recommended: number
+}
+
+export interface Producto {
+  id: string
+  product: string
+  brand: string
+  price: number
+  descripcion: string
+  detalles: string[]
+  variantes: Variante[]
+  tamaños: Tamaño[]
+  reviews: Review[]
+}
+
+export interface ItemCarrito {
+  id: number
+  nombre: string
+  color: string
+  image: string
+  price: number
+}
+
+export interface UsuarioLogin {
+  nombre: string
+  contra: string
+  premium: boolean
+}
+//Nueva interfaz para el usuario
+
+export interface Usuario {
+  //Ponemos el id opcional con el ?
+  id?: string
+  nombre: string
+  email: string
+  contrasena?: string
+  premium: boolean
+}
+</file>
+
+<file path="tsconfig.json">
+{
+  "compilerOptions": {
+    "target": "es2020",
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "strict": true,
+    "jsx": "preserve",
+    "lib": ["ES2020", "DOM"],
+    "skipLibCheck": true,
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
+  "include": ["src/**/*.ts", "src/**/*.vue", "vitest.config.ts"],
+  "exclude": ["node_modules"]
+}
+</file>
+
+<file path="src/router/index.ts">
+import { datos } from '@/stores/Usuario'
+import LoginView from '@/views/LoginView.vue'
+import { createRouter, createWebHistory } from 'vue-router'
+//En vez de hacer 9 imports hacemos uno que sea global con las carpeta de views y que nos pille todos los archivos .vue
+const vistas = import.meta.glob('../views/*.vue')
+
+const router = createRouter({
+  history: createWebHistory(import.meta.env.BASE_URL),
+  scrollBehavior(to, from, savedPostiton) {
+    if (savedPostiton) {
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          //Acortamiento con los '...' lo mismo: {left:savedPosition.left,top: savedPosition.top}
+          resolve({ ...savedPostiton, behavior: 'smooth' })
+        }, 300)
+      })
+    } else {
+      return {
+        top: 0,
+        behavior: 'smooth',
+      }
+    }
+  },
+  routes: [
+    {
+      path: '/',
+      name: 'Login',
+      component: LoginView,
+    },
+    {
+      path: '/home',
+      name: 'Home',
+      component: vistas['../views/HomeView.vue'],
+    },
+    {
+      path: '/tienda',
+      name: 'TiendaCompleta',
+      component: vistas['../views/TiendaView.vue'],
+    },
+    {
+      path: '/carrito',
+      name: 'Carrito',
+      component: vistas['../views/CarritoView.vue'],
+    },
+    {
+      path: '/item/:id',
+      redirect: (to) => {
+        return {
+          path: `/producto/${to.params.id}`,
+        }
+      },
+    },
+    {
+      path: '/producto/:id',
+      name: 'ProductoLayout',
+      component: vistas['../views/ProductoLayout.vue'],
+      props: true, // Permite recibir el :id como prop
+      //Ponemos a los hijos
+      children: [
+        {
+          //Al tener el path vacio eso significa qyue nos lleva al path de arriba del :id
+          path: '',
+          name: 'ProductoInfo',
+          component: vistas['../views/ProductoInfo.vue'],
+        },
+        {
+          path: 'resenas', // Ruta de reseñas (/producto/1/resenas)
+          name: 'ProductoResenas',
+          component: vistas['../views/ProductoResenas.vue'],
+        },
+      ],
+    },
+    {
+      //Te lleva a una ruta de error 404 y da igual si es evento erroneo pagina o etc
+      path: '/404/:resource',
+      name: '404Resource',
+      component: vistas['../views/NotFound.vue'],
+      props: true,
+    },
+    {
+      path: '/network-error',
+      name: 'NetworkError',
+      component: vistas['../views/NetworkError.vue'],
+    },
+    {
+      //path para mirar todas las rutas que se juntan y no existen
+      path: '/:catchAll(.*)',
+      name: 'NotFoundGeneral',
+      component: vistas['../views/NotFound.vue'],
+      props: {
+        resource: 'pagina',
+      },
+    },
+  ],
+})
+router.beforeEach((to) => {
+  const log = datos()
+  if (to.name === 'Carrito' && !log.logueado) {
+    return {
+      name: 'Login',
+    }
+  }
+  if (to.name === 'Login' && log.logueado) {
+    return {
+      name: 'Home',
+    }
+  }
+})
+
+export default router
+</file>
+
+<file path="src/stores/Usuario.ts">
+import { defineStore } from 'pinia'
+import { ref, computed } from 'vue'
+import TiendaService from '@/services/TiendaService'
+import type { Usuario } from '@/types/index'
+
+export const datos = defineStore('usuario', () => {
+  const usuario = ref<Usuario | null>(null)
+  const logueado = computed(() => usuario.value !== null || invitado.value)
+  const premium = computed(() => usuario.value?.premium ?? false)
+  const nombre = computed(() => {
+    if (usuario.value) return usuario.value.nombre
+    if (invitado.value) return 'Invitado'
+    return ''
+  })
+  const error = ref<string>('')
+  const invitado = ref<boolean>(false)
+
+  async function login(email: string, contrasena: string): Promise<boolean> {
+    try {
+      const respuesta = await TiendaService.encontrar(email)
+      const encontrado: Usuario = respuesta.data[0]
+
+      if (!encontrado || encontrado.contrasena !== contrasena) {
+        error.value = 'El correo o la contraseña son incorrectas'
+        return false
+      }
+
+      //Con la funcion de antes la contraseña al estar guardada en el localstorage,estara escrita al darle F12 para inspeccionar la pagina y se podria robar la contra muy facil
+      //Al hacer eso a ts le decimos que almacene en una variable temporal con el _ y los tres puntos(operador rest) le decimos que coja las demas variables
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { contrasena: _contra, ...usuarioSeguro } = encontrado
+      usuario.value = usuarioSeguro as Usuario
+
+      //Guardamos en el localstorage para que haya persistencia entre sesiones
+      localStorage.setItem('usuario', JSON.stringify(usuarioSeguro))
+      error.value = ''
+      return true
+    } catch (err) {
+      error.value = 'Error de conexion'
+      console.error(err)
+      return false
+    }
+  }
+
+  async function registro(nombre: string, email: string, contrasena: string): Promise<boolean> {
+    try {
+      //Comprobaciones de existencia
+      const respuesta = await TiendaService.encontrar(email)
+      if (respuesta.data.length > 0) {
+        error.value = 'Hay una cuenta existente con este gmail'
+        return false
+      }
+      const nuevo: Usuario = {
+        nombre,
+        email,
+        contrasena,
+        premium: false,
+      }
+      const creado = await TiendaService.registrar(nuevo)
+      //usuario.value = creado.data
+      //localStorage.setItem('usuario', JSON.stringify(creado.data))
+
+      //Y con este texto le decimos a ts que aun que no usemos la variable contra no nos de el error
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { contrasena: _contra, ...usuarioSeguro } = creado.data
+      usuario.value = usuarioSeguro as Usuario
+      localStorage.setItem('usuario', JSON.stringify(usuarioSeguro))
+      error.value = ''
+      return true
+    } catch (err) {
+      error.value = 'Error al intentar cread la cuenta'
+      console.error(err)
+      return false
+    }
+  }
+  function entradainvitado(): void {
+    usuario.value = null
+    invitado.value = true
+    error.value = ''
+  }
+
+  function salida(): void {
+    usuario.value = null
+    invitado.value = false
+    localStorage.removeItem('usuario')
+  }
+
+  //Funcion de guardado al recargar pagina
+  function conectada(): void {
+    const guardado = localStorage.getItem('usuario')
+    //Comprobamos que no sea null antes de pasearlo
+    if (guardado) {
+      usuario.value = JSON.parse(guardado)
+    }
+  }
+
+  return {
+    usuario,
+    logueado,
+    premium,
+    nombre,
+    error,
+    login,
+    registro,
+    salida,
+    conectada,
+    entradainvitado,
+  }
+})
+</file>
+
+<file path="src/views/CarritoView.vue">
+<script setup lang="ts">
+import { CarritoTienda } from '@/stores/CartStore'
+
+const carritoStore = CarritoTienda()
+</script>
+
+<template>
+  <div class="carrito-container">
+    <h1 class="carrito-titulo">Tu Carrito</h1>
+
+    <div v-if="carritoStore.total === 0" class="carrito-vacio">
+      <p>Tu carro esta sin compras</p>
+      <router-link :to="{ name: 'TiendaCompleta' }" class="button-start">
+        Ir a la Tienda
+      </router-link>
+    </div>
+
+    <div v-else>
+      <div v-for="(item, index) in carritoStore.items" :key="index" class="carrito-item">
+        <img :src="item.image" :alt="item.nombre" class="carrito-imagen" />
+        <div class="carrito-info">
+          <h2>{{ item.nombre }}</h2>
+          <p>Color:{{ item.color }}</p>
+          <p class="carrito-precio">{{ item.price }}€</p>
+        </div>
+        <button class="btn-eliminar" @click="carritoStore.eliminar(item.id)">X</button>
+      </div>
+      <div class="carrito-footer">
+        <p class="total-precio">Total: {{ carritoStore.precioTotal }}€</p>
+        <button class="button" @click="carritoStore.vacio()">Vaciar carro</button>
+      </div>
+    </div>
+  </div>
+</template>
+<style scoped>
+.carrito-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 30px 20px;
+}
+.carrito-titulo {
+  font-size: 40px;
+  color: var(--color-texto-oscuro);
+  border-bottom: 3px solid var(--color-primario);
+  padding-bottom: 10px;
+  margin-bottom: 30px;
+}
+
+.carrito-vacio {
+  text-align: center;
+  margin-top: 80px;
+  font-size: 22px;
+  color: #666;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.carrito-item {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 20px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+  margin-bottom: 15px;
+}
+
+.carrito-imagen {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  padding: 5px;
+}
+
+.carrito-info {
+  flex: 1;
+}
+.carrito-info h2 {
+  font-size: 18px;
+  color: var(--color-texto-oscuro);
+  margin: 0 0 5px;
+}
+.carrito-info p {
+  margin: 3px 0;
+  color: #666;
+}
+.carrito-precio {
+  font-weight: bold;
+  color: var(--color-primario) !important;
+  font-size: 18px;
+}
+
+.btn-eliminar {
+  background: none;
+  border: 2px solid #ddd;
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  cursor: pointer;
+  font-size: 16px;
+  color: #999;
+  transition: all 0.2s ease;
+}
+
+.btn-eliminar:hover {
+  border-color: #ff4a4a;
+  color: #ff4a4a;
+}
+
+.carrito-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 2px solid #eee;
+}
+.total-precio {
+  font-size: 26px;
+  font-weight: bold;
+  color: var(--color-texto-oscuro);
+}
+
+.button-start {
+  background-color: var(--color-primario);
+  color: white;
+  padding: 12px 30px;
+  text-decoration: none;
+  font-size: 16px;
+  border-radius: 8px;
+  font-weight: bold;
+  transition: background-color 0.2s ease;
+}
+
+.button-start:hover {
+  background-color: #12998d;
+}
+</style>
+</file>
+
+<file path="src/views/NotFound.vue">
+<script setup lang="ts">
+withDefaults(
+  defineProps<{
+    resource: string
+  }>(),
+  {
+    resource: 'pagina',
+  },
+)
+</script>
+
+<template>
+  <div style="text-align: center; margin-top: 50px">
+    <h1 style="font-size: 80px; color: red">Error 404</h1>
+    <h2>El {{ resource }} que quieres buscar no se encuentra</h2>
+    <router-link
+      :to="{ name: 'Home' }"
+      class="button"
+      style="display: inline-block; margin-top: 20px"
+      >Volver al inicio</router-link
+    >
+  </div>
+</template>
+</file>
+
+<file path="src/assets/styles.css">
+:root {
+  --color-primario: #16c0b0;
+  --color-texto-oscuro: #39495c;
+  --color-borde: #d8d8d8;
+  --color-fondo: #f2f2f2;
+  --color-tarjetas: #ffffff;
+  --color-secundario: #12998d;
+}
+
+body.oscuro {
+  --color-primario: #12a193;
+  --color-texto-oscuro: #e0e0e0;
+  --color-borde: #444444;
+  --color-fondo: #121212;
+  --color-tarjetas: #1e1e1e;
+  --color-secundario: #0e7a71;
+}
+
+body {
+  background-color: var(--color-fondo);
+  margin: 0;
+  font-family: tahoma, sans-serif;
+  color: var(--color-texto-oscuro);
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+}
+
+/*Diseño con nav-bar*/
+.nav-bar {
+  background: linear-gradient(-90deg, #84cf6a, #16c0b0);
+  height: 60px;
+  margin-bottom: 25px;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.57);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 30px;
+}
+.nav-links {
+  display: flex;
+  gap: 30px;
+}
+.nav-link {
+  color: white;
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: bold;
+}
+.nav-link:hover {
+  text-decoration: underline;
+}
+
+/*Animacion globales */
+.cart {
+  padding: 8px 20px;
+  background-color: var(--color-tarjetas);
+  border: 1px solid var(--color-borde);
+  border-radius: 5px;
+  font-weight: bold;
+  box-shadow: 2px 15px -12px rgba(0, 0, 0, 0.57);
+  color: var(--color-texto-oscuro);
+  transition: background-color 0.3s ease;
+}
+.cart-animation {
+  animation: ShopEfect 0.3s ease-in-out;
+}
+
+@keyframes ShopEfect {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.2);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+/*Ordenado abajo los reviews*/
+.review-wrapper {
+  margin-top: 50px;
+  padding: 40px;
+  border-top: 2px solid var(--color-borde);
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.review-form,
+.review-container {
+  width: 425px;
+  padding: 25px;
+  background-color: var(--color-tarjetas);
+  border: 2px solid var(--color-borde);
+  transition: background-color 0.3s ease;
+  box-shadow: 2px 15px -12px rgba(0, 0, 0, 0.57);
+}
+.flash-message {
+  position: fixed;
+  top: 80px;
+  right: 40px;
+  background-color: var(--color-primario);
+  color: white;
+  padding: 15px 25px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  font-weight: bold;
+  font-size: 16px;
+  z-index: 1000;
+  animation: fade-in-out 3s ease-in-out forwards;
+}
+@keyframes fade-in-out {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  10% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  90% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+}
+
+input,
+select,
+textarea {
+  box-sizing: border-box;
+  font-family: inherit;
+}
+</file>
+
+<file path="src/components/ReviewForm.vue">
+<!--Cambiasmos de la API export default a la 'Composition API' ya que en caso de que querramos usar TS nos sera mejor-->
+<script setup lang="ts">
+import { ref } from 'vue'
+import { Review } from '@/types/index'
+
+const emit = defineEmits<{
+  'review-submitted': [review: Review]
+}>()
+const name = ref('')
+const review = ref('')
+const rating = ref<number | null>(null)
+const recommended = ref<number | null>(null)
+
+const onSubmit = () => {
+  if (!name.value || !review.value || !rating.value || recommended.value === null) {
+    alert('Completa el formulario entero antes de entregar')
+    return
+  }
+  emit('review-submitted', {
+    name: name.value,
+    review: review.value,
+    rating: rating.value,
+    recommended: recommended.value,
+  })
+
+  name.value = review.value = ''
+  rating.value = recommended.value = null
+}
+</script>
+
+<template>
+  <form class="review-form" @submit.prevent="onSubmit">
+    <h3>Leave a review</h3>
+    <label for="name">Name:</label>
+    <input id="name" v-model="name" />
+
+    <label for="review">Review:</label>
+    <textarea id="review" v-model="review"></textarea>
+
+    <label for="rating">Rating:</label>
+    <select id="rating" v-model.number="rating">
+      <option>5</option>
+      <option>4</option>
+      <option>3</option>
+      <option>2</option>
+      <option>1</option>
+    </select>
+
+    <label for="recommended">Would you recommend this product?</label>
+    <select id="recommended" v-model.number="recommended">
+      <option value="1">Yes</option>
+      <option value="0">No</option>
+    </select>
+
+    <input class="button" type="submit" value="Submit" />
+  </form>
+</template>
+</file>
+
+<file path="src/services/TiendaService.ts">
+import axios from 'axios'
+import type { Review } from '@/types/index'
+
+const apiClient = axios.create({
+  //La url que llamamos
+  baseURL: 'http://localhost:3000',
+  //Autenticacion y configuracion para comunicarnos con nuestro server
+  withCredentials: false,
+  headers: {
+    Accept: 'application/json',
+    'Content-Type': 'application/json',
+  },
+})
+
+export default {
+  getCalcetines(id?: string) {
+    return apiClient.get(id ? `/calcetines/${encodeURIComponent(id)}` : '/calcetines')
+  },
+
+  async opiniones(productoId: string, opinion: Review) {
+    const respuesta = await apiClient.get(`/calcetines/${encodeURIComponent(productoId)}`)
+    const opiactuales = respuesta.data.reviews || []
+    return apiClient.patch(`/calcetines/${encodeURIComponent(productoId)}`, {
+      reviews: [...opiactuales, opinion],
+    })
+  },
+
+  recogeropiniones(productoId: string) {
+    return apiClient.get(`/calcetines/${encodeURIComponent(productoId)}`)
+  },
+
+  encontrar(email: string) {
+    return apiClient.get('/usuarios', {
+      params: {
+        email,
+      },
+    })
+  },
+
+  registrar(usuario: object) {
+    return apiClient.post('/usuarios', usuario)
+  },
+}
+</file>
+
+<file path="src/views/ProductoLayout.vue">
+<script setup lang="ts">
+import { ref, onMounted } from 'vue'
+import TiendaService from '@/services/TiendaService'
+import { useRouter } from 'vue-router'
+import type { Producto } from '@/types/index'
+
+//Prop tipada
+const props = defineProps<{
+  id: string
+}>()
+
+//Tipado como producto o null
+const calcetin = ref<Producto | null>(null)
+const router = useRouter()
+
+// Cuando se muestre la pagina lo que hacemos es pedirle los calcetines a la API
+onMounted(() => {
+  TiendaService.getCalcetines(props.id)
+    .then((response) => {
+      //Manejamos mediante un array u objeto ya que json puedes devolver esos tipos de datos usando un operador ternario
+      calcetin.value = Array.isArray(response.data) ? response.data[0] : response.data
+
+      //En caso de que no hay id ponemos el error
+      if (!calcetin.value) {
+        router.push({ name: '404Resource', params: { resource: 'calcetín' } })
+      }
+    })
+    .catch((error) => {
+      //Manejo de errores mediante push ya que con console.log seria la parte fea del error,asi con el push le mandamos a la pagina de error que creamos
+      if (error.response && error.response.status === 404) {
+        router.push({ name: '404Resource', params: { resource: 'calcetín' } })
+      } else {
+        router.push({ name: 'NetworkError' })
+      }
+    })
+})
+</script>
+
+<template>
+  <div v-if="calcetin" class="layout-container">
+    <div class="nav-producto">
+      <router-link :to="{ name: 'ProductoInfo' }">Detalles del Producto</router-link>
+      <router-link :to="{ name: 'ProductoResenas' }">Opiniones</router-link>
+    </div>
+    <!--Ahora ya no hace falta pasarle los @add-to-cart ya que pinia gestionara los movimientos-->
+    <router-view :calcetin="calcetin" />
+  </div>
+</template>
+
+<style scoped>
+.layout-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.nav-producto {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 30px;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 10px;
+}
+
+.nav-producto a {
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: bold;
+  color: var(--color-texto-oscuro);
+  padding: 5px 10px;
+  transition: all 0.2s ease;
+}
+
+.nav-producto a:hover {
+  color: var(--color-primario);
+}
+
+/* Vue Router añade esta clase al enlace activo */
+.nav-producto a.router-link-exact-active {
+  color: var(--color-primario);
+  border-bottom: 3px solid var(--color-primario);
+}
+</style>
+</file>
+
+<file path="db.json">
+{
+  "calcetines": [
+    {
+      "id": "1",
+      "product": "Socks",
+      "brand": "Vue Mastery",
+      "price": 6.75,
+      "descripcion": "Calecetines comodos para entrenar",
+      "detalles": ["50% algodon", "30% lana", "20% poliester"],
+      "variantes": [
+        {
+          "id": 2234,
+          "color": "green",
+          "image": "/images/socks_green.jpg",
+          "cantidad": 50,
+          "enRebajas": true
+        },
+        {
+          "id": 2235,
+          "color": "blue",
+          "image": "/images/socks_blue.jpg",
+          "cantidad": 0,
+          "enRebajas": false
+        }
+      ],
+      "tamaños": [
+        {
+          "id": 1,
+          "color": "green",
+          "tallas": ["S", "M", "L"]
+        },
+        {
+          "id": 2,
+          "color": "blue",
+          "tallas": ["XL", "XXL", "XXXL"]
+        }
+      ],
+      "reviews": [
+        {
+          "name": "Gabriel",
+          "review": "Prueba",
+          "rating": 4,
+          "recommended": 1
+        },
+        {
+          "name": "Gabriel",
+          "review": "Prueba2",
+          "rating": 4,
+          "recommended": 1
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "product": "GabiTech",
+      "brand": "Camiseta",
+      "price": 15.5,
+      "descripcion": "Camiseta para uso deportivo",
+      "detalles": ["100% algodon", "Slim-fit", "Tela fina"],
+      "variantes": [
+        {
+          "id": 3001,
+          "color": "black",
+          "image": "/images/shirt_black.jpg",
+          "cantidad": 20,
+          "enRebajas": false
+        },
+        {
+          "id": 3002,
+          "color": "white",
+          "image": "/images/shirt_white.jpg",
+          "cantidad": 10,
+          "enRebajas": true
+        }
+      ],
+      "tamaños": [
+        {
+          "id": 1,
+          "color": "black",
+          "tallas": ["S", "M", "L"]
+        },
+        {
+          "id": 2,
+          "color": "white",
+          "tallas": ["M", "L", "XL"]
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "id": "3",
+      "product": "Sudadera",
+      "brand": "VueShop",
+      "price": 29.99,
+      "descripcion": "Sudadera con capucha para el entreno",
+      "detalles": ["Capucha", "Bolsillo Unido", "Tela suave"],
+      "variantes": [
+        {
+          "id": 4001,
+          "color": "gray",
+          "image": "/images/hoodie_gray.jpg",
+          "cantidad": 10,
+          "enRebajas": false
+        },
+        {
+          "id": 4002,
+          "color": "navy",
+          "image": "/images/hoodie_navy.jpg",
+          "cantidad": 5,
+          "enRebajas": true
+        }
+      ],
+      "tamaños": [
+        {
+          "id": 1,
+          "color": "gray",
+          "tallas": ["M", "L", "XXL"]
+        },
+        {
+          "id": 2,
+          "color": "navy",
+          "tallas": ["S", "M", "L"]
+        }
+      ],
+      "reviews": []
+    }
+  ],
+  "usuarios": [
+    {
+      "id": "1",
+      "nombre": "gabriel",
+      "email": "terente@vue.com",
+      "contrasena": "1234",
+      "premium": true
+    }
+  ],
+
+  "$schema": "./node_modules/json-server/schema.json"
+}
+</file>
+
+<file path="package.json">
+{
+  "name": "progreso-tienda",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "run-s lint:*",
+    "lint:oxlint": "oxlint . --fix",
+    "lint:eslint": "eslint . --fix --cache",
+    "format": "prettier --write --experimental-cli src/"
+  },
+  "dependencies": {
+    "axios": "^1.13.6",
+    "lodash-es": "^4.17.23",
+    "pinia": "^3.0.4",
+    "vue": "^3.5.29",
+    "vue-router": "^5.0.3"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/lodash-es": "^4.17.12",
+    "@types/node": "^25.5.0",
+    "@vitejs/plugin-vue": "^6.0.5",
+    "@vue/language-server": "^3.2.6",
+    "@vue/test-utils": "^2.4.0-alpha.2",
+    "cypress": "^15.13.0",
+    "eslint": "^10.0.2",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-oxlint": "~1.50.0",
+    "eslint-plugin-vue": "~10.8.0",
+    "globals": "^17.3.0",
+    "jsdom": "^29.0.1",
+    "npm-run-all2": "^8.0.4",
+    "oxlint": "~1.50.0",
+    "prettier": "3.8.1",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.57.1",
+    "vite": "^7.3.1",
+    "vite-plugin-vue-devtools": "^8.0.6",
+    "vitest": "^4.1.2",
+    "vue-tsc": "^3.2.6"
+  },
+  "engines": {
+    "node": "^20.19.0 || >=22.12.0"
+  }
+}
+</file>
+
+<file path="src/views/ProductoResenas.vue">
+<script setup lang="ts">
+import ReviewList from '@/components/ReviewList.vue'
+import ReviewForm from '@/components/ReviewForm.vue'
+import { useReviewStore } from '@/stores/ReviewStore'
+import { computed, onMounted } from 'vue'
+import type { Producto, Review } from '@/types/index'
+
+const props = defineProps<{
+  calcetin: Producto
+}>()
+const reviewStore = useReviewStore()
+const reviews = computed(() => reviewStore.resenas(props.calcetin.id))
+
+onMounted(() => {
+  reviewStore.cargarreviews(props.calcetin.id)
+})
+//Tipamos el dato y le añadimos el void para decirle que no devolvemos nada
+const anadirReview = (productoOpinion: Review): void => {
+  //Verificacion de que calce tenga un array de review creado
+  reviewStore.anadir(props.calcetin.id, productoOpinion)
+
+  //Añadir opinion a la interfaz
+}
+</script>
+
+<template>
+  <div class="review-wrapper">
+    <ReviewList v-if="reviews.length > 0" :reviews="reviews" />
+    <div v-else class="sin-reviews">
+      <p>Deja tu opinion aqui</p>
+    </div>
+
+    <ReviewForm @review-submitted="anadirReview" />
+  </div>
+</template>
+
+<style scoped>
+.review-wrapper {
+  padding: 20px;
+}
+
+.sin-reviews {
+  text-align: center;
+  padding: 30px;
+  color: #666;
+  font-size: 18px;
+  background: white;
+  border-radius: 10px;
+  border: 2px dashed var(--color-borde);
+  margin-bottom: 20px;
+}
+</style>
+</file>
+
+<file path="src/views/HomeView.vue">
+<script setup lang="ts">
+import { ref, onMounted } from 'vue'
+import TiendaService from '@/services/TiendaService'
+import { Producto } from '@/types'
+import { useRouter } from 'vue-router'
+
+const productos = ref<Producto[] | null>(null)
+const router = useRouter()
+onMounted(() => {
+  TiendaService.getCalcetines()
+    .then((response) => {
+      productos.value = response.data
+    })
+    .catch(() => {
+      //Evitamos exponer stack traces mediante el push al networkerror
+      router.push({ name: 'NetworkError' })
+    })
+})
+</script>
+
+<template>
+  <div class="home-container">
+    <h1>Hola a VueShopLearn soy Gabi</h1>
+    <p>Una de las mejores tiendas que se ha creado con Vue</p>
+    <div class="productos-grid" v-if="productos">
+      <div v-for="producto in productos" :key="producto.id" class="producto-card">
+        <img :src="producto.variantes[0].image" :alt="producto.product" class="card-image" />
+        <h2>{{ producto.brand }} {{ producto.product }}</h2>
+        <p class="price">{{ producto.price }}€</p>
+
+        <router-link
+          v-if="producto.id"
+          :to="{ name: 'ProductoLayout', params: { id: producto.id } }"
+          class="button-start"
+        >
+          Ver mas detalles
+        </router-link>
+      </div>
+    </div>
+  </div>
+</template>
+
+<style scoped>
+.home-container {
+  text-align: center;
+  margin-top: 50px;
+  padding: 0 20px;
+  font-family: Arial, sans-serif;
+}
+
+h1 {
+  font-size: 48px;
+  color: var(--color-texto-oscuro);
+  margin-bottom: 10px;
+}
+
+p {
+  font-size: 20px;
+  color: #666;
+  margin-bottom: 50px;
+}
+
+.productos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-bottom: 60px;
+}
+
+.producto-card {
+  background: #ffffff;
+  border: 1px solid #f0f0f0;
+  border-radius: 12px;
+  padding: 25px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.producto-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.1);
+  border-color: var(--color-primario);
+}
+
+.card-image {
+  width: 100%;
+  height: 200px;
+  object-fit: contain;
+  margin-bottom: 20px;
+}
+
+.producto-card h2 {
+  font-size: 22px;
+  color: var(--color-texto-oscuro);
+  margin: 10px 0;
+}
+
+.price {
+  font-size: 26px;
+  font-weight: bold;
+  color: var(--color-primario);
+  margin-bottom: 20px;
+}
+
+.button-start {
+  background-color: var(--color-primario);
+  color: white;
+  padding: 12px 0;
+  text-decoration: none;
+  font-size: 16px;
+  border-radius: 8px;
+  font-weight: bold;
+  transition: background-color 0.2s ease;
+  width: 100%;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.button-start:hover {
+  background-color: #12998d;
+}
+</style>
+</file>
+
+<file path="src/views/LoginView.vue">
+<script setup lang="ts">
+import { ref } from 'vue'
+import { datos } from '@/stores/Usuario'
+import { useRouter } from 'vue-router'
+import { NotificacionStore } from '@/stores/NotificationStore'
+
+const usuario = datos()
+const router = useRouter()
+const ns = NotificacionStore()
+
+const modo = ref<'login' | 'registro'>('login')
+const nombre = ref<string>('')
+const email = ref<string>('')
+const contra = ref<string>('')
+
+const onSubmit = async (): Promise<void> => {
+  var correcto: boolean
+  if (modo.value === 'login') {
+    correcto = await usuario.login(email.value, contra.value)
+  } else {
+    correcto = await usuario.registro(nombre.value, email.value, contra.value)
+  }
+
+  if (correcto) {
+    ns.mostrar(`Bienvenido de nuevo, ${usuario.nombre}`)
+    router.push({ name: 'Home' })
+  }
+}
+const cambio = (): void => {
+  modo.value = modo.value === 'login' ? 'registro' : 'login'
+  usuario.error = ''
+}
+
+const loginvitado = (): void => {
+  usuario.entradainvitado() //LLaMada a la funcion
+  ns.mostrar('Estas navegando como invitado')
+  router.push({
+    name: 'TiendaCompleta',
+  })
+}
+</script>
+<template>
+  <div class="login-pagina">
+    <div class="login-card">
+      <div class="logo"></div>
+      <h1>VueShop</h1>
+      <h2>{{ modo === 'login' ? 'Iniciar sesion' : 'Crear cuenta' }}</h2>
+
+      <div v-if="usuario.error" class="error-msg">
+        {{ usuario.error }}
+      </div>
+
+      <form @submit.prevent="onSubmit">
+        <div v-if="modo === 'registro'" class="campo">
+          <label>Usuario</label>
+          <input v-model="nombre" type="text" placeholder="Tu nombre de usuario" required />
+        </div>
+
+        <div class="campo">
+          <label>Email</label>
+          <input v-model="email" type="email" placeholder="correo@email.com" required />
+        </div>
+
+        <div class="campo">
+          <label>Constraseña</label>
+          <input v-model="contra" type="password" placeholder="Tu contraseña" required />
+        </div>
+
+        <button class="registrar" type="submit">
+          {{ modo === 'login' ? 'Entrar' : 'Crear cuenta' }}
+        </button>
+      </form>
+      <p class="cambiar">
+        {{ modo === 'login' ? 'No tienes cuenta?' : 'Ya tienes una cuenta?' }}
+        <span @click="cambio">
+          {{ modo === 'login' ? 'Registrarte' : 'Iniciar sesion' }}
+        </span>
+      </p>
+      <div class="divisor">o</div>
+      <button type="button" class="invitado" @click="loginvitado">
+        Continuar sin iniciar sesion
+      </button>
+    </div>
+  </div>
+</template>
+
+<style scoped>
+.login-pagina {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  overflow: hidden;
+  background: linear-gradient(135deg, #020617 0%, #0f172a 100%);
+}
+
+.login-card {
+  background: var(--color-tarjetas-oscuras, #1e1e1e);
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.7);
+  width: 100%;
+  max-width: 420px;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  border: 1px solid var(--color-primario-claro, #8cecc8);
+}
+
+h1 {
+  color: white;
+  flex-direction: column;
+  gap: 5px;
+  text-align: center;
+}
+
+h2 {
+  color: var(--color-primario-claro, #8cecc8);
+  text-align: center;
+  font-size: 18px;
+  margin: 0;
+  font-weight: normal;
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.campo label {
+  font-weight: bold;
+  color: var(--color-gris-claro, #e2e8f0);
+  font-size: 14px;
+}
+
+.campo input {
+  padding: 10px 15px;
+  border: 2px solid var(--color-primario-oscuro, #4a5568);
+  border-radius: 8px;
+  font-size: 15px;
+  transition: border-color 0.2s ease;
+  width: 100%;
+  box-sizing: border-box;
+  background-color: var(--color-tarjetas-oscuras, #2d3748);
+  color: white;
+}
+
+.campo input:focus {
+  outline: none;
+  border-color: var(--color-primario-claro, #8cecc8);
+}
+
+.registrar {
+  background: linear-gradient(135deg, var(--color-primario), #12998d);
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition:
+    transform 0.1s ease,
+    box-shadow 0.2s ease;
+  width: 100%;
+  margin-top: 5px;
+}
+
+.registrar:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(22, 192, 176, 0.4);
+}
+
+.registrar:active {
+  transform: translateY(0);
+}
+
+.error-msg {
+  background: rgba(255, 74, 74, 0.1);
+  color: #ff4a4a;
+  padding: 10px 15px;
+  border-radius: 8px;
+  font-size: 14px;
+  text-align: center;
+  border: 1px solid #ff4a4a;
+}
+
+.cambiar {
+  text-align: center;
+  color: #666;
+  font-size: 14px;
+  margin: 0;
+}
+
+.cambiar span {
+  color: var(--color-primario-claro, #8cecc8);
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.cambiar span:hover {
+  color: #12998d;
+}
+.divisor {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: var(--color-go, #a0aec0);
+  font-size: 14px;
+  margin: 10px 0;
+}
+
+.divisor::before,
+.divisor::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid var(--color-primario-oscuro, #4a5568);
+}
+.divisor:not(:empty)::before {
+  margin-right: 15px;
+}
+.divisor:not(:empty)::after {
+  margin-left: 15px;
+}
+
+.invitado {
+  background: transparent;
+  border: 2px solid var(--color-go, #a0aec0);
+  color: var(--color-gris-claro, #e2e8f0);
+  padding: 10px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  width: 100%;
+}
+
+.invitado:hover {
+  background: var(--color-texto-gris-oscuro, #a0aec0);
+  color: #1e1e1e;
+}
+</style>
+</file>
+
+<file path="src/views/ProductoInfo.vue">
+<script setup lang="ts">
+import { ref, computed } from 'vue'
+import { NotificacionStore } from '@/stores/NotificationStore'
+import { CarritoTienda } from '@/stores/CartStore'
+import type { Producto } from '@/types/index'
+
+const notificacionStore = NotificacionStore()
+const carritoStore = CarritoTienda()
+
+const props = defineProps<{
+  calcetin: Producto
+}>()
+
+const selectedVariant = ref<number>(0)
+//Como la vairante actual se repite varias veces usaremos una computed
+const actualVariante = computed(() => props.calcetin.variantes[selectedVariant.value])
+
+//Propiedades
+const title = computed(() => props.calcetin.brand + ' ' + props.calcetin.product)
+const psale = computed(() => title.value + 'esta en venta')
+const image = computed(() => actualVariante.value.image)
+const inStock = computed(() => actualVariante.value.cantidad)
+const onSale = computed(() => actualVariante.value.enRebajas)
+
+//Validar que selecione una talla y que haya stock
+const tallasDispo = computed(() => {
+  //Funcion para que en cuanto slecione un color encuentre con el metodo find el color usando un if en donde si encuentra devuelve las tallas de ese color,si no nos da una array vacio
+  const tamaño = props.calcetin.tamaños.find((t) => t.color === actualVariante.value.color)
+  return tamaño?.tallas ?? []
+})
+
+const actualizarVariante = (index: number): void => {
+  selectedVariant.value = index
+}
+
+const anadirAlCarrit = (): void => {
+  carritoStore.add({
+    id: actualVariante.value.id,
+    nombre: title.value,
+    color: actualVariante.value.color,
+    image: actualVariante.value.image,
+    price: props.calcetin.price,
+  })
+  notificacionStore.mostrar('Añadido correctamente al carrito')
+}
+
+const eliminarElemento = () => {
+  carritoStore.eliminar(props.calcetin.variantes[selectedVariant.value].id)
+  notificacionStore.mostrar('Eliminado correctamente')
+}
+</script>
+
+<template>
+  <div class="product-container">
+    <div class="product-image">
+      <img :src="image" :alt="title" :class="{ 'out-of-stock-img': inStock === 0 }" />
+    </div>
+
+    <div class="product-info">
+      <h1>{{ title }}</h1>
+      <p v-if="inStock > 10">En stock</p>
+      <p v-else-if="inStock <= 10 && inStock > 0">Apunto de terminarse!!</p>
+      <p v-else>Fuera de stock</p>
+      <p v-if="onSale">{{ psale }}</p>
+
+      <ul>
+        <li v-for="detalle in calcetin.detalles" :key="detalle">{{ detalle }}</li>
+      </ul>
+
+      <div class="selection-row">
+        <div class="color-circles">
+          <div
+            v-for="(variante, index) in calcetin.variantes"
+            :key="variante.id"
+            @mouseover="actualizarVariante(index)"
+            class="color-circle"
+            :style="{ backgroundColor: variante.color }"
+          ></div>
+        </div>
+        <div class="price-desc">
+          <h2>{{ calcetin.price }} €</h2>
+          <p>{{ calcetin.descripcion }}</p>
+        </div>
+      </div>
+
+      <div class="tallas-container">
+        <p><strong>Talla disponibles:</strong></p>
+        <div class="tallas-flex">
+          <span v-for="talla in tallasDispo" :key="talla" class="talla-box">{{ talla }} </span>
+        </div>
+      </div>
+
+      <div class="button-group">
+        <button
+          class="button"
+          :class="{ disabledButton: inStock === 0 }"
+          :disabled="inStock === 0"
+          @click="anadirAlCarrit"
+        >
+          Añadir al carrito
+        </button>
+        <button
+          class="button"
+          :class="{ disabledButton: inStock === 0 }"
+          :disabled="inStock === 0"
+          @click="eliminarElemento"
+        >
+          Eliminar del carrito
+        </button>
+      </div>
+    </div>
+  </div>
+</template>
+
+<style scoped>
+.tallas-container {
+  margin-bottom: 20px;
+}
+
+.tallas-flex {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+.talla-box {
+  border: 2px solid var(--color-borde);
+  padding: 8px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  color: var(--color-texto-oscuro);
+  background-color: var(--color-tarjetas);
+  transition:
+    background-color 0.3s ease,
+    border-color 0.3s ease,
+    color 0.3s ease;
+}
+
+.talla-box:hover {
+  border-color: var(--color-primario);
+  color: var(--color-primario);
+}
+
+.talla-activa {
+  background-color: var(--color-primario);
+  color: white;
+  border-color: var(--color-primario);
+}
+
+.product-container {
+  display: flex;
+  gap: 40px;
+  padding: 30px;
+  background-color: var(--color-tarjetas);
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  border: 1px solid var(--color-borde);
+  transition:
+    background-color 0.3s ease,
+    border-color 0.3s ease;
+  flex-direction: row;
+}
+.product-info {
+  flex: 1;
+  color: var(--color-texto-oscuro);
+  transition: color 0.3s ease;
+}
+.product-info h1 {
+  color: var(--color-texto-oscuro);
+  transition: color 0.3s ease;
+  margin-top: 0;
+  font-size: 32px;
+}
+.button-group {
+  display: flex;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.button {
+  background-color: var(--color-texto-oscuro);
+  color: var(--color-fondo);
+  border: 2px solid var(--color-texto-oscuro);
+  padding: 12px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.button:hover {
+  background-color: var(--color-primario);
+  border-color: var(--color-primario);
+  color: white; /*Forzamos a que el texto siempre sea blanco*/
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+.disabledButton,
+.button:disabled {
+  background-color: #cccccc !important;
+  border-color: #cccccc !important;
+  color: #666666 !important;
+  cursor: not-allowed;
+  transform: none !important;
+  box-shadow: none !important;
+  opacity: 0.7;
+}
+
+.price-desc {
+  border-left: 3px solid var(--color-primario);
+  padding-left: 15px;
+}
+.selection-row {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin: 20px 0;
+  background-color: rgba(0, 0, 0, 0.03);
+  padding: 15px;
+  border-radius: 8px;
+  border: 1px solid var(--color-borde);
+  transition: border-color 0.3s ease;
+}
+
+.color-circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid var(--color-borde);
+  cursor: pointer;
+  transition:
+    transform 0.2s ease,
+    border-color 0.3s ease;
+}
+.color-circle:hover {
+  transform: scale(1.1);
+}
+.product-image {
+  flex: 0 0 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.product-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border: 2px solid var(--color-borde);
+  padding: 15px;
+  background-color: var(--color-tarjetas);
+  transition: all 0.3s ease;
+  border-radius: 8px;
+}
+.out-of-stock-img {
+  opacity: 0.5;
+}
+
+.stock-text {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+.stock-text.warning {
+  color: orange;
+}
+.stock-text.danger {
+  color: red;
+}
+.sale-text {
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+ul {
+  padding-left: 20px;
+  margin-bottom: 25px;
+}
+
+li {
+  margin-bottom: 8px;
+  font-size: 16px;
+}
+
+.price-desc h2 {
+  margin: 0;
+  color: var(--color-primario);
+  font-size: 28px;
+}
+.price-desc p {
+  margin: 5px 0 0 0;
+}
+</style>
+</file>
+
+<file path="src/App.vue">
+<script setup lang="ts">
+import { NotificacionStore } from './stores/NotificationStore'
+import { CarritoTienda } from './stores/CartStore'
+import { datos } from './stores/Usuario'
+import { fondo } from './stores/FondoStore'
+
+const notificacionStore = NotificacionStore()
+const carrito = CarritoTienda()
+const usuario = datos()
+const tema = fondo()
+
+const url = 'https://vuejs.org/guide/quick-start.html'
+</script>
+
+<template>
+  <div class="nav-bar">
+    <div class="nav-links">
+      <router-link to="/" class="nav-link">Inicio</router-link>
+      <router-link :to="{ name: 'TiendaCompleta' }" class="nav-link">Tienda</router-link>
+
+      <a :href="url" class="nav-link">Guia de Vue</a>
+    </div>
+
+    <div class="nav-right">
+      <button class="tema" @click="tema.cambiar">
+        {{ tema.oscuro ? 'Modo claro' : 'Modo oscuro' }}
+      </button>
+      <div v-if="usuario.logueado" class="user-info">
+        <span>{{ usuario.nombre }}</span>
+        <span v-if="usuario.premium" class="premium-badge">Premium</span>
+        <button class="btn-logout" @click="usuario.salida()">Cerrar sesion</button>
+      </div>
+      <router-link v-else :to="{ name: 'Login' }" class="nav-link">Iniciar sesion</router-link>
+    </div>
+    <router-link
+      :to="{ name: 'Carrito' }"
+      class="cart"
+      :class="{ 'cart-animation': carrito.isAnimating }"
+    >
+      Cart({{ carrito.total }})
+    </router-link>
+  </div>
+  <div v-if="notificacionStore.mensaje" class="flash-message">
+    {{ notificacionStore.mensaje }}
+  </div>
+  <router-view v-slot="{ Component }">
+    <Transition name="pagina" mode="out-in">
+      <component :is="Component" :premium="usuario.premium" />
+    </Transition>
+  </router-view>
+</template>
+
+<style scoped>
+/*Precaucion para que no pete*/
+.nav-link {
+  color: white !important;
+}
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: white;
+  font-weight: bold;
+}
+
+.premium-badge {
+  background: gold;
+  color: var(--color-texto-oscuro);
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 13px;
+}
+
+.btn-logout {
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid white;
+  color: white;
+  padding: 5px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.2s ease;
+}
+
+.btn-logout:hover {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.pagina-enter-active,
+.pagina-leave-active {
+  transition: all 0.3s ease;
+}
+
+.pagina-enter-from {
+  opacity: 0;
+  transform: translateX(20px);
+}
+.pagina-leave-to {
+  opacity: 0;
+  transform: translateX(-20px);
+}
+
+.tema {
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid white;
+  color: white;
+  padding: 6px 14px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 14px;
+  transition:
+    transform 0.2s ease,
+    background-color 0.2s;
+}
+
+.tema:hover {
+  background-color: rgba(0, 0, 0, 0.4);
+  transform: scale(1.05);
+}
+</style>
+</file>
+
+<file path="src/views/TiendaView.vue">
+<script setup lang="ts">
+import { ref, onMounted, computed, watch } from 'vue'
+import { debounce } from 'lodash-es'
+import TiendaService from '@/services/TiendaService'
+import ProductoInfo from './ProductoInfo.vue'
+import type { Producto } from '@/types/index'
+import { useRouter } from 'vue-router'
+
+//Filtros
+const Color = ref<string>('')
+const Rebajas = ref<boolean>(false)
+const Stock = ref<boolean>(false)
+const Orden = ref<string>('')
+const productos = ref<Producto[]>([])
+const buscar = ref<string>('')
+const router = useRouter()
+//Debounce
+const dbd = ref<string>('')
+
+//Cuando paremos de escribir durante 300 ms
+const busqueda = debounce((val: string) => {
+  dbd.value = val
+}, 300)
+
+//Miramos el buscar y despues llamamos a la funcion con el delay
+watch(buscar, (nColor) => {
+  busqueda(nColor)
+})
+
+//Montamos los productos de la API
+onMounted(() => {
+  TiendaService.getCalcetines()
+    .then((response) => {
+      productos.value = response.data
+    })
+    .catch(() => {
+      router.push({ name: 'NetworkError' })
+    })
+})
+
+//Bucle para que saque los colores sin repetir
+const colordispo = computed<string[]>(() => {
+  const colores: string[] = []
+  for (const producto of productos.value) {
+    for (const variante of producto.variantes) {
+      //En caso de que el color no este en el array lo metemos con el .includes
+      if (!colores.includes(variante.color)) {
+        colores.push(variante.color)
+      }
+    }
+  }
+  return colores
+})
+//Ordenamos mediante metodo quicksrot
+function quickSort(array: Producto[], orden: string): Producto[] {
+  //Excepciones
+  if (array.length <= 1) return array
+
+  //Constante la cual es el medio
+  const p = array[Math.floor(array.length / 2)].price
+  const menos = []
+  const igual = []
+  const mayor = []
+
+  for (const producto of array) {
+    if (producto.price < p) {
+      menos.push(producto)
+    } else if (producto.price === p) {
+      igual.push(producto)
+    } else {
+      mayor.push(producto)
+    }
+  }
+  //Recursividad
+  if (orden === 'asc') {
+    //Y ordenamos de menor a mayor,primero menores luego iguales y luego mayor
+    return [...quickSort(menos, orden), ...igual, ...quickSort(mayor, orden)]
+  } else {
+    //Lo mismo solo que esta vez cambiamos las ultimas variables del principio  y final para que sea al reves
+    return [...quickSort(mayor, orden), ...igual, ...quickSort(menos, orden)]
+  }
+}
+
+//Calculamos los filtros una vez hechos arriba
+const filtrados = computed<Producto[]>(() => {
+  let resultado = productos.value.filter((producto) => {
+    const buscalower = dbd.value.toLowerCase()
+    const mismapalabra =
+      dbd.value === '' ||
+      producto.product.toLowerCase().includes(buscalower) ||
+      producto.brand.toLowerCase().includes(buscalower)
+
+    const coinciden = producto.variantes.some(
+      (v) =>
+        //añadimos esta validacion para que el resultado no devuelva con el filter un producto con el some(variable para que encuentre con el filtro que le metemos)
+        //ese mismo color y precio,ya que el producto mezclaba tanto un color con el otro el stock rebajas y colores
+        (Color.value === '' || v.color === Color.value) &&
+        (!Rebajas.value || v.enRebajas) &&
+        (!Stock.value || v.cantidad > 0),
+    )
+    return mismapalabra && coinciden
+  })
+
+  //Orden en caso de que el usuario seleccione ascendente o descendente
+  if (Orden.value === 'asc' || Orden.value === 'desc') {
+    resultado = quickSort(resultado, Orden.value)
+  }
+  return resultado
+})
+const reiniciar = (): void => {
+  Color.value = ''
+  Rebajas.value = false
+  Stock.value = false
+  Orden.value = ''
+  buscar.value = ''
+  dbd.value = ''
+}
+</script>
+
+<template>
+  <div class="tienda-gigante">
+    <h1 class="titulo-catalogo">Productos Actualmente</h1>
+
+    <div class="filtros-bar">
+      <div>
+        <label>Buscar: </label>
+        <input type="text" v-model="buscar" placeholder="Buscar producto..." class="buscar" />
+      </div>
+      <div class="filtro-grupo">
+        <label>Color:</label>
+        <select v-model="Color">
+          <option value="">Todos</option>
+          <option v-for="color in colordispo" :key="color" :value="color">
+            {{ color }}
+          </option>
+        </select>
+      </div>
+
+      <div class="filtro-grupo">
+        <label>Precio:</label>
+        <select v-model="Orden">
+          <option value="">Sin ordenar</option>
+          <option value="asc">Menor a mayor</option>
+          <option value="desc">Mayor a menor</option>
+        </select>
+      </div>
+
+      <div class="filtro-grupo">
+        <label for="check-rebajas">Solo Rebajas</label>
+        <input id="check-rebajas " type="checkbox" v-model="Rebajas" />
+      </div>
+
+      <div class="filtro-grupo">
+        <label>
+          <input type="checkbox" v-model="Stock" />
+          Solo en Stock
+        </label>
+      </div>
+
+      <button class="btn-reset" @click="reiniciar">Limpiar Filtros</button>
+    </div>
+    <p class="resultado-count">
+      <!--Contamos los productos y hacemos un operador ternario en caso de que si hay mas de un producto ke añada la s de productos y no salga producto habiendo 4 productos-->
+      {{ filtrados.length }} producto{{ filtrados.length !== 1 ? 's' : '' }} encontrado{{
+        filtrados.length !== 1 ? 's' : ''
+      }}
+    </p>
+
+    <div v-if="filtrados.length > 0" class="lista-productos">
+      <div v-for="producto in filtrados" :key="producto.id" class="producto-fila">
+        <ProductoInfo :calcetin="producto" />
+      </div>
+    </div>
+
+    <div v-else class="sin-resultados">
+      <p>No hay productos con este filtro</p>
+      <button class="btn-reset" @click="reiniciar">Ver todos</button>
+    </div>
+  </div>
+</template>
+
+<style scoped>
+.tienda-gigante {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.titulo-catalogo {
+  text-align: center;
+  font-size: 36px;
+  color: var(--color-texto-oscuro);
+  margin-bottom: 30px;
+  padding-bottom: 10px;
+  transition: color 0.3s ease;
+}
+
+.filtros-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  align-items: center;
+  background: var(--color-tarjetas);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  margin-bottom: 30px;
+  border: 1px solid var(--color-borde);
+  transition:
+    background-color 0.3s ease,
+    border-color 0.3s ease;
+  justify-content: space-between;
+}
+
+.filtro-grupo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: bold;
+  color: var(--color-texto-oscuro);
+}
+
+.filtro-grupo select,
+.buscar {
+  border: 1px solid var(--color-borde);
+  border-radius: 5px;
+  padding: 8px 12px;
+  font-size: 14px;
+  color: var(--color-texto-oscuro);
+  background-color: var(--color-tarjetas);
+  transition: all 0.3s ease;
+}
+
+.filtro-grupo input[type='checkbox'] {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  accent-color: var(--color-primario);
+}
+
+.btn-reset {
+  background: none;
+  border: 2px solid var(--color-primario);
+  color: var(--color-texto-oscuro);
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.btn-reset:hover {
+  background: var(--color-primario);
+  color: white;
+}
+
+.resultado-count {
+  color: var(--color-texto-oscuro);
+  font-size: 14px;
+  margin-bottom: 20px;
+  opacity: 0.8;
+}
+
+.sin-resultados {
+  text-align: center;
+  padding: 60px 0;
+  color: var(--color-texto-oscuro);
+  font-size: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+.buscar {
+  width: 200px;
+}
+.buscar:focus,
+.filtro-grupo select:focus {
+  outline: none;
+  border-color: var(--color-primario);
+}
+.lista-productos {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+</style>
+</file>
+
+</files>

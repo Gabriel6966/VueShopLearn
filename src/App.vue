@@ -1,13 +1,22 @@
 <script setup lang="ts">
+import { ref } from 'vue'
 import { NotificacionStore } from './stores/NotificationStore'
 import { CarritoTienda } from './stores/CartStore'
 import { datos } from './stores/Usuario'
-import { fondo } from './stores/FondoStore'
 
 const notificacionStore = NotificacionStore()
 const carrito = CarritoTienda()
 const usuario = datos()
-const tema = fondo()
+const oscuro = ref(false)
+
+const tema = () => {
+  oscuro.value = !oscuro.value
+  if (oscuro.value) {
+    document.body.classList.add('oscuro')
+  } else {
+    document.body.classList.remove('oscuro')
+  }
+}
 
 const url = 'https://vuejs.org/guide/quick-start.html'
 </script>
@@ -22,8 +31,8 @@ const url = 'https://vuejs.org/guide/quick-start.html'
     </div>
 
     <div class="nav-right">
-      <button class="tema" @click="tema.cambiar">
-        {{ tema.oscuro ? 'Modo claro' : 'Modo oscuro' }}
+      <button class="tema" @click="tema">
+        {{ oscuro ? 'Modo claro' : 'Modo oscuro' }}
       </button>
       <div v-if="usuario.logueado" class="user-info">
         <span>{{ usuario.nombre }}</span>

@@ -55,3 +55,13 @@ const onSubmit = () => {
     <input class="button" type="submit" value="Submit" />
   </form>
 </template>
+<style scoped>
+.review-form {
+  width: 425px;
+  padding: 25px;
+  background-color: var(--color-tarjetas);
+  border: 2px solid var(--color-borde);
+  transition: background-color 0.3s ease;
+  box-shadow: 2px 15px -12px rgba(0, 0, 0, 0.57);
+}
+</style>
