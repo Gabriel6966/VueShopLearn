@@ -20,7 +20,7 @@ export default {
   async opiniones(productoId: string, opinion: Review) {
     const respuesta = await apiClient.get(`/calcetines/${encodeURIComponent(productoId)}`)
     const opiactuales = respuesta.data.reviews || []
-    return apiClient.patch(`/calcetines/${productoId}`, {
+    return apiClient.patch(`/calcetines/${encodeURIComponent(productoId)}`, {
       reviews: [...opiactuales, opinion],
     })
   },

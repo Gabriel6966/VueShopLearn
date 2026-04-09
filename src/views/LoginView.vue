@@ -13,14 +13,6 @@ const nombre = ref<string>('')
 const email = ref<string>('')
 const contra = ref<string>('')
 
-const X = ref(0)
-const Y = ref(0)
-
-const raton = (e: MouseEvent) => {
-  X.value = e.clientX
-  Y.value = e.clientY
-}
-
 const onSubmit = async (): Promise<void> => {
   var correcto: boolean
   if (modo.value === 'login') {
@@ -29,7 +21,10 @@ const onSubmit = async (): Promise<void> => {
     correcto = await usuario.registro(nombre.value, email.value, contra.value)
   }
 
-  if (correcto) router.push({ name: 'Home' })
+  if (correcto) {
+    ns.mostrar(`Bienvenido de nuevo, ${usuario.nombre}`)
+    router.push({ name: 'Home' })
+  }
 }
 const cambio = (): void => {
   modo.value = modo.value === 'login' ? 'registro' : 'login'
@@ -45,17 +40,7 @@ const loginvitado = (): void => {
 }
 </script>
 <template>
-  <div
-    class="login-pagina"
-    @mouseover="raton"
-    :style="{ '--raton-x': X + 'px', '--raton-y': Y + 'px' }"
-  >
-    <div class="ptnbase"></div>
-    <div class="ptnreactivos"></div>
-    <div class="animaciones">
-      <div v-for="n in 10" :key="n" class="animacion"></div>
-    </div>
-
+  <div class="login-pagina">
     <div class="login-card">
       <div class="logo"></div>
       <h1>VueShop</h1>
@@ -95,8 +80,6 @@ const loginvitado = (): void => {
       <button type="button" class="invitado" @click="loginvitado">
         Continuar sin iniciar sesion
       </button>
-
-      <div></div>
     </div>
   </div>
 </template>
@@ -107,116 +90,15 @@ const loginvitado = (): void => {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background-color: #000000;
   overflow: hidden;
-  position: relative;
-}
-
-.animaciones {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-}
-
-.animacion {
-  position: absolute;
-  bottom: -100px;
-  background: rgba(255, 255, 255, 0.15);
-  border-radius: 50%;
-  animation: subir 8s infinite ease-in;
-}
-
-.animacion:nth-child(1) {
-  width: 40px;
-  height: 40px;
-  left: 10%;
-  animation-duration: 7s;
-}
-.animacion:nth-child(2) {
-  width: 20px;
-  height: 20px;
-  left: 20%;
-  animation-duration: 5s;
-  animation-delay: 1s;
-}
-.animacion:nth-child(3) {
-  width: 60px;
-  height: 60px;
-  left: 30%;
-  animation-duration: 9s;
-  animation-delay: 2s;
-}
-.animacion:nth-child(4) {
-  width: 80px;
-  height: 80px;
-  left: 40%;
-  animation-duration: 6s;
-  animation-delay: 0.5s;
-}
-.animacion:nth-child(5) {
-  width: 25px;
-  height: 25px;
-  left: 50%;
-  animation-duration: 8s;
-  animation-delay: 3s;
-}
-
-.animacion:nth-child(6) {
-  width: 50px;
-  height: 50px;
-  left: 60%;
-  animation-duration: 7s;
-  animation-delay: 1.5s;
-}
-.animacion:nth-child(7) {
-  width: 35px;
-  height: 35px;
-  left: 70%;
-  animation-duration: 6s;
-  animation-delay: 2.5s;
-}
-.animacion:nth-child(8) {
-  width: 70px;
-  height: 70px;
-  left: 80%;
-  animation-duration: 9s;
-  animation-delay: 0s;
-}
-.animacion:nth-child(9) {
-  width: 15px;
-  height: 15px;
-  left: 90%;
-  animation-duration: 5s;
-  animation-delay: 4s;
-}
-.animacion:nth-child(10) {
-  width: 45px;
-  height: 45px;
-  left: 5%;
-  animation-duration: 8s;
-  animation-delay: 3.5s;
-}
-
-@keyframes subir {
-  0% {
-    transform: translateY(0);
-    rotate: (0deg);
-    opacity: 0.8;
-  }
-  100% {
-    transform: translateY(-110vh);
-    rotate: (720deg);
-    opacity: 0;
-  }
+  background: linear-gradient(135deg, #020617 0%, #0f172a 100%);
 }
 
 .login-card {
   background: var(--color-tarjetas-oscuras, #1e1e1e);
   padding: 40px;
   border-radius: 20px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.7);
   width: 100%;
   max-width: 420px;
   z-index: 10;
@@ -226,20 +108,15 @@ const loginvitado = (): void => {
   border: 1px solid var(--color-primario-claro, #8cecc8);
 }
 
-.logo {
-  font-size: 50px;
-  text-align: center;
-}
-
 h1 {
-  color: #39495c;
+  color: white;
+  flex-direction: column;
+  gap: 5px;
   text-align: center;
-  font-size: 28px;
-  margin: 0;
 }
 
 h2 {
-  color: #16c0b0;
+  color: var(--color-primario-claro, #8cecc8);
   text-align: center;
   font-size: 18px;
   margin: 0;
@@ -266,6 +143,8 @@ h2 {
   transition: border-color 0.2s ease;
   width: 100%;
   box-sizing: border-box;
+  background-color: var(--color-tarjetas-oscuras, #2d3748);
+  color: white;
 }
 
 .campo input:focus {
@@ -299,12 +178,13 @@ h2 {
 }
 
 .error-msg {
-  background: #ffe0e0;
+  background: rgba(255, 74, 74, 0.1);
   color: #ff4a4a;
   padding: 10px 15px;
   border-radius: 8px;
   font-size: 14px;
   text-align: center;
+  border: 1px solid #ff4a4a;
 }
 
 .cambiar {
@@ -315,7 +195,7 @@ h2 {
 }
 
 .cambiar span {
-  color: #16c0b0;
+  color: var(--color-primario-claro, #8cecc8);
   font-weight: bold;
   cursor: pointer;
   text-decoration: underline;
@@ -337,19 +217,19 @@ h2 {
 .divisor::after {
   content: '';
   flex: 1;
-  border-bottom: 1px solid #d8d8d8;
+  border-bottom: 1px solid var(--color-primario-oscuro, #4a5568);
 }
 .divisor:not(:empty)::before {
   margin-right: 15px;
 }
 .divisor:not(:empty)::after {
-  margin-right: 15px;
+  margin-left: 15px;
 }
 
 .invitado {
   background: transparent;
-  border: 2px solid #39495c;
-  color: #39495c;
+  border: 2px solid var(--color-go, #a0aec0);
+  color: var(--color-gris-claro, #e2e8f0);
   padding: 10px;
   border-radius: 8px;
   font-weight: bold;
@@ -359,42 +239,7 @@ h2 {
 }
 
 .invitado:hover {
-  background: #39495c;
-  color: white;
-}
-.ptnbase,
-.ptnreactivos {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  /*Evitamos que no bloqueen los clicks */
-  pointer-events: none;
-  /*Ajustamos las capas */
-  background-position: 0 0;
-}
-.ptnbase {
-  background-image: radial-gradient(rgba(255, 255, 255, 0.8) 1.5px, transparent 1.5px);
-  background-size: 30px 30px;
-  z-index: 1;
-}
-.ptnreactivos {
-  background-image: radial-gradient(var(--color-primario) 2px, transparent 2px);
-  background-size: 30px 30px;
-  z-index: 2;
-
-  -webkit-mask-image: radial-gradient(
-    circle 200px at var(--raton-x, 50%) var(--raton-y, 50%),
-    black 0%,
-    transparent 100%
-  );
-  mask-image: radial-gradient(
-    circle 200px at var(--raton-x, 50%) var(--raton-y, 50%),
-    black 0%,
-    transparent 100%
-  );
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
+  background: var(--color-texto-gris-oscuro, #a0aec0);
+  color: #1e1e1e;
 }
 </style>
