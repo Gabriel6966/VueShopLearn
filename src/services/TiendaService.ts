@@ -14,11 +14,11 @@ const apiClient = axios.create({
 
 export default {
   getCalcetines(id?: string) {
-    return apiClient.get(id ? `/calcetines/${id}` : '/calcetines')
+    return apiClient.get(id ? `/calcetines/${encodeURIComponent(id)}` : '/calcetines')
   },
 
   async opiniones(productoId: string, opinion: Review) {
-    const respuesta = await apiClient.get(`/calcetines/${productoId}`)
+    const respuesta = await apiClient.get(`/calcetines/${encodeURIComponent(productoId)}`)
     const opiactuales = respuesta.data.reviews || []
     return apiClient.patch(`/calcetines/${productoId}`, {
       reviews: [...opiactuales, opinion],
@@ -26,11 +26,15 @@ export default {
   },
 
   recogeropiniones(productoId: string) {
-    return apiClient.get(`/calcetines/${productoId}`)
+    return apiClient.get(`/calcetines/${encodeURIComponent(productoId)}`)
   },
 
   encontrar(email: string) {
-    return apiClient.get(`/usuarios?email=${email}`)
+    return apiClient.get('/usuarios', {
+      params: {
+        email,
+      },
+    })
   },
 
   registrar(usuario: object) {

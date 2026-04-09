@@ -12,6 +12,7 @@ onMounted(() => {
       productos.value = response.data
     })
     .catch(() => {
+      //Evitamos exponer stack traces mediante el push al networkerror
       router.push({ name: 'NetworkError' })
     })
 })
