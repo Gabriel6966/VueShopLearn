@@ -1,0 +1,4 @@
+## 2026-04-12 - [Remove Information Disclosure via Error Logging in Client Store]
+**Vulnerability:** Raw exception logs (e.g. `console.error(err)`) in client-side authentication/registration handlers within Pinia stores were identified. In earlier stages this may leak connection/mock information to standard users or attackers inspecting devtools.
+**Learning:** This repo's existing routing design pattern includes a generic 'NetworkError' state to prevent exposing underlying stack trace or API failures. Relying strictly on this router state aligns with the 'Fail securely' defensive philosophy.
+**Prevention:** Always redirect standard internal or network exceptions to standardized generic error views using Vue Router, and use empty catch block syntax (`catch { ... }`) in TypeScript to enforce ESLint strictness while simultaneously guaranteeing that the error context object is not leaked or misused.
