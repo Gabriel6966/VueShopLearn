@@ -1,0 +1,4 @@
+## 2025-02-18 - Axios Error Payload Leakage
+**Vulnerability:** Raw `console.error(err)` logging in API catch blocks (e.g., in `login` and `registro` functions of `Usuario.ts`) exposed sensitive data to the browser console. Specifically, Axios error objects include the full original request in `err.config.data`, which meant plaintext passwords were being inadvertently logged during failed authentication or registration attempts.
+**Learning:** Even if the server responds securely to an error, standard client-side networking libraries like Axios retain the request payload for debugging purposes. Directly logging the raw error object without sanitization is a critical risk for credential exposure.
+**Prevention:** Always catch and handle errors securely. For expected validation/connection errors in stores, use an empty `catch { ... }` block to avoid exposing raw errors, while still setting local reactive state (e.g., `error.value`) to inform the user.
