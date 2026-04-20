@@ -1,0 +1,4 @@
+## 2025-03-09 - Axios Raw Error Console Leakage
+**Vulnerability:** Raw Axios error objects (`err`) were being logged to the console via `console.error(err)` upon API failure in state management stores (e.g., `Usuario.ts`).
+**Learning:** This is a codebase-specific vulnerability pattern because the application relies on an Axios `apiClient` mapping to a mock `json-server` backend. Because Axios embeds the original request payload within `err.config.data`, any failed login or registration attempt exposed plaintext user credentials directly to the browser console. This violates the principle of failing securely.
+**Prevention:** Do not blindly log raw error objects from network requests. Either use empty catch blocks (`catch { ... }`) to silence them when only localized error state updates are needed, or carefully destructure and log only safe parts of the error (e.g., `err.message` or `err.response.status`) while omitting `config.data`.
