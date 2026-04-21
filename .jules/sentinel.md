@@ -1,0 +1,4 @@
+## 2024-05-24 - Avoid Logging Raw Axios Errors in Authentication
+**Vulnerability:** Raw Axios error objects (`err`) contain the original request payload in `err.config.data`, which logs the user's plaintext password directly to the browser console if a network or server error occurs during login or registration.
+**Learning:** In the `Usuario.ts` store, catching errors and dumping them via `console.error(err)` created a critical information leakage vector, exposing sensitive credentials in the client environment.
+**Prevention:** Always use empty `catch { ... }` blocks or handle errors securely without logging the raw error object (or specifically the `err.config` property) when sensitive payloads are transmitted. Update user-facing error state variables instead.
