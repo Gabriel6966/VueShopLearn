@@ -1,0 +1,4 @@
+## 2024-04-24 - [Avoid Leaking API Requests via Raw Axios Errors]
+**Vulnerability:** Raw Axios error objects (`err`) were being logged to the console using `console.error(err)` inside `src/stores/Usuario.ts`. Because Axios errors contain the entire original request configuration (`err.config.data`), this exposed plaintext user passwords to the browser developer console during login or registration failures.
+**Learning:** Even though generic error messages were set (`error.value`), appending the entire unhandled API exception leaked PII and authentication credentials when network issues occurred. This architectural quirk in Axios dictates that you must not blindly log full error instances on the client side.
+**Prevention:** Either silently catch network/API errors (`catch { ... }`) when internal handling is sufficient, or meticulously destructure and log only safe parts of the exception (e.g., `error.message` or `error.response?.status`).
