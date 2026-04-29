@@ -1,0 +1,4 @@
+## 2024-04-29 - Prevent Data Leakage from Raw Axios Errors
+**Vulnerability:** Logging raw Axios error objects (`err`) directly to the browser console.
+**Learning:** In the specific mock setup (using `json-server` with `db.json`) of this codebase, sensitive user data including passwords was being transmitted in the `err.config.data` property of Axios errors. Logging the raw error object inadvertently leaked plaintext passwords to the browser console during failed login or registration attempts.
+**Prevention:** Always handle HTTP request errors specifically or omit logging the raw Axios error object in production code, especially in contexts dealing with user credentials. Ensure explicit handling or silent capture of exceptions to prevent inadvertent data exposure.
