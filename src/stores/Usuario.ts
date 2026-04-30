@@ -35,9 +35,11 @@ export const datos = defineStore('usuario', () => {
       localStorage.setItem('usuario', JSON.stringify(usuarioSeguro))
       error.value = ''
       return true
-    } catch (err) {
+    } catch {
       error.value = 'Error de conexion'
-      console.error(err)
+      // 🛡️ SECURITY FIX: Do not log the raw Axios error object as it contains the request payload in `err.config.data`
+      // which would leak the plaintext password to the console and any attached logging services.
+      console.error('Error de conexion durante el login. Solicitud fallida.')
       return false
     }
   }
@@ -67,9 +69,11 @@ export const datos = defineStore('usuario', () => {
       localStorage.setItem('usuario', JSON.stringify(usuarioSeguro))
       error.value = ''
       return true
-    } catch (err) {
+    } catch {
       error.value = 'Error al intentar cread la cuenta'
-      console.error(err)
+      // 🛡️ SECURITY FIX: Do not log the raw Axios error object as it contains the request payload in `err.config.data`
+      // which would leak the plaintext password to the console and any attached logging services.
+      console.error('Error durante el registro. Solicitud fallida.')
       return false
     }
   }
