@@ -1,0 +1,4 @@
+## 2025-05-01 - [Axios Error Handling Leaks Credentials]
+**Vulnerability:** The application was logging raw Axios error objects (`console.error(err)`) inside the catch blocks of authentication operations (login and registration).
+**Learning:** Raw Axios error objects embed the original request payload inside the `err.config.data` property. Because the payload in these operations contained plain text passwords, failing API calls would leak user passwords to the browser console. This is a critical credential exposure specific to how Axios structured its error objects when dealing with sensitive forms.
+**Prevention:** Never log raw Axios error objects when handling sensitive payloads like credentials. Always use empty catch blocks `catch { ... }` (if the exact error string is not needed, which avoids strict linter unused-vars issues) or manually map/sanitize specific fields (like `err.message` or `err.response.status`) instead of the entire error object.
