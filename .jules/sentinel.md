@@ -1,0 +1,4 @@
+## 2025-05-04 - [Axios Request Payload Exposure via Console Logging]
+**Vulnerability:** Raw Axios error objects (`err`) were being logged directly to the console (`console.error(err)`) in catch blocks within `src/stores/Usuario.ts` during authentication and registration requests.
+**Learning:** This is a critical security issue because Axios includes the original request payload in the `err.config.data` property of its error object. When a request fails, the entire payload, including plaintext passwords submitted during registration or login, gets exposed in the browser's console, risking credential leakage.
+**Prevention:** Avoid logging raw Axios error objects directly. Always extract non-sensitive properties (like `err.message` or `err.response.status`) if logging is necessary, or catch errors silently if local state (e.g., `error.value`) is enough.
