@@ -35,9 +35,9 @@ export const datos = defineStore('usuario', () => {
       localStorage.setItem('usuario', JSON.stringify(usuarioSeguro))
       error.value = ''
       return true
-    } catch (err) {
+    } catch {
       error.value = 'Error de conexion'
-      console.error(err)
+      // 🛡️ Sentinel: Do not log raw error object which could leak Axios config with plaintext password
       return false
     }
   }
@@ -67,9 +67,9 @@ export const datos = defineStore('usuario', () => {
       localStorage.setItem('usuario', JSON.stringify(usuarioSeguro))
       error.value = ''
       return true
-    } catch (err) {
+    } catch {
       error.value = 'Error al intentar cread la cuenta'
-      console.error(err)
+      // 🛡️ Sentinel: Do not log raw error object which could leak Axios config with plaintext password
       return false
     }
   }
