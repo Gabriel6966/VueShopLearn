@@ -1,0 +1,4 @@
+## 2025-02-26 - [Avoid Logging Raw Axios Errors]
+**Vulnerability:** Raw `console.error(err)` logging inside catch blocks for login and registration exposed the original API request payload (`err.config.data`), which contained plaintext passwords and user credentials, to the browser console.
+**Learning:** Axios error objects encapsulate the original request configurations. Passing these raw objects directly to logging mechanisms unconditionally exposes all request data, resulting in a critical sensitive information disclosure.
+**Prevention:** Catch errors silently where possible (e.g., empty catch blocks `catch { ... }`) or use dedicated loggers that explicitly omit `config.data` and sensitive nested fields when handling generic errors. Provide local UI feedback via error state instead of exposing technical details.
