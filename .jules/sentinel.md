@@ -1,0 +1,4 @@
+## 2025-02-20 - [Axios Request Payload Disclosure via console.error]
+**Vulnerability:** Raw Axios error objects (`err`) were being logged to the browser console (`console.error(err)`) in the `Usuario` Pinia store during login and registration attempts.
+**Learning:** In Axios, the error object contains the original request configuration and payload under `err.config.data`. Because the frontend sends plaintext passwords in the JSON payload (an architectural reality of the `json-server` mock backend setup where passwords are verified locally), logging the raw error effectively dumps plaintext user credentials to the developer console on a failed request.
+**Prevention:** Never log raw Axios error objects in contexts where the request might contain sensitive information (like passwords, tokens, or PII). Always destructure or explicitly handle the error, and if unused, prefer ES2019 empty catch blocks (`catch { ... }`) to avoid unused variable linting errors.
