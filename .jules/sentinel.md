@@ -1,0 +1,4 @@
+## 2025-05-20 - Prevent Sensitive Data Leak in Axios Error Logs
+**Vulnerability:** Raw `AxiosError` objects from authentication endpoints (login, register) were being directly logged to the browser console using `console.error(err)`.
+**Learning:** `AxiosError` objects typically contain an `err.config.data` field, which holds the stringified JSON payload sent with the initial request. When logging the raw error object, plain text credentials like passwords and emails included in the request payload are leaked and visible to anyone inspecting the browser console.
+**Prevention:** Avoid logging raw `AxiosError` objects, especially on endpoints dealing with sensitive data. Catch the exception without exposing the error object, or strictly log non-sensitive error properties such as `err.message` or `err.response.status`.
