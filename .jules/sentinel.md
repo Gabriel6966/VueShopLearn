@@ -1,0 +1,4 @@
+## 2025-05-22 - [CRITICAL] Prevent sensitive data leak via raw Axios errors
+**Vulnerability:** Raw `AxiosError` objects containing plaintext passwords in `err.config.data` were being logged to the browser console during failed login or registration attempts.
+**Learning:** In a codebase using Axios for API communication (like `TiendaService`), raw error objects inherently log their full request context. Because the authentication mechanism transmits plaintext passwords to the backend API (`db.json` setup), logging this error exposes credentials to anyone inspecting the console.
+**Prevention:** Always catch and handle API errors securely, avoiding raw `console.error(err)`. Use parameterless `catch { ... }` blocks for silent failure and UI error state updates to ensure passwords and sensitive payload data are not leaked, while also satisfying strict `no-unused-vars` linting rules.
