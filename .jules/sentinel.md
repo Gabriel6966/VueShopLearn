@@ -1,0 +1,4 @@
+## 2024-05-23 - Prevent Credential Leakage via Raw Axios Error Logs
+**Vulnerability:** Raw `AxiosError` objects were logged to the console via `console.error(err)` when `login` and `registro` functions failed in `src/stores/Usuario.ts`. The error objects contained sensitive information like user passwords in `err.config.data`.
+**Learning:** By directly outputting `err`, we expose `err.config.data` (the original request body) to the client's web browser console. Since this app passes credentials directly via JSON rather than securely abstracted forms, any connection or API failures would emit user plaintext passwords in the browser logs.
+**Prevention:** Avoid logging raw `AxiosError` objects directly. Prefer handling the error locally via internal state updates like `error.value` to ensure security info isn't leaked to dev tools. If error handling isn't useful, omit the `err` variable in the `catch` block (`catch { ... }`).
