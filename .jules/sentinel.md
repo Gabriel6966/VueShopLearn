@@ -1,0 +1,4 @@
+## 2024-05-24 - Axios Error Request Payload Leakage
+**Vulnerability:** Raw `console.error(err)` logging in Pinia actions (`login` and `registro`) exposed sensitive data, such as plaintext passwords submitted via user forms. The original Axios request config, including the `data` payload with the credentials, is attached to the raw error object, leading to console exposure when API requests fail.
+**Learning:** Automatically forwarding raw error objects (e.g., from network failures) to logging frameworks or browser consoles without sanitization leaks full request payloads. This is a common but easily overlooked risk when handling errors from HTTP clients like Axios.
+**Prevention:** Catch errors and suppress or sanitize them. Avoid raw error dumps (`console.error(err)`) in areas handling sensitive data. Instead, update application state (e.g., `error.value = "Error message"`) and silently catch failures or log only specific, non-sensitive properties.
