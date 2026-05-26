@@ -1,0 +1,4 @@
+## 2025-02-14 - Prevent Axios Error Payload Leakage
+**Vulnerability:** Logging raw Axios errors in authentication actions (`login`, `registro`) via `console.error(err)` leaked the original request payload containing plaintext passwords (`contrasena`) to the browser console.
+**Learning:** In a frontend using Axios, error objects retain the full `config.data` used to make the request. Even if you explicitly omit passwords from your app state/localStorage (e.g., using `delete` or rest parameters), an HTTP error can still expose them if you naively log the raw error object to the console.
+**Prevention:** Do not blindly `console.error(err)` when the HTTP request contains sensitive user data. Catch errors silently using `catch { ... }` (avoiding unused parameter lint rules) or destructure safe fields to log.
