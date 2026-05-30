@@ -1,0 +1,4 @@
+## 2025-05-30 - Prevent Leaking Raw Axios Errors Containing Sensitive Data
+**Vulnerability:** Raw Axios error objects (`err`) were being logged directly to the console (`console.error(err)`) in `src/stores/Usuario.ts` during authentication (`login`) and registration (`registro`).
+**Learning:** In the mock backend setup using JSON server and Axios, the `err` object from Axios includes `err.config.data`, which contains the original request payload. When logging errors during login or registration, this exposes sensitive credentials (like plaintext passwords) to the browser console. This is an architectural limitation and known vulnerability in this mock setup that shouldn't leak to client-side logs.
+**Prevention:** Catch Axios errors silently or handle them securely without logging the raw error object, especially in sensitive operations. Store error strings safely in component/store state without relying on console logs.
