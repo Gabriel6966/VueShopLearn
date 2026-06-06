@@ -1,0 +1,5 @@
+## 2024-06-06 - [Critical] Axios Error Object Credential Leak
+
+**Vulnerability:** Raw Axios error objects (`err`) were being logged to the console via `console.error(err)` in the `login` and `registro` functions. Axios error objects include the original request config, which contains the request payload (`err.config.data`), exposing plaintext passwords and other sensitive information.
+**Learning:** Raw error logging in API interactions can easily result in unintended leakage of sensitive credentials, especially with popular network libraries like Axios that embed full request details in error contexts.
+**Prevention:** Avoid logging raw network error objects containing sensitive inputs. Catch errors silently (`catch { ... }`), or manually log specific, safe details. Ensure inline comments explain why error logging is intentionally omitted to prevent regressions.
