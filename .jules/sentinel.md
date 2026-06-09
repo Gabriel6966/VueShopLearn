@@ -1,0 +1,4 @@
+## 2024-05-30 - Axios Raw Error Exposure in Login/Registration
+**Vulnerability:** The raw `err` object from Axios was logged to `console.error` during login and registration errors in `src/stores/Usuario.ts`. Axios raw error objects contain the original request payload, which in these instances included plaintext passwords, resulting in sensitive credential exposure to the browser console.
+**Learning:** Error logging in frontend state management, particularly for authentication flows, risks inadvertently leaking sensitive user data when whole error objects are printed.
+**Prevention:** Explicitly omit sensitive properties or replace the raw error dump with a sanitized error message and/or specific error status codes. Use ES2019 optional catch binding (`catch { ... }`) to deliberately ignore the error object if detailed logging is not strictly required.
