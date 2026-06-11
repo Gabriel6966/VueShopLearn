@@ -1,0 +1,4 @@
+## 2024-06-11 - Prevent Credential Leaks in Axios Error Logs
+**Vulnerability:** Raw Axios error objects (`err`) were being logged to the console during authentication and registration flows. Since Axios includes the original request payload in `err.config.data`, this could leak plaintext passwords and sensitive PII to browser consoles or logging aggregators.
+**Learning:** Raw error objects from HTTP clients often contain the entire request context, which is problematic when the request contains sensitive user input like credentials.
+**Prevention:** Avoid logging raw error objects directly. Catch errors silently or destructure specific safe properties (e.g., `err.message` or `err.status`). Use ES2019 optional catch binding (`catch { ... }`) to omit the error object entirely when it's unneeded, ensuring compliance with `@typescript-eslint/no-unused-vars` rules without leaking data.
