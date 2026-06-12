@@ -1,0 +1,4 @@
+## 2026-06-12 - Prevent Axios Error Objects from Leaking Sensitive Credentials
+**Vulnerability:** Raw `console.error(err)` logging in `catch` blocks within authentication methods (e.g., `login`, `registro`) in Pinia stores exposes the raw Axios error object, which contains the original request payload (`err.config.data`), including plain-text passwords, to the browser console.
+**Learning:** Standard error logging practices can inadvertently leak sensitive information. When using Axios or similar HTTP clients to send credentials, the request body is often attached to the error object on failure.
+**Prevention:** Do not blindly log error objects in authentication/authorization flows. Catch errors silently using ES2019 optional catch binding (`catch { ... }`), handle the local application state (e.g., setting `error.value`), and add explicit comments clarifying why the raw error is intentionally omitted to prevent accidental developer re-introduction.
