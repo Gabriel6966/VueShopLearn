@@ -1,0 +1,4 @@
+## 2025-02-19 - Axios Error Object Credential Leakage
+**Vulnerability:** Raw Axios error objects (`err`) were being logged to the browser console via `console.error(err)` in `src/stores/Usuario.ts` during authentication (`login`) and registration (`registro`).
+**Learning:** Axios error objects store the original request payload in the `err.config.data` property. Because the frontend relies on a mock backend and local verification of plaintext passwords, logging these raw errors directly exposed user credentials to the browser console on failed requests.
+**Prevention:** Avoid logging raw Axios errors. Use ES2019 optional catch binding (`catch { ... }`) to intentionally omit the error object when handling requests containing sensitive data. Update local error state silently and add inline comments explaining the security rationale.
