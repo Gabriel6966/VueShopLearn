@@ -1,0 +1,4 @@
+## 2025-02-28 - Axios Error Object Leakage
+**Vulnerability:** Raw Axios error objects (`err`) were being logged to the console via `console.error(err)` in authentication flows (login and registration).
+**Learning:** Raw Axios errors include the `config.data` object, which contains the original request payload. For authentication endpoints, this means plaintext passwords and other sensitive PII were being printed directly to the browser console on failure, making them accessible to any script on the page or anyone inspecting the browser devtools.
+**Prevention:** Avoid logging raw network/Axios error objects on the client side, especially for endpoints handling sensitive data. Use ES2019 optional catch bindings (`catch { ... }`) to silence the error entirely and rely on user-facing error state updates (e.g., `error.value = 'Connection Error'`), or log only sanitized generic messages.
