@@ -1,0 +1,4 @@
+## 2025-02-14 - Prevent Leaking Sensitive Request Data in Errors
+**Vulnerability:** The raw Axios error objects in user authentication and registration actions (`login` and `registro`) were being logged to the console using `console.error(err)`.
+**Learning:** Axios error objects store the original request configuration, including the request payload (`err.config.data`), which contains plain-text passwords and other sensitive information. Logging these raw errors directly to the console exposes this sensitive data in the browser.
+**Prevention:** Catch errors silently (using the ES2019 optional catch binding `catch { ... }`) when the request payload contains sensitive information, or properly parse and sanitize error messages before logging or displaying them. Do not rely on generic error handlers that output raw request configurations.
