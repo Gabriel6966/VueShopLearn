@@ -1,0 +1,4 @@
+## 2024-05-24 - Prevent Secret Leakage in Axios Error Logs
+**Vulnerability:** Logging raw Axios error objects in catch blocks (e.g., `console.error(err)`) during authentication flows (login, registration).
+**Learning:** Axios error objects store the original request configuration and payload under `err.config.data`. If an error occurs during a login or registration API call, logging the raw error object to the browser console inadvertently exposes plain-text passwords and sensitive user data.
+**Prevention:** Use optional catch binding (`catch { ... }` instead of `catch (err) { ... }`) to intentionally omit the error object when handling authentication failures, or explicitly handle and sanitize errors. Do not log raw Axios error objects to the console, instead update local error state to avoid credential leakage.
