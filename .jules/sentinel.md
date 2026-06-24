@@ -1,0 +1,4 @@
+## 2024-11-23 - Prevent Axios Credential Leakage in Console
+**Vulnerability:** Raw error logging `console.error(err)` in Vue Pinia store actions was writing Axios `AxiosError` objects directly to the browser console.
+**Learning:** By default, Axios attaches the entire request configuration (`err.config`) to its error objects, which includes the unredacted request payload in `err.config.data`. In authentication workflows, this inadvertently exposes plaintext passwords or sensitive API payloads to the client-side console, violating security constraints against exposing sensitive PII or credentials.
+**Prevention:** Avoid logging raw `err` objects in client-side authentication or sensitive form submissions. Use optional catch bindings (`catch { ... }`) or safely destructured logging that omits `err.config.data`.
