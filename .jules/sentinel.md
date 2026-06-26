@@ -1,0 +1,4 @@
+## 2025-06-26 - Prevent logging sensitive Axios request data to console
+**Vulnerability:** Raw `console.error(err)` was catching and logging Axios errors in `src/stores/Usuario.ts` during authentication/registration. This exposed `err.config.data` which contained the user's plaintext password, leaking credentials into the browser's developer console.
+**Learning:** Axios error objects store the full request configuration, including the request body (`config.data`), which can accidentally leak PII, tokens, or credentials if blindly logged to the console without sanitization.
+**Prevention:** Avoid blindly logging raw Axios error objects. When handling errors for sensitive forms (login, registration), use ES2019 optional catch binding (`catch { ... }`) to silence the exception safely, or explicitly sanitize the error object before logging.
