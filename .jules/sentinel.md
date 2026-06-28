@@ -1,0 +1,4 @@
+## 2024-06-28 - Avoid Exposing Sensitive Information in Axios Errors
+**Vulnerability:** The application was logging raw Axios error objects (`console.error(err)`) in the `login` and `registro` functions. Axios error objects include the original request config and payload (`err.config.data`), which means plain text passwords submitted during authentication and registration were being exposed in the browser console.
+**Learning:** Raw error objects often contain implicit context (like HTTP request bodies) that can inadvertently leak PII or credentials if logged blindly.
+**Prevention:** Avoid blindly logging error objects from third-party libraries without sanitizing them or understanding their structure. In sensitive flows like authentication, use ES2019 parameterless catch bindings (`catch { ... }`) to ignore the error completely, or selectively log only safe properties like `err.message` while displaying a generic message to the user.
