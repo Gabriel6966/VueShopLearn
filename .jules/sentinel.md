@@ -1,0 +1,4 @@
+## 2024-07-04 - [Avoid Leaking Sensitive Data in Axios Error Logs]
+**Vulnerability:** Raw Axios error objects (`err`) log the original request payload (in `err.config.data`), causing the browser console to leak sensitive user information such as passwords when API requests fail.
+**Learning:** During login and registration processes in Pinia store actions, logging caught exceptions using `console.error(err)` silently exposes critical credentials to local console logs and potential remote monitoring systems without any functional benefit.
+**Prevention:** Remove standard `console.error(err)` invocations within authentication store actions. Utilize ES2019 optional catch binding (`catch { ... }`) to discard the error and silently handle state updates (e.g., setting a user-facing error message) while staying compliant with strict ESLint parameter usage rules.
