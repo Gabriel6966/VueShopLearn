@@ -1,0 +1,4 @@
+## 2025-02-19 - Avoid Logging Raw Axios Errors in Store Actions
+**Vulnerability:** Logging raw Axios error objects (`err`) to the browser console (via `console.error(err)`) during authentication or registration requests exposed the original request payload (`err.config.data`), which contained sensitive credentials (plaintext passwords).
+**Learning:** Axios error objects store the full request context. When requests fail (e.g., due to network issues or backend validation), logging the error directly leaks the request payload to the console, leading to credential exposure.
+**Prevention:** Use ES2019 optional catch binding (`catch { ... }`) in store actions that handle sensitive forms (like login or registration) to intentionally suppress error object logging. Catch errors silently and instead update the local error state (e.g., `error.value = 'Error message'`) to inform the user without exposing sensitive data in logs.
