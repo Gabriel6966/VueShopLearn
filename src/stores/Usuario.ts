@@ -37,7 +37,9 @@ export const datos = defineStore('usuario', () => {
       return true
     } catch (err) {
       error.value = 'Error de conexion'
-      console.error(err)
+      // Security: Do not log the raw Axios error because err.config.data contains plaintext passwords.
+      // We rely on the UI error.value update, but log the safe error message for debugging.
+      console.error('Request failed:', err instanceof Error ? err.message : String(err))
       return false
     }
   }
@@ -69,7 +71,9 @@ export const datos = defineStore('usuario', () => {
       return true
     } catch (err) {
       error.value = 'Error al intentar cread la cuenta'
-      console.error(err)
+      // Security: Do not log the raw Axios error because err.config.data contains plaintext passwords.
+      // We rely on the UI error.value update, but log the safe error message for debugging.
+      console.error('Request failed:', err instanceof Error ? err.message : String(err))
       return false
     }
   }

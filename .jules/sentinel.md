@@ -1,0 +1,4 @@
+## 2025-02-27 - Credentials leakage in console logs via Axios error objects
+**Vulnerability:** Raw Axios error objects (`err`) were being logged to the console using `console.error(err)` in the `login` and `registro` functions of `src/stores/Usuario.ts`.
+**Learning:** In Axios, raw error objects contain the original request payload in `err.config.data`. Logging these objects directly to the browser console can expose plain-text passwords or other sensitive information submitted in the request.
+**Prevention:** To prevent leaking sensitive information, avoid logging raw Axios errors directly, especially in form submission handlers (e.g., login/registration). Use ES2019 optional catch binding (`catch { ... }`) to silence errors securely and rely on local error state (e.g., `error.value`) for UI updates instead of throwing errors to generic error routes which might disrupt the user flow.
