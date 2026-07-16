@@ -37,7 +37,8 @@ export const datos = defineStore('usuario', () => {
       return true
     } catch (err) {
       error.value = 'Error de conexion'
-      console.error(err)
+      // Sentinel: Log only the error message to avoid exposing raw Axios config/data (which contains plaintext passwords)
+      console.error(err instanceof Error ? err.message : String(err))
       return false
     }
   }
@@ -69,7 +70,8 @@ export const datos = defineStore('usuario', () => {
       return true
     } catch (err) {
       error.value = 'Error al intentar cread la cuenta'
-      console.error(err)
+      // Sentinel: Log only the error message to avoid exposing raw Axios config/data (which contains plaintext passwords)
+      console.error(err instanceof Error ? err.message : String(err))
       return false
     }
   }
