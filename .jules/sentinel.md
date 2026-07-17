@@ -1,0 +1,4 @@
+## 2025-02-23 - Prevent Credential Leak in Axios Errors
+**Vulnerability:** Raw Axios error objects (`err`) were being logged to the console via `console.error(err)` during login and registration attempts in the Vue store.
+**Learning:** Axios error objects encapsulate the original request payload in `err.config.data`. If a login or registration request fails (e.g., due to a network error or 500 response), logging the raw error dumps the user's plaintext password into the browser console, exposing it to anyone with physical access or malicious scripts.
+**Prevention:** Avoid logging raw Axios error objects in frontend code, especially in authentication workflows. Catch errors silently using ES2019 optional catch binding (`catch { ... }`) and handle the failure gracefully by updating local state (e.g., `error.value`), or explicitly extract only safe properties (like `err.message`) if logging is absolutely necessary.
