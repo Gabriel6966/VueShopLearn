@@ -1,0 +1,4 @@
+## 2025-07-20 - Sensitive Data Exposure in Raw Axios Errors
+**Vulnerability:** Logging raw error objects caught from Axios (e.g., `console.error(err)`) inadvertently exposes the original request payload containing sensitive data like plaintext passwords within `err.config.data`.
+**Learning:** During authentication and registration flows, Axios error objects retain the full configuration of the failed request. Directly outputting these errors for debugging purposes leaks critical sensitive credentials to the browser console or server logs, posing a significant security risk.
+**Prevention:** Always silently catch and handle network or API errors involving sensitive payloads in production. Use optional catch bindings (`catch { ... }`) to avoid strict TypeScript any-type errors and update application error states cleanly without logging the raw error object.
