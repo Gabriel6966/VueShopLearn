@@ -1,0 +1,4 @@
+## 2024-07-22 - Raw Axios Error Logging Leaking Credentials
+**Vulnerability:** Raw Axios error objects (`err`) were being logged to the console using `console.error(err)` in `Usuario.ts` during login and registration.
+**Learning:** Axios error objects encapsulate the original request configuration, including the `data` payload. Logging this object exposes sensitive information like plaintext passwords to the browser console, which is accessible via DevTools or third-party monitoring scripts.
+**Prevention:** Never log raw Axios error objects directly. Catch errors silently if logging isn't strictly necessary, or manually extract and log only non-sensitive parts of the error (like the status code or generic error message).
