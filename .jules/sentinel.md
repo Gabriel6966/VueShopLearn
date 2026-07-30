@@ -1,0 +1,4 @@
+## 2024-05-18 - Avoid logging raw Axios errors to console
+**Vulnerability:** Raw Axios error objects (`err`) contain the original request payload in `err.config.data`. If logged to the console via `console.error(err)`, sensitive information like plaintext passwords (e.g., during login or registration) can be leaked to anyone inspecting the browser console.
+**Learning:** The mock backend setup requires plaintext password verification on the frontend, making the login/registration request payloads inherently sensitive. The default `catch (err)` block with `console.error(err)` unintentionally exposes this payload data.
+**Prevention:** Avoid logging raw Axios errors directly, especially in authentication stores. Catch errors silently or handle them securely without exposing internal request configuration. Use ES2019 optional catch binding (`catch { ... }`) to omit the error entirely, and add inline comments explaining the security-driven omission.
