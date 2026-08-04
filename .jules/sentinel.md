@@ -1,0 +1,4 @@
+## 2024-05-18 - Information Disclosure in Axios Error Logs
+**Vulnerability:** Raw Axios error objects logged to the console leak the original request payload containing plaintext passwords.
+**Learning:** When Axios throws an error during an HTTP request, the error object includes the original `config` object, which contains the `data` payload sent to the server. If this error is directly logged using `console.error(err)`, sensitive data such as plaintext passwords from login or registration flows will be exposed in the browser's console.
+**Prevention:** Always extract and log only the necessary error message (e.g., `err.message` or `err.response.data.message`), or use optional catch binding (`catch { ... }`) to fail securely without logging the raw error object, especially in authentication-related operations.
