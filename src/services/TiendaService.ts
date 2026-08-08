@@ -2,8 +2,10 @@ import axios from 'axios'
 import type { Review } from '@/types/index'
 
 const apiClient = axios.create({
+  // Security fix: Avoid hardcoded environment configurations
+  // Fallback to local dev server if env variable is not present
   //La url que llamamos
-  baseURL: 'http://localhost:3000',
+  baseURL: import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000',
   //Autenticacion y configuracion para comunicarnos con nuestro server
   headers: {
     Accept: 'application/json',
