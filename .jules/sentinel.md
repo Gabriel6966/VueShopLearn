@@ -1,0 +1,4 @@
+## YYYY-MM-DD - Raw Axios Error Leak in Vue Pinia Stores
+**Vulnerability:** Raw Axios error objects (`err`) were being logged to the browser console during authentication errors (like `console.error(err)` in `login` or `registro` actions). This exposes the original request payload containing plaintext passwords because the payload is attached to `err.config.data`.
+**Learning:** Axios error objects store the full request configuration, including sensitive data from the payload, which makes logging raw error objects a critical credential leak vulnerability in frontend applications.
+**Prevention:** Catch authentication and sensitive request errors silently, or extract and log only safe parts of the error (e.g., `err.message` or a generic string). Always avoid `console.error(err)` for Axios calls passing sensitive credentials.
