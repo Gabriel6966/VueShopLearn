@@ -35,9 +35,11 @@ export const datos = defineStore('usuario', () => {
       localStorage.setItem('usuario', JSON.stringify(usuarioSeguro))
       error.value = ''
       return true
-    } catch (err) {
+    } catch {
+      // Sentinel: Error intentionally caught silently to prevent credential leaks.
+      // Raw Axios error objects (err) contain the original request payload in err.config.data,
+      // which includes plaintext passwords. Logging them exposes secrets to the browser console.
       error.value = 'Error de conexion'
-      console.error(err)
       return false
     }
   }
@@ -67,9 +69,11 @@ export const datos = defineStore('usuario', () => {
       localStorage.setItem('usuario', JSON.stringify(usuarioSeguro))
       error.value = ''
       return true
-    } catch (err) {
+    } catch {
+      // Sentinel: Error intentionally caught silently to prevent credential leaks.
+      // Raw Axios error objects (err) contain the original request payload in err.config.data,
+      // which includes plaintext passwords. Logging them exposes secrets to the browser console.
       error.value = 'Error al intentar cread la cuenta'
-      console.error(err)
       return false
     }
   }
