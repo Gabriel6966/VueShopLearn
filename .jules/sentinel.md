@@ -1,0 +1,4 @@
+## YYYY-MM-DD - Fix Credential Leak in Console Logging
+**Vulnerability:** Raw Axios error objects (`err`) were being logged to the browser console during authentication flows. These objects contain the original request payload in `err.config.data`, which exposed plaintext user passwords upon network or server errors.
+**Learning:** Standard error logging (`console.error(err)`) in Vite/Vue applications using Axios can inadvertently expose sensitive data because Axios bundles the entire request configuration into the error object.
+**Prevention:** Avoid logging raw Axios error objects directly in frontend clients, especially in authentication or payment flows. Either catch them silently using ES2019 optional catch binding (`catch { ... }`), or explicitly extract non-sensitive properties (like `err.message`) before logging.
