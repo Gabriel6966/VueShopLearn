@@ -1,0 +1,4 @@
+## 2026-08-25 - Fix Sensitive Data Leak in Console
+**Vulnerability:** Raw Axios error objects (`err`) contain the original request payload in `err.config.data`. Logging these directly to the browser console on authentication failures (login/registration) exposes sensitive user data, such as plaintext passwords.
+**Learning:** In Vite frontend applications and similar setups using Axios, handling errors by globally or generically logging them without sanitization can inadvertently leak sensitive form data. This highlights the risk of relying on standard `console.error(err)` during sensitive operations like authentication.
+**Prevention:** Catch errors silently or handle them securely during sensitive operations. Specifically, use ES2019 optional catch binding (`catch { ... }`) to avoid unused parameter linting issues (`eslint(no-unused-vars)`) while securely updating local error state without exposing raw error objects to the console.
