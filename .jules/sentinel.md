@@ -1,0 +1,4 @@
+## YYYY-MM-DD - Prevent Information Disclosure in Axios Errors
+**Vulnerability:** Raw Axios error objects (`err`) were being logged to the console during authentication failures. These objects contain the original request payload in `err.config.data`, which exposes plaintext passwords and user credentials to the browser console.
+**Learning:** In frontend applications using Axios, logging raw errors can inadvertently leak sensitive information because Axios attaches the entire request configuration (including sensitive payload data) to the error object.
+**Prevention:** Catch errors silently using the ES2019 optional catch binding (`catch { ... }`) for operations handling sensitive data, or explicitly extract only the safe error message (e.g., `err.message`) instead of logging the entire raw error object.
