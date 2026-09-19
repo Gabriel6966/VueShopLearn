@@ -1,0 +1,4 @@
+## YYYY-MM-DD - [Exposed Credentials in Error Logs]
+**Vulnerability:** Raw Axios error objects were being logged to the browser console during login and registration. This leaks the original request payload (`err.config.data`), which includes sensitive user credentials like plaintext passwords.
+**Learning:** When using Axios, caught error objects contain a `config` property with the original request data. Logging these errors exposes all submitted sensitive form data in the client-side console.
+**Prevention:** Use ES2019 optional catch bindings (`catch { ... }`) to silently handle errors in authentication store actions, omitting raw error logging to prevent credentials from leaking while continuing to set local reactive error states for the user.
