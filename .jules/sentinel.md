@@ -1,0 +1,4 @@
+## YYYY-MM-DD - [Axios Error Credential Leakage]
+**Vulnerability:** Axios error objects were logged to the browser console using `console.error(err)`. These error objects include `err.config.data` which contains the request payload, exposing plaintext passwords during login and registration.
+**Learning:** The mock backend architecture combined with Axios requires the frontend to send plaintext passwords in requests. Logging these raw HTTP errors on the frontend unintentionally leaks sensitive user credentials to the developer console.
+**Prevention:** Use ES2019 optional catch binding (`catch { ... }`) to handle authentication failures silently without passing the error object, or explicitly log only safe properties like `err.message`.
