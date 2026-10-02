@@ -1,0 +1,4 @@
+## YYYY-MM-DD - Prevent Axios Credential Leaks
+**Vulnerability:** Raw Axios error objects (`err`) contain the original request payload in `err.config.data`, leaking sensitive credentials (e.g., plaintext passwords) to the browser console when logged.
+**Learning:** In the `Usuario` store, `console.error(err)` during login and registration implicitly logs the request body, exposing passwords. Standard error logging practices can inadvertently cause critical data leaks in Vite/Axios setups.
+**Prevention:** Use ES2019 optional catch binding (`catch { ... }`) for sensitive form actions and silently catch errors, updating local UI error state instead of raw logging.
