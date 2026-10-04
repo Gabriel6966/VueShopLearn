@@ -1,0 +1,4 @@
+## YYYY-MM-DD - Prevent credential leakage in Axios error logging
+**Vulnerability:** Raw Axios error objects (`err`) logged via `console.error` expose the original request payload in `err.config.data`, which leaks sensitive data like plaintext passwords to the browser console during login and registration.
+**Learning:** Logging entire error objects from HTTP clients (like Axios) in the frontend can inadvertently expose sensitive user credentials that were part of the failed request.
+**Prevention:** Silently catch errors in authentication flows using optional catch binding (`catch { ... }`) or explicitly extract and log only safe properties (e.g., `err.message`) instead of the full error object.
