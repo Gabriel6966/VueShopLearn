@@ -1,0 +1,4 @@
+## YYYY-MM-DD - Prevent Credential Leakage in Axios Error Handling
+**Vulnerability:** Raw error objects from Axios were being logged directly to the console during login and registration, which exposes the original request payload containing plaintext passwords.
+**Learning:** Axios attaches the original request configuration, including raw unmasked data payloads, to its error objects. Logging these errors raw in the browser console leaks sensitive user credentials.
+**Prevention:** Catch errors silently using ES2019 optional catch binding (`catch { ... }`) when handling sensitive operations. If logging is necessary, explicitly extract safe properties rather than logging the entire object.
