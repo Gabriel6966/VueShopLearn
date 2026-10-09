@@ -1,0 +1,4 @@
+## 2024-10-09 - Axios Error Object Credential Leak
+**Vulnerability:** Raw Axios error objects containing sensitive request payloads (like passwords) were being logged to the browser console via `console.error(err)` in authentication flows (login and registration).
+**Learning:** Axios attaches the original request configuration, including the raw `data` payload, to its error objects. When these errors are logged directly to the console, it exposes user credentials or other sensitive information submitted in the request to anyone with access to the browser developer tools.
+**Prevention:** Always silently catch authentication errors or handle them securely without logging the raw error object to the console. In strict TypeScript environments (like with Oxlint), use the ES2019 optional catch binding syntax (`catch { ... }`) to avoid unused variable linting errors while preventing credential leaks.
