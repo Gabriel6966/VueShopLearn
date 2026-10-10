@@ -1,0 +1,4 @@
+## YYYY-MM-DD - [Prevent Axios Error Password Leak]
+**Vulnerability:** Raw Axios error objects (`err`) were being logged to the browser console during authentication and registration flows via `console.error(err)`. This exposed `err.config.data`, which contained sensitive user payloads including plaintext passwords.
+**Learning:** Axios error objects encapsulate the entire request configuration, including raw request data. Directly logging these error objects in frontend code leaks any sensitive data submitted in the request directly to the client's console.
+**Prevention:** Catch errors silently using ES2019 optional catch binding (`catch { ... }`) to avoid strict linting errors (`@typescript-eslint/no-unused-vars`), update local error state to inform the user securely, and never log raw Axios error objects in production environments.
