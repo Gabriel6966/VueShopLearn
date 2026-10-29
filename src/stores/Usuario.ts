@@ -37,7 +37,9 @@ export const datos = defineStore('usuario', () => {
       return true
     } catch (err) {
       error.value = 'Error de conexion'
-      console.error(err)
+      // Evitamos exponer el objeto de error completo de Axios (que puede contener credenciales en config.data)
+      const mensaje = err instanceof Error ? err.message : String(err)
+      console.error('Login error:', mensaje)
       return false
     }
   }
@@ -69,7 +71,9 @@ export const datos = defineStore('usuario', () => {
       return true
     } catch (err) {
       error.value = 'Error al intentar cread la cuenta'
-      console.error(err)
+      // Evitamos exponer el objeto de error completo de Axios (que puede contener credenciales en config.data)
+      const mensaje = err instanceof Error ? err.message : String(err)
+      console.error('Registro error:', mensaje)
       return false
     }
   }
