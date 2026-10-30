@@ -1,0 +1,4 @@
+## YYYY-MM-DD - [Fix] Remove console.error to prevent information leakage
+**Vulnerability:** Leaking stack traces or sensitive data via `console.error` in production in `src/stores/Usuario.ts`. Raw error objects (`err`) contain the original request payload in `err.config.data`, which may leak user passwords upon authentication failure.
+**Learning:** The previous implementation caught authentication errors using `catch (err)` and blindly logged them via `console.error(err)`. This exposed internals and credentials on failure.
+**Prevention:** Instead of logging raw objects directly in production code or exposing them to user views, either catch errors silently or handle them securely to avoid leaking sensitive data.
