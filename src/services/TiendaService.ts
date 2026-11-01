@@ -3,7 +3,7 @@ import type { Review } from '@/types/index'
 
 const apiClient = axios.create({
   //La url que llamamos
-  baseURL: 'http://localhost:3000',
+  baseURL: import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000',
   //Autenticacion y configuracion para comunicarnos con nuestro server
   headers: {
     Accept: 'application/json',
