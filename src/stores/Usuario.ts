@@ -37,7 +37,8 @@ export const datos = defineStore('usuario', () => {
       return true
     } catch (err) {
       error.value = 'Error de conexion'
-      console.error(err)
+      // Log safely without exposing Axios err.config.data (which may contain passwords)
+      console.error(err instanceof Error ? err.message : String(err))
       return false
     }
   }
@@ -69,7 +70,8 @@ export const datos = defineStore('usuario', () => {
       return true
     } catch (err) {
       error.value = 'Error al intentar cread la cuenta'
-      console.error(err)
+      // Log safely without exposing Axios err.config.data (which may contain passwords)
+      console.error(err instanceof Error ? err.message : String(err))
       return false
     }
   }
