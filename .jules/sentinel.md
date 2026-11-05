@@ -1,0 +1,4 @@
+## YYYY-MM-DD - Prevent Credential Leaks in Axios Errors
+**Vulnerability:** Raw Axios error objects containing request payloads were logged directly to the browser console.
+**Learning:** When using Axios, raw error objects (`err`) contain the original request payload in `err.config.data`. Logging these raw errors directly in authentication flows exposes sensitive information like passwords to the browser console.
+**Prevention:** Avoid logging raw error objects. Catch errors securely and extract only safe properties (e.g., `err instanceof Error ? err.message : String(err)`) or omit logging entirely.
