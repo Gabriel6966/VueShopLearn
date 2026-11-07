@@ -37,7 +37,8 @@ export const datos = defineStore('usuario', () => {
       return true
     } catch (err) {
       error.value = 'Error de conexion'
-      console.error(err)
+      // Sentinel: Prevent raw Axios error logging to avoid leaking sensitive data (e.g. passwords in err.config.data)
+      console.error(err instanceof Error ? err.message : 'Error in login')
       return false
     }
   }
@@ -69,7 +70,8 @@ export const datos = defineStore('usuario', () => {
       return true
     } catch (err) {
       error.value = 'Error al intentar cread la cuenta'
-      console.error(err)
+      // Sentinel: Prevent raw Axios error logging to avoid leaking sensitive data (e.g. passwords in err.config.data)
+      console.error(err instanceof Error ? err.message : 'Error in registro')
       return false
     }
   }
