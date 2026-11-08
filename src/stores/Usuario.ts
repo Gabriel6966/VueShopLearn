@@ -35,9 +35,10 @@ export const datos = defineStore('usuario', () => {
       localStorage.setItem('usuario', JSON.stringify(usuarioSeguro))
       error.value = ''
       return true
-    } catch (err) {
+    } catch {
       error.value = 'Error de conexion'
-      console.error(err)
+      // 🛡️ Sentinel: Catch silencioso para evitar registrar el error crudo de Axios,
+      // el cual expondría las credenciales (contraseña) en la consola del navegador.
       return false
     }
   }
@@ -67,9 +68,10 @@ export const datos = defineStore('usuario', () => {
       localStorage.setItem('usuario', JSON.stringify(usuarioSeguro))
       error.value = ''
       return true
-    } catch (err) {
+    } catch {
       error.value = 'Error al intentar cread la cuenta'
-      console.error(err)
+      // 🛡️ Sentinel: Catch silencioso para prevenir la fuga de datos sensibles (contraseña)
+      // en la consola a través del objeto de error de Axios.
       return false
     }
   }
