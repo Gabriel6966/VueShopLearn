@@ -37,7 +37,7 @@ export const datos = defineStore('usuario', () => {
       return true
     } catch {
       error.value = 'Error de conexion'
-      // Catch error silently to prevent leaking sensitive request payload (e.g. passwords in Axios errors) to the console
+      // Error caught silently to prevent credential leak via console
       return false
     }
   }
@@ -69,7 +69,7 @@ export const datos = defineStore('usuario', () => {
       return true
     } catch {
       error.value = 'Error al intentar cread la cuenta'
-      // Catch error silently to prevent leaking sensitive request payload (e.g. passwords in Axios errors) to the console
+      // Error caught silently to prevent credential leak via console
       return false
     }
   }
